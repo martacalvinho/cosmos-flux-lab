@@ -13,11 +13,17 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-input bg-surface hover:bg-hover hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost: "hover:bg-hover hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // Category-specific variants
+        staking: "bg-staking/10 text-staking border border-staking/20 hover:bg-staking/20",
+        "liquid-staking": "bg-liquid-staking/10 text-liquid-staking border border-liquid-staking/20 hover:bg-liquid-staking/20",
+        liquidity: "bg-liquidity/10 text-liquidity border border-liquidity/20 hover:bg-liquidity/20",
+        lending: "bg-lending/10 text-lending border border-lending/20 hover:bg-lending/20",
+        perps: "bg-perps/10 text-perps border border-perps/20 hover:bg-perps/20",
       },
       size: {
         default: "h-10 px-4 py-2",

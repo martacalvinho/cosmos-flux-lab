@@ -26,7 +26,8 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					muted: 'hsl(var(--primary-muted))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -50,7 +51,8 @@ export default {
 				},
 				card: {
 					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
+					foreground: 'hsl(var(--card-foreground))',
+					border: 'hsl(var(--card-border))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -61,7 +63,24 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Category Colors
+				staking: 'hsl(var(--staking))',
+				'liquid-staking': 'hsl(var(--liquid-staking))',
+				liquidity: 'hsl(var(--liquidity))',
+				lending: 'hsl(var(--lending))',
+				perps: 'hsl(var(--perps))',
+				// Semantic Colors
+				success: 'hsl(var(--success))',
+				warning: 'hsl(var(--warning))',
+				error: 'hsl(var(--error))',
+				info: 'hsl(var(--info))',
+				// Surface Colors
+				surface: 'hsl(var(--surface))',
+				'surface-variant': 'hsl(var(--surface-variant))',
+				'surface-accent': 'hsl(var(--surface-accent))',
+				hover: 'hsl(var(--hover))',
+				active: 'hsl(var(--active))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
