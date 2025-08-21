@@ -2,6 +2,7 @@ import { ExternalLink, Info, AlertTriangle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 export interface ProtocolCardProps {
@@ -95,9 +96,28 @@ export const ProtocolCard = ({
             </Button>
           )}
           {links.docs && (
-            <Button size="sm" variant="ghost">
-              <Info className="h-3 w-3" />
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button size="sm" variant="ghost">
+                    <Info className="h-3 w-3" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left" className="max-w-xs bg-background border-border shadow-lg">
+                  <div className="space-y-2">
+                    <p className="font-medium text-sm">How it works:</p>
+                    <ol className="text-sm space-y-1">
+                      {howItWorks.map((step, index) => (
+                        <li key={index} className="flex gap-2">
+                          <span className="text-primary font-medium">{index + 1}.</span>
+                          <span>{step}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
         </div>
       </div>
@@ -124,18 +144,6 @@ export const ProtocolCard = ({
         </div>
       )}
 
-      {/* How it Works */}
-      <div className="space-y-2 mb-4">
-        <p className="text-sm font-medium">How it works:</p>
-        <ol className="text-sm text-muted-foreground space-y-1">
-          {howItWorks.map((step, index) => (
-            <li key={index} className="flex gap-2">
-              <span className="text-primary font-medium">{index + 1}.</span>
-              <span>{step}</span>
-            </li>
-          ))}
-        </ol>
-      </div>
 
       {/* Footer */}
       <div className="flex items-center justify-between pt-4 border-t border-border">
