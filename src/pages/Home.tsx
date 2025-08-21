@@ -12,6 +12,7 @@ import {
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Navigation } from "@/components/ui/layout/Navigation";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
@@ -105,55 +106,29 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-surface/30 border-b border-border">
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-4xl mx-auto text-center space-y-6">
-            <Badge variant="outline" className="mb-4">
+      <section className="relative overflow-hidden bg-surface/30">
+        <div className="container mx-auto px-4 py-12">
+          <div className="max-w-3xl mx-auto text-center space-y-4">
+            <Badge variant="outline" className="mb-2">
               <div className="w-2 h-2 bg-success rounded-full mr-2 animate-pulse" />
               All systems operational • {dataMode} data
             </Badge>
             
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
               ATOM DeFi
               <span className="text-primary block">Ecosystem</span>
             </h1>
             
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Discover and compare the best DeFi opportunities across the Cosmos ecosystem. 
               Track yields, manage risk, and optimize your ATOM holdings.
             </p>
-
-            <div className="flex items-center justify-center gap-4 pt-4">
-              <Button size="lg" asChild>
-                <Link to="/staking">
-                  Start Exploring
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/portfolio">View Portfolio</Link>
-              </Button>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 pt-8 max-w-md mx-auto">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-primary">$5.2B</div>
-                <div className="text-sm text-muted-foreground">Total TVL</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-success">45+</div>
-                <div className="text-sm text-muted-foreground">Protocols</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-warning">18.5%</div>
-                <div className="text-sm text-muted-foreground">Avg APY</div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
+
+      {/* Navigation Tabs */}
+      <Navigation />
 
       <div className="container mx-auto px-4 py-12 space-y-12">
         {/* Categories Grid */}

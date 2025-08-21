@@ -9,6 +9,8 @@ import Home from "./pages/Home";
 import Staking from "./pages/Staking";
 import LiquidStaking from "./pages/LiquidStaking";
 import Liquidity from "./pages/Liquidity";
+import Lending from "./pages/Lending";
+import Perps from "./pages/Perps";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,16 +23,13 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Header />
-          <Navigation />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/staking" element={<Staking />} />
             <Route path="/liquid-staking" element={<LiquidStaking />} />
             <Route path="/liquidity" element={<Liquidity />} />
-            <Route path="/lending" element={<NotFound />} />
-            <Route path="/perps" element={<NotFound />} />
-            <Route path="/portfolio" element={<NotFound />} />
-            <Route path="/risks" element={<NotFound />} />
+            <Route path="/lending" element={<Lending />} />
+            <Route path="/perps" element={<Perps />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

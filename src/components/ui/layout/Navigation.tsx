@@ -56,27 +56,20 @@ const NAVIGATION_ITEMS = [
   }
 ];
 
-const SECONDARY_ITEMS = [
-  {
-    label: "Portfolio",
-    path: "/portfolio",
-    icon: User
-  },
-  {
-    label: "Risks",
-    path: "/risks",
-    icon: Shield
-  }
-];
+const SECONDARY_ITEMS: any[] = [];
 
-export const Navigation = () => {
+interface NavigationProps {
+  className?: string;
+}
+
+export const Navigation = ({ className }: NavigationProps) => {
   return (
-    <nav className="border-b border-border bg-surface/50">
+    <nav className={cn("border-b border-border bg-surface/50", className)}>
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           {/* Main Navigation */}
           <div className="flex items-center space-x-1">
-            {NAVIGATION_ITEMS.map((item) => (
+            {NAVIGATION_ITEMS.slice(1).map((item) => ( // Skip Home item when used in hero
               <NavLink
                 key={item.path}
                 to={item.path}
@@ -93,33 +86,9 @@ export const Navigation = () => {
               >
                 <item.icon className="h-4 w-4" />
                 {item.label}
-                {item.path !== "/" && (
-                  <Badge variant="secondary" className="ml-1 text-xs">
-                    New
-                  </Badge>
-                )}
-              </NavLink>
-            ))}
-          </div>
-
-          {/* Secondary Navigation */}
-          <div className="flex items-center space-x-1">
-            {SECONDARY_ITEMS.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  cn(
-                    "flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-                    "hover:bg-hover/50",
-                    isActive
-                      ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:text-foreground"
-                  )
-                }
-              >
-                <item.icon className="h-4 w-4" />
-                {item.label}
+                <Badge variant="secondary" className="ml-1 text-xs">
+                  New
+                </Badge>
               </NavLink>
             ))}
           </div>
