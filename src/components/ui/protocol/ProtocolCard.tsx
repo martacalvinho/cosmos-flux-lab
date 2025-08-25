@@ -67,7 +67,7 @@ export const ProtocolCard = ({
             >
               {category.replace("-", " ")}
             </Badge>
-            <Badge variant="outline">{protocol}</Badge>
+            <Badge variant="outline" className="text-purple-400 bg-purple-500/10 border-purple-500/30">{protocol}</Badge>
             <Badge variant="outline">{chain}</Badge>
             <Badge 
               variant="outline"
@@ -91,8 +91,10 @@ export const ProtocolCard = ({
 
         <div className="flex gap-1">
           {links.app && (
-            <Button size="sm" variant="outline">
-              <ExternalLink className="h-3 w-3" />
+            <Button size="sm" variant="outline" asChild>
+              <a href={links.app} target="_blank" rel="noopener noreferrer" aria-label="Open App">
+                <ExternalLink className="h-3 w-3" />
+              </a>
             </Button>
           )}
           {links.docs && (
@@ -154,12 +156,16 @@ export const ProtocolCard = ({
         
         <div className="flex gap-2">
           {links.pool && (
-            <Button size="sm" variant="outline">
-              Direct Pool
+            <Button size="sm" variant="outline" asChild>
+              <a href={links.pool} target="_blank" rel="noopener noreferrer">
+                Direct Pool
+              </a>
             </Button>
           )}
-          <Button size="sm" variant={category}>
-            Open App
+          <Button size="sm" variant={category} asChild>
+            <a href={links.app ?? '#'} target="_blank" rel="noopener noreferrer">
+              Open App
+            </a>
           </Button>
         </div>
       </div>

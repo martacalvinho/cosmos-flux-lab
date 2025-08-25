@@ -65,16 +65,16 @@ interface NavigationProps {
 export const Navigation = ({ className, activeTab, onTabChange }: NavigationProps) => {
   return (
     <nav className={cn("border-b border-border bg-surface/50", className)}>
-      <div className="container mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-center">
           {/* Main Navigation */}
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-2">
             {NAVIGATION_ITEMS.map((item) => (
               <button
                 key={item.value}
                 onClick={() => onTabChange(item.value)}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg transition-colors",
+                  "flex items-center gap-2 px-16 py-3 text-sm font-medium rounded-lg transition-colors",
                   "hover:bg-hover/50",
                   activeTab === item.value
                     ? `${item.bgColor || "bg-primary/10"} ${item.color || "text-primary"}`
@@ -83,9 +83,6 @@ export const Navigation = ({ className, activeTab, onTabChange }: NavigationProp
               >
                 <item.icon className="h-4 w-4" />
                 {item.label}
-                <Badge variant="secondary" className="ml-1 text-xs">
-                  New
-                </Badge>
               </button>
             ))}
           </div>

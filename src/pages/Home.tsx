@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Coins, 
   Layers, 
@@ -23,6 +23,21 @@ import { ProtocolCard } from "@/components/ui/protocol/ProtocolCard";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { AstroportService } from "@/services/astroportService";
+import { OsmosisService } from "@/services/osmosisService";
+import { AstrovaultService } from "@/services/astrovaultService";
+
+interface LiquidityPool {
+  id: string;
+  type: 'liquidity';
+  platform: string;
+  apy: string;
+  tvl: string;
+  description: string;
+  url: string;
+  pair: string;
+  chain: string;
+}
 
 const CATEGORIES = [
   {
@@ -321,15 +336,223 @@ const PROTOCOL_DATA = {
   "perps": PERPS_PROTOCOLS
 };
 
-export default function Home() {
-  const [dataMode, setDataMode] = useState<"live" | "demo">("live");
-  const [activeTab, setActiveTab] = useState<string>("all");
+export const Home = () => {
+  const [activeTab, setActiveTab] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
-  const [viewMode, setViewMode] = useState<"card" | "list">("card");
-  const [sortBy, setSortBy] = useState<"default" | "apr" | "tvl">("default");
   const [filterBy, setFilterBy] = useState<"all" | "active" | "paused">("all");
+  const [sortBy, setSortBy] = useState("default");
+  const [viewMode, setViewMode] = useState("card");
+  const [liquidityPools, setLiquidityPools] = useState<LiquidityPool[]>([]);
+  const [isLoadingPools, setIsLoadingPools] = useState(false);
+  
+  // Liquidity sorting state
+  const [liquiditySortBy, setLiquiditySortBy] = useState<'apy' | 'pair' | 'tvl'>('apy');
+  const [liquiditySortDir, setLiquiditySortDir] = useState<'asc' | 'desc'>('desc');
 
-  const currentProtocols = PROTOCOL_DATA[activeTab as keyof typeof PROTOCOL_DATA] || [];
+  // Convert liquidity pools to protocol format for display - simplified atom test pattern
+  const convertPoolsToProtocols = (pools: LiquidityPool[]) => {
+    return pools.map((pool) => {
+      const isOsmosis = pool.platform === 'Osmosis';
+      const isAstroport = pool.platform === 'Astroport';
+      const isAstrovault = pool.platform === 'Astrovault';
+      
+      const poolId = isOsmosis ? pool.id.replace('osmosis-', '') : undefined;
+      const links = {
+        app: isOsmosis 
+          ? 'https://app.osmosis.zone' 
+          : isAstroport 
+          ? 'https://app.astroport.fi'
+          : isAstrovault
+          ? 'https://astrovault.io'
+          : pool.url,
+        docs: isOsmosis 
+          ? 'https://docs.osmosis.zone' 
+          : isAstroport 
+          ? 'https://docs.astroport.fi'
+          : isAstrovault
+          ? 'https://docs.astrovault.io'
+          : undefined,
+        pool: isOsmosis && poolId ? `https://app.osmosis.zone/pool/${poolId}` : pool.url,
+      } as const;
+      
+      const dataSource = isOsmosis 
+        ? 'Osmosis SQS + LCD API'
+        : isAstroport 
+        ? 'Astroport API'
+        : isAstrovault
+        ? 'Astrovault API'
+        : 'Live API Data';
+
+      // Parse assets from pair string
+      const assets = pool.pair ? pool.pair.split('/').filter(Boolean) : ['ATOM'];
+
+      return {
+        category: "liquidity" as const,
+        protocol: pool.platform,
+        chain: pool.chain || "unknown",
+        title: pool.description,
+        assets,
+        status: "active" as const,
+        metrics: {
+          "APY": pool.apy,
+          "TVL": pool.tvl,
+          "Pair": pool.pair || 'ATOM',
+          "Chain": pool.chain || 'Unknown',
+        },
+        risks: ["Impermanent Loss Risk", "Smart Contract Risk"],
+        howItWorks: [
+          `Provide liquidity to the ${pool.pair || 'ATOM'} pool on ${pool.platform}`,
+          `Earn trading fees from swaps and liquidity provision`,
+          `${pool.platform} pools offer ${pool.apy || 'variable'} APY`,
+          `Withdraw liquidity at any time (subject to pool conditions)`,
+        ],
+        links,
+        dataSource,
+        lastUpdated: "Just now",
+      };
+    });
+  };
+
+  // Effect to fetch liquidity pools when liquidity tab is active - simplified atom test pattern
+  useEffect(() => {
+    if (activeTab === "liquidity") {
+      setIsLoadingPools(true);
+      const fetchLiquidityData = async () => {
+        try {
+          const [astroPools, osmoPools, avPools] = await Promise.all([
+            AstroportService.fetchPools(),
+            OsmosisService.fetchAtomPools(),
+            AstrovaultService.fetchAtomPools(),
+          ]);
+          
+          // Convert all to LiquidityPool format since services return different types
+          const avFormatted: LiquidityPool[] = await Promise.all(
+            avPools.map(async pool => {
+              // Use service helpers for correct symbol and chain mapping
+              const poolData = pool as any;
+              const symbols = await AstrovaultService.symbolsForPool(pool as any);
+              const pair = symbols.length >= 2 ? symbols.join('/') : symbols[0] ? `${symbols[0]}/ATOM` : 'ATOM';
+
+              const aprRaw = (pool as any).percentageAPRs?.[0];
+              let apy = '—';
+              if (aprRaw != null && !isNaN(aprRaw)) {
+                let v = Number(aprRaw);
+                if (v > 0 && v < 1) v = v * 100; // scale fraction to percentage
+                const s = v.toFixed(2);
+                apy = `${s}%`;
+              }
+
+              // Extract TVL from pool data
+              const tvlRaw = poolData.totalValueLockedUSD || poolData.tvl || poolData.totalLiquidity;
+              let tvlFormatted = '—';
+              if (tvlRaw && typeof tvlRaw === 'number' && tvlRaw > 0) {
+                if (tvlRaw >= 1000000) {
+                  tvlFormatted = `$${(tvlRaw / 1000000).toFixed(1)}M`;
+                } else if (tvlRaw >= 1000) {
+                  tvlFormatted = `$${Math.round(tvlRaw / 1000)}K`;
+                } else {
+                  tvlFormatted = `$${Math.round(tvlRaw)}`;
+                }
+              }
+
+              return {
+                id: `astrovault-${poolData.id || poolData.poolId || Math.random()}`,
+                type: 'liquidity' as const,
+                platform: 'Astrovault',
+                apy,
+                tvl: tvlFormatted,
+                description: `${pair} AMM Pool on Astrovault`,
+                url: poolData.detailsUrl || 'https://astrovault.io',
+                pair,
+                chain: AstrovaultService.chainNameFromId(poolData.contextChainId),
+              };
+            })
+          );
+
+          const normalizedPools: LiquidityPool[] = [
+            ...astroPools.map(pool => ({
+              id: pool.id,
+              type: 'liquidity' as const,
+              platform: pool.platform,
+              apy: pool.apy,
+              tvl: pool.tvl,
+              description: pool.description,
+              url: pool.url,
+              pair: pool.pair,
+              chain: pool.chain,
+            })),
+            ...osmoPools.map(pool => ({
+              id: pool.id,
+              type: 'liquidity' as const,
+              platform: pool.platform,
+              apy: pool.apy,
+              tvl: pool.tvl,
+              description: pool.description,
+              url: pool.url,
+              pair: pool.pair,
+              chain: pool.chain,
+            })),
+            ...avFormatted,
+          ];
+          
+          setLiquidityPools(normalizedPools);
+        } catch (error) {
+          console.error('Failed to fetch liquidity pools:', error);
+        } finally {
+          setIsLoadingPools(false);
+        }
+      };
+      fetchLiquidityData();
+    }
+  }, [activeTab]);
+
+  // Helper function to parse TVL strings to numbers for sorting
+  const parseTvlToNumber = (tvl: string): number => {
+    if (!tvl || tvl === '—') return 0;
+    const cleanTvl = tvl.replace(/[$,]/g, '');
+    const multiplier = cleanTvl.includes('M') ? 1_000_000 : cleanTvl.includes('K') ? 1_000 : 1;
+    const number = parseFloat(cleanTvl.replace(/[MK]/g, ''));
+    return isNaN(number) ? 0 : number * multiplier;
+  };
+
+  // Sort liquidity pools before converting to protocols
+  const sortedLiquidityPools = [...liquidityPools].sort((a, b) => {
+    let comparison = 0;
+    
+    switch (liquiditySortBy) {
+      case 'apy':
+        const apyA = parseFloat(a.apy.replace('%', '').replace('—', '0'));
+        const apyB = parseFloat(b.apy.replace('%', '').replace('—', '0'));
+        comparison = apyA - apyB;
+        break;
+      case 'pair':
+        comparison = (a.pair || '').localeCompare(b.pair || '');
+        break;
+      case 'tvl':
+        const tvlA = parseTvlToNumber(a.tvl);
+        const tvlB = parseTvlToNumber(b.tvl);
+        comparison = tvlA - tvlB;
+        break;
+    }
+    
+    return liquiditySortDir === 'desc' ? -comparison : comparison;
+  });
+  
+  const liquidityProtocols = convertPoolsToProtocols(sortedLiquidityPools);
+  
+  // Handle liquidity sorting toggle
+  const handleLiquiditySort = (sortKey: 'apy' | 'pair' | 'tvl') => {
+    if (liquiditySortBy === sortKey) {
+      setLiquiditySortDir(liquiditySortDir === 'desc' ? 'asc' : 'desc');
+    } else {
+      setLiquiditySortBy(sortKey);
+      setLiquiditySortDir('desc');
+    }
+  };
+
+  const currentProtocols = activeTab === "liquidity" 
+    ? liquidityProtocols
+    : PROTOCOL_DATA[activeTab as keyof typeof PROTOCOL_DATA] || [];
   
   // Apply search filter
   let filteredProtocols = currentProtocols.filter(protocol =>
@@ -340,7 +563,11 @@ export default function Home() {
 
   // Apply status filter
   if (filterBy !== "all") {
-    filteredProtocols = filteredProtocols.filter(protocol => protocol.status === filterBy);
+    filteredProtocols = filteredProtocols.filter(protocol => {
+      // Convert status to lower case for comparison
+      const protocolStatus = protocol.status?.toLowerCase();
+      return filterBy === protocolStatus;
+    });
   }
 
   // Apply sorting
@@ -348,8 +575,8 @@ export default function Home() {
     filteredProtocols.sort((a, b) => {
       // Extract APR/APY values from metrics
       const getAPR = (protocol: any) => {
-        const apr = protocol.metrics["APR"] || protocol.metrics["Supply APY"] || "0%";
-        return parseFloat(apr.replace('%', ''));
+        const apr = protocol.metrics["APR"] || protocol.metrics["Fee APR"] || protocol.metrics["Supply APY"] || "0%";
+        return parseFloat(String(apr).replace('%', ''));
       };
       return getAPR(b) - getAPR(a); // Descending order
     });
@@ -387,16 +614,19 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-surface/30">
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-8">
           <div className="max-w-3xl mx-auto text-center space-y-4">
-            <Badge variant="outline" className="mb-2">
-              <div className="w-2 h-2 bg-success rounded-full mr-2 animate-pulse" />
-              All systems operational • {dataMode} data
-            </Badge>
-            
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-              ATOM DeFi
-              <span className="text-primary block">Ecosystem</span>
+            <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
+              <span className="text-white">USE</span>
+              <span className={cn(
+                "ml-1",
+                activeTab === "all" && "text-primary",
+                activeTab === "staking" && "text-staking",
+                activeTab === "liquid-staking" && "text-liquid-staking",
+                activeTab === "liquidity" && "text-liquidity",
+                activeTab === "lending" && "text-lending",
+                activeTab === "perps" && "text-perps"
+              )}>ATOM</span>
             </h1>
             
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -410,7 +640,7 @@ export default function Home() {
       {/* Navigation Tabs */}
       <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
 
-      <div className="container mx-auto px-4 py-12 space-y-12">
+      <div className="max-w-6xl mx-auto px-4 py-12 space-y-12">
         {/* Featured Protocols - Only show on All tab */}
         {activeTab === "all" && (
           <section className="mb-8">
@@ -425,7 +655,7 @@ export default function Home() {
                     <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 text-xs">
                       Featured
                     </Badge>
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="outline" className="text-xs text-purple-400 bg-purple-500/10 border-purple-500/30">
                       {protocol.protocol}
                     </Badge>
                   </div>
@@ -446,28 +676,17 @@ export default function Home() {
 
         {/* Tab Content Header */}
         <section>
-          <div className="border-b border-border bg-surface/30 -mx-4 px-4 py-8 mb-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-3xl font-bold flex items-center gap-2">
-                  <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", categoryInfo.bg)}>
-                    <div className={cn("w-4 h-4 rounded-full", categoryInfo.color.replace("text-", "bg-"))} />
-                  </div>
-                  {categoryInfo.title}
-                </h1>
-                <p className="text-muted-foreground mt-2">
-                  {categoryInfo.description}
-                </p>
-              </div>
-              
-              <div className="flex items-center gap-4">
-                <Badge variant="outline" className={cn(categoryInfo.bg, categoryInfo.color, categoryInfo.border)}>
-                  {filteredProtocols.length} protocols
-                </Badge>
-                <Badge variant="outline">
-                  {categoryInfo.stats.apy || (categoryInfo.stats as any).funding}
-                </Badge>
-              </div>
+          <div className="border-b border-border bg-surface/30 -mx-4 px-4 py-6 mb-8">
+            <div>
+              <h1 className="text-2xl font-bold flex items-center gap-2">
+                <div className={cn("w-6 h-6 rounded-lg flex items-center justify-center", categoryInfo.bg)}>
+                  <div className={cn("w-3 h-3 rounded-full", categoryInfo.color.replace("text-", "bg-"))} />
+                </div>
+                {categoryInfo.title}
+              </h1>
+              <p className="text-muted-foreground mt-1 text-sm">
+                {categoryInfo.description}
+              </p>
             </div>
           </div>
 
@@ -503,26 +722,72 @@ export default function Home() {
               </DropdownMenuContent>
             </DropdownMenu>
             
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="secondary" className="gap-2 bg-surface border-border">
-                  <SortDesc className="h-4 w-4" />
-                  Sort: {sortBy === "default" ? "Default" : sortBy === "apr" ? "APR" : "TVL"}
-                  <ChevronDown className="h-4 w-4" />
+            {activeTab === "liquidity" ? (
+              // Liquidity-specific sorting buttons with arrows
+              <div className="flex items-center gap-2 bg-surface border border-border rounded-lg p-1">
+                <Button
+                  variant={liquiditySortBy === 'apy' ? 'default' : 'ghost'}
+                  size="sm"
+                  className="gap-1 text-xs"
+                  onClick={() => handleLiquiditySort('apy')}
+                >
+                  APY
+                  {liquiditySortBy === 'apy' && (
+                    <span className="text-xs">
+                      {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                    </span>
+                  )}
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-background border-border">
-                <DropdownMenuItem onClick={() => setSortBy("default")}>
-                  Default Order
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("apr")}>
-                  Sort by APR/APY
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("tvl")}>
-                  Sort by TVL
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                <Button
+                  variant={liquiditySortBy === 'pair' ? 'default' : 'ghost'}
+                  size="sm"
+                  className="gap-1 text-xs"
+                  onClick={() => handleLiquiditySort('pair')}
+                >
+                  Pair
+                  {liquiditySortBy === 'pair' && (
+                    <span className="text-xs">
+                      {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                    </span>
+                  )}
+                </Button>
+                <Button
+                  variant={liquiditySortBy === 'tvl' ? 'default' : 'ghost'}
+                  size="sm"
+                  className="gap-1 text-xs"
+                  onClick={() => handleLiquiditySort('tvl')}
+                >
+                  TVL
+                  {liquiditySortBy === 'tvl' && (
+                    <span className="text-xs">
+                      {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                    </span>
+                  )}
+                </Button>
+              </div>
+            ) : (
+              // Regular sorting dropdown for other tabs
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="secondary" className="gap-2 bg-surface border-border">
+                    <SortDesc className="h-4 w-4" />
+                    Sort: {sortBy === "default" ? "Default" : sortBy === "apr" ? "APR" : "TVL"}
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-background border-border">
+                  <DropdownMenuItem onClick={() => setSortBy("default")}>
+                    Default Order
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSortBy("apr")}>
+                    Sort by APR/APY
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSortBy("tvl")}>
+                    Sort by TVL
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
             
             <Button 
               variant={viewMode === "list" ? "default" : "outline"} 
@@ -536,6 +801,9 @@ export default function Home() {
 
 
           {/* Protocol Display - Cards or List */}
+          {activeTab === "liquidity" && isLoadingPools && (
+            <div className="mb-4 text-sm text-muted-foreground">Loading live pools...</div>
+          )}
           {viewMode === "card" ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredProtocols.map((protocol, index) => (
@@ -550,89 +818,52 @@ export default function Home() {
               <Table>
                 <TableHeader>
                   <TableRow>
+                    <TableHead>Assets</TableHead>
+                    <TableHead>APY</TableHead>
                     <TableHead>Protocol</TableHead>
                     <TableHead>Chain</TableHead>
-                    <TableHead>Assets</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Main Metric</TableHead>
                     <TableHead>TVL/Volume</TableHead>
-                    <TableHead>Risks</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredProtocols.map((protocol, index) => (
+                  {filteredProtocols.map((protocol, index) => {
+                    return (
                     <TableRow key={`${protocol.protocol}-${protocol.chain}-${index}`}>
-                      <TableCell className="font-medium">
-                        <div className="flex items-center gap-2">
-                          <Badge 
-                            variant="outline" 
-                            className={cn(categoryInfo.bg, categoryInfo.color, categoryInfo.border)}
-                          >
-                            {protocol.protocol}
-                          </Badge>
+                      <TableCell>
+                        <div className="flex gap-1 flex-wrap">
+                          {protocol.assets.map((asset) => (
+                            <Badge key={asset} variant="outline" className="text-xs font-semibold text-purple-400 bg-purple-500/10 border-purple-500/30">
+                              {asset}
+                            </Badge>
+                          ))}
                         </div>
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {(protocol.metrics as any).APY || Object.entries(protocol.metrics)[0]?.[1] || "—"}
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className="text-purple-400 bg-purple-500/10 border-purple-500/30">
+                          {protocol.protocol}
+                        </Badge>
                       </TableCell>
                       <TableCell>
                         <Badge variant="outline">{protocol.chain}</Badge>
                       </TableCell>
                       <TableCell>
-                        <div className="flex gap-1 flex-wrap">
-                          {protocol.assets.slice(0, 2).map((asset) => (
-                            <span key={asset} className="text-xs bg-muted px-2 py-1 rounded">
-                              {asset}
-                            </span>
-                          ))}
-                          {protocol.assets.length > 2 && (
-                            <span className="text-xs text-muted-foreground">
-                              +{protocol.assets.length - 2}
-                            </span>
-                          )}
-                        </div>
+                        {(protocol.metrics as any).TVL || Object.entries(protocol.metrics).find(([key]) => 
+                          key.toLowerCase().includes('tvl') || key.toLowerCase().includes('volume')
+                        )?.[1] || "—"}
                       </TableCell>
                       <TableCell>
-                        <Badge 
-                          variant="outline"
-                          className={cn(
-                            protocol.status === "active" ? "text-success bg-success/10" :
-                            protocol.status === "paused" ? "text-warning bg-warning/10" :
-                            "text-info bg-info/10"
-                          )}
-                        >
-                          {protocol.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {Object.entries(protocol.metrics)[0]?.[1] || "N/A"}
-                      </TableCell>
-                      <TableCell>
-                        {protocol.metrics["TVL"] || protocol.metrics["Volume 24h"] || protocol.metrics["Open Interest"] || "N/A"}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-1 flex-wrap">
-                          {protocol.risks.slice(0, 2).map((risk) => (
-                            <Badge key={risk} variant="outline" className="text-xs bg-warning/10 text-warning border-warning/20">
-                              {risk}
-                            </Badge>
-                          ))}
-                          {protocol.risks.length > 2 && (
-                            <span className="text-xs text-muted-foreground">
-                              +{protocol.risks.length - 2}
-                            </span>
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          {protocol.links.app && (
-                            <Button size="sm" variant="outline">
-                              Open App
-                            </Button>
-                          )}
-                        </div>
+                        <Button size="sm" variant="outline" asChild>
+                          <a href={protocol.links.app || "#"} target="_blank" rel="noopener noreferrer">
+                            Open App
+                          </a>
+                        </Button>
                       </TableCell>
                     </TableRow>
-                  ))}
+                  )})}
                 </TableBody>
               </Table>
             </Card>
@@ -679,3 +910,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;
