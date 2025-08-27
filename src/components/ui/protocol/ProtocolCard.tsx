@@ -1,9 +1,7 @@
-import { ExternalLink, Info, AlertTriangle } from "lucide-react";
+import { ExternalLink, Info } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
 
 export interface ProtocolCardProps {
   category: "staking" | "liquid-staking" | "liquidity" | "lending" | "perps";
@@ -24,69 +22,24 @@ export interface ProtocolCardProps {
   lastUpdated: string;
 }
 
-const CATEGORY_STYLES = {
-  staking: { color: "text-staking", bg: "bg-staking/10", border: "border-staking/20" },
-  "liquid-staking": { color: "text-liquid-staking", bg: "bg-liquid-staking/10", border: "border-liquid-staking/20" },
-  liquidity: { color: "text-liquidity", bg: "bg-liquidity/10", border: "border-liquidity/20" },
-  lending: { color: "text-lending", bg: "bg-lending/10", border: "border-lending/20" },
-  perps: { color: "text-perps", bg: "bg-perps/10", border: "border-perps/20" }
-};
-
-const STATUS_STYLES = {
-  active: { color: "text-success", bg: "bg-success/10" },
-  paused: { color: "text-warning", bg: "bg-warning/10" },
-  new: { color: "text-info", bg: "bg-info/10" }
-};
+// note: header pills removed for a cleaner, informational-only card UI
 
 export const ProtocolCard = ({ 
-  category, 
-  protocol, 
-  chain, 
+  category,
   title, 
-  assets, 
-  status, 
   metrics,
-  risks,
   howItWorks,
   links,
   dataSource,
   lastUpdated
 }: ProtocolCardProps) => {
-  const categoryStyle = CATEGORY_STYLES[category];
-  const statusStyle = STATUS_STYLES[status];
 
   return (
     <Card className="p-6 shadow-card border-border hover:shadow-elevated transition-all duration-200">
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="space-y-2">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Badge 
-              variant="outline" 
-              className={cn(categoryStyle.color, categoryStyle.bg, categoryStyle.border)}
-            >
-              {category.replace("-", " ")}
-            </Badge>
-            <Badge variant="outline" className="text-purple-400 bg-purple-500/10 border-purple-500/30">{protocol}</Badge>
-            <Badge variant="outline">{chain}</Badge>
-            <Badge 
-              variant="outline"
-              className={cn(statusStyle.color, statusStyle.bg)}
-            >
-              {status}
-            </Badge>
-          </div>
-          
           <h3 className="text-lg font-semibold">{title}</h3>
-          
-          <div className="flex items-center gap-1 flex-wrap">
-            {assets.map((asset, index) => (
-              <span key={asset} className="text-sm text-muted-foreground">
-                {asset}
-                {index < assets.length - 1 && <span className="mx-1">•</span>}
-              </span>
-            ))}
-          </div>
         </div>
 
         <div className="flex gap-1">
@@ -134,17 +87,7 @@ export const ProtocolCard = ({
         ))}
       </div>
 
-      {/* Risk Chips */}
-      {risks.length > 0 && (
-        <div className="flex items-center gap-2 mb-4 flex-wrap">
-          <AlertTriangle className="h-4 w-4 text-warning" />
-          {risks.map((risk) => (
-            <Badge key={risk} variant="outline" className="text-xs bg-warning/10 text-warning border-warning/20">
-              {risk}
-            </Badge>
-          ))}
-        </div>
-      )}
+      {/* Risk chips removed for a cleaner, informational-only card UI */}
 
 
       {/* Footer */}

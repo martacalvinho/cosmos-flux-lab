@@ -18,13 +18,12 @@ interface AstroportPool {
   isDeregistered: boolean;
 }
 
-export interface FormattedPool {
+interface FormattedPool {
   id: string;
   type: 'liquidity';
   platform: string;
   apy: string;
   tvl: string;
-  volume24h: string;
   description: string;
   url: string;
   pair: string;
@@ -34,39 +33,11 @@ export interface FormattedPool {
 export class AstroportService {
   private static readonly API_URL = 'https://app.astroport.fi/api/pools';
   
-  private static formatTvl(value?: number): string {
-    if (!value || value <= 0) return '—';
-    if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(1)}M`;
-    if (value >= 1_000) return `$${Math.round(value / 1_000)}K`;
-    return '$<1K';
-  }
-  
-  private static formatVolume(value?: number): string {
-    if (!value || value <= 0) return '—';
-    if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(1)}M`;
-    if (value >= 1_000) return `$${Math.round(value / 1_000)}K`;
-    return '$<1K';
-  }
-  
-  private static tvlToNumber(tvl: string): number {
-    if (!tvl) return 0;
-    const s = tvl.replace(/[$,]/g, '');
-    if (s.includes('<')) return 500; // treat <$1K as 500 for ordering
-    const isM = s.includes('M');
-    const isK = s.includes('K');
-    const num = parseFloat(s.replace(/[MK]/g, ''));
-    if (isNaN(num)) return 0;
-    return num * (isM ? 1_000_000 : isK ? 1_000 : 1);
-  }
-  
   private static formatPercentRaw(value?: number): string {
     if (value == null || isNaN(value)) return '—';
-    let v = Number(value);
-    // Some Astroport endpoints return yield as a fraction (e.g., 0.1537 for 15.37%).
-    // If it looks like a fraction, scale to percent.
-    if (v > 0 && v < 1) v = v * 100;
-    const s = v.toFixed(2);
-    return `${s}%`;
+    const s = Number(value).toFixed(2);
+    const trimmed = s.replace(/\.00$/, '').replace(/(\.\d*[1-9])0$/, '$1');
+    return `${trimmed}%`;
   }
   
   // Map chain IDs from API to display names
@@ -158,8 +129,9 @@ export class AstroportService {
           .filter(p => !p.isDeregistered)
           .map((pool) => {
             const assetNames = pool.assets.map(asset => asset.symbol || asset.denom).join('/');
-            const tvl = AstroportService.formatTvl(pool.totalLiquidityUSD);
-            const volume24h = AstroportService.formatVolume(pool.dayVolumeUSD);
+            const tvl = pool.totalLiquidityUSD > 1000000 
+              ? `$${(pool.totalLiquidityUSD / 1000000).toFixed(1)}M`
+              : `$${Math.round(pool.totalLiquidityUSD / 1000)}K`;
             const apy = pool.yield?.total != null
               ? AstroportService.formatPercentRaw(pool.yield.total)
               : '—';
@@ -169,14 +141,17 @@ export class AstroportService {
               platform: 'Astroport',
               apy,
               tvl,
-              volume24h,
               description: `${assetNames} liquidity pool`,
               url: `https://app.astroport.fi/pools/${pool.poolAddress}`,
               pair: assetNames,
               chain: AstroportService.mapChainIdToName(pool.chainId)
             };
           })
-          .sort((a, b) => AstroportService.tvlToNumber(b.tvl) - AstroportService.tvlToNumber(a.tvl))
+          .sort((a, b) => {
+            const aTvl = parseFloat(a.tvl.replace(/[$MK]/g, '')) * (a.tvl.includes('M') ? 1000000 : 1000);
+            const bTvl = parseFloat(b.tvl.replace(/[$MK]/g, '')) * (b.tvl.includes('M') ? 1000000 : 1000);
+            return bTvl - aTvl;
+          })
           .slice(0, 10);
         return fallbackFormatted as any;
       }
@@ -186,8 +161,9 @@ export class AstroportService {
         const assetNames = pool.assets.map(asset => asset.symbol || asset.denom).join('/');
         
         // Format TVL from the API data
-        const tvl = AstroportService.formatTvl(pool.totalLiquidityUSD);
-        const volume24h = AstroportService.formatVolume(pool.dayVolumeUSD);
+        const tvl = pool.totalLiquidityUSD > 1000000 
+          ? `$${(pool.totalLiquidityUSD / 1000000).toFixed(1)}M`
+          : `$${Math.round(pool.totalLiquidityUSD / 1000)}K`;
         
         // Use actual yield data from API
         const apy = pool.yield?.total != null
@@ -200,7 +176,6 @@ export class AstroportService {
           platform: 'Astroport',
           apy,
           tvl,
-          volume24h,
           description: `${assetNames} liquidity pool`,
           url: `https://app.astroport.fi/pools/${pool.poolAddress}`,
           pair: assetNames,
@@ -210,9 +185,13 @@ export class AstroportService {
       
       console.log('Formatted pools before sorting:', formattedPools.length);
       
-      const sortedPools = formattedPools
-        .sort((a, b) => AstroportService.tvlToNumber(b.tvl) - AstroportService.tvlToNumber(a.tvl))
-        .slice(0, 20); // Show top 20 pools by TVL
+      const sortedPools = formattedPools.sort((a, b) => {
+        // Sort by TVL descending
+        const aTvl = parseFloat(a.tvl.replace(/[$MK]/g, '')) * (a.tvl.includes('M') ? 1000000 : 1000);
+        const bTvl = parseFloat(b.tvl.replace(/[$MK]/g, '')) * (b.tvl.includes('M') ? 1000000 : 1000);
+        return bTvl - aTvl;
+      })
+      .slice(0, 20); // Show top 20 pools by TVL
       
       console.log('Final pools to return:', sortedPools.length);
       console.log('Pool details:', sortedPools.map(p => `${p.description} - ${p.tvl} - ${p.apy}`));

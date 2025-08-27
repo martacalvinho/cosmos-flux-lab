@@ -33,6 +33,7 @@ interface LiquidityPool {
   platform: string;
   apy: string;
   tvl: string;
+  volume24h: string;
   description: string;
   url: string;
   pair: string;
@@ -346,7 +347,7 @@ export const Home = () => {
   const [isLoadingPools, setIsLoadingPools] = useState(false);
   
   // Liquidity sorting state
-  const [liquiditySortBy, setLiquiditySortBy] = useState<'apy' | 'pair' | 'tvl'>('apy');
+  const [liquiditySortBy, setLiquiditySortBy] = useState<'apy' | 'pair' | 'tvl' | 'volume'>('apy');
   const [liquiditySortDir, setLiquiditySortDir] = useState<'asc' | 'desc'>('desc');
 
   // Convert liquidity pools to protocol format for display - simplified atom test pattern
@@ -396,6 +397,7 @@ export const Home = () => {
         metrics: {
           "APY": pool.apy,
           "TVL": pool.tvl,
+          "Volume (24h)": pool.volume24h,
           "Pair": pool.pair || 'ATOM',
           "Chain": pool.chain || 'Unknown',
         },
@@ -446,12 +448,12 @@ export const Home = () => {
               const tvlRaw = poolData.totalValueLockedUSD || poolData.tvl || poolData.totalLiquidity;
               let tvlFormatted = '—';
               if (tvlRaw && typeof tvlRaw === 'number' && tvlRaw > 0) {
-                if (tvlRaw >= 1000000) {
-                  tvlFormatted = `$${(tvlRaw / 1000000).toFixed(1)}M`;
-                } else if (tvlRaw >= 1000) {
-                  tvlFormatted = `$${Math.round(tvlRaw / 1000)}K`;
+                if (tvlRaw >= 1_000_000) {
+                  tvlFormatted = `$${(tvlRaw / 1_000_000).toFixed(1)}M`;
+                } else if (tvlRaw >= 1_000) {
+                  tvlFormatted = `$${Math.round(tvlRaw / 1_000)}K`;
                 } else {
-                  tvlFormatted = `$${Math.round(tvlRaw)}`;
+                  tvlFormatted = '$<1K';
                 }
               }
 
@@ -461,6 +463,7 @@ export const Home = () => {
                 platform: 'Astrovault',
                 apy,
                 tvl: tvlFormatted,
+                volume24h: '—',
                 description: `${pair} AMM Pool on Astrovault`,
                 url: poolData.detailsUrl || 'https://astrovault.io',
                 pair,
@@ -476,6 +479,7 @@ export const Home = () => {
               platform: pool.platform,
               apy: pool.apy,
               tvl: pool.tvl,
+              volume24h: (pool as any).volume24h || '—',
               description: pool.description,
               url: pool.url,
               pair: pool.pair,
@@ -487,6 +491,7 @@ export const Home = () => {
               platform: pool.platform,
               apy: pool.apy,
               tvl: pool.tvl,
+              volume24h: (pool as any).volume24h || '—',
               description: pool.description,
               url: pool.url,
               pair: pool.pair,
@@ -510,6 +515,7 @@ export const Home = () => {
   const parseTvlToNumber = (tvl: string): number => {
     if (!tvl || tvl === '—') return 0;
     const cleanTvl = tvl.replace(/[$,]/g, '');
+    if (cleanTvl.includes('<')) return 500; // treat <$1K as midpoint for ordering
     const multiplier = cleanTvl.includes('M') ? 1_000_000 : cleanTvl.includes('K') ? 1_000 : 1;
     const number = parseFloat(cleanTvl.replace(/[MK]/g, ''));
     return isNaN(number) ? 0 : number * multiplier;
@@ -533,6 +539,11 @@ export const Home = () => {
         const tvlB = parseTvlToNumber(b.tvl);
         comparison = tvlA - tvlB;
         break;
+      case 'volume':
+        const volA = parseTvlToNumber(a.volume24h || '—');
+        const volB = parseTvlToNumber(b.volume24h || '—');
+        comparison = volA - volB;
+        break;
     }
     
     return liquiditySortDir === 'desc' ? -comparison : comparison;
@@ -541,7 +552,7 @@ export const Home = () => {
   const liquidityProtocols = convertPoolsToProtocols(sortedLiquidityPools);
   
   // Handle liquidity sorting toggle
-  const handleLiquiditySort = (sortKey: 'apy' | 'pair' | 'tvl') => {
+  const handleLiquiditySort = (sortKey: 'apy' | 'pair' | 'tvl' | 'volume') => {
     if (liquiditySortBy === sortKey) {
       setLiquiditySortDir(liquiditySortDir === 'desc' ? 'asc' : 'desc');
     } else {
@@ -617,16 +628,16 @@ export const Home = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
-              <span className="text-white">USE</span>
               <span className={cn(
-                "ml-1",
+                "",
                 activeTab === "all" && "text-primary",
                 activeTab === "staking" && "text-staking",
                 activeTab === "liquid-staking" && "text-liquid-staking",
                 activeTab === "liquidity" && "text-liquidity",
                 activeTab === "lending" && "text-lending",
                 activeTab === "perps" && "text-perps"
-              )}>ATOM</span>
+              )}>USE</span>
+              <span className="ml-1 text-white">ATOM</span>
             </h1>
             
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -677,129 +688,139 @@ export const Home = () => {
         {/* Tab Content Header */}
         <section>
           <div className="border-b border-border bg-surface/30 -mx-4 px-4 py-6 mb-8">
-            <div>
-              <h1 className="text-2xl font-bold flex items-center gap-2">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+              <div className="flex items-center gap-3">
                 <div className={cn("w-6 h-6 rounded-lg flex items-center justify-center", categoryInfo.bg)}>
                   <div className={cn("w-3 h-3 rounded-full", categoryInfo.color.replace("text-", "bg-"))} />
                 </div>
-                {categoryInfo.title}
-              </h1>
-              <p className="text-muted-foreground mt-1 text-sm">
-                {categoryInfo.description}
-              </p>
-            </div>
-          </div>
-
-          {/* Filters and Search */}
-          <div className="flex items-center gap-4 mb-8">
-            <div className="flex-1 max-w-md">
-              <Input
-                placeholder={`Search ${categoryInfo.title.toLowerCase()} protocols...`}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="bg-surface border-border"
-              />
-            </div>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="secondary" className="gap-2 bg-surface border-border">
-                  <Filter className="h-4 w-4" />
-                  Filter: {filterBy === "all" ? "All" : filterBy.charAt(0).toUpperCase() + filterBy.slice(1)}
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-background border-border">
-                <DropdownMenuItem onClick={() => setFilterBy("all")}>
-                  All Protocols
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setFilterBy("active")}>
-                  Active Only
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setFilterBy("paused")}>
-                  Paused Only
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            
-            {activeTab === "liquidity" ? (
-              // Liquidity-specific sorting buttons with arrows
-              <div className="flex items-center gap-2 bg-surface border border-border rounded-lg p-1">
-                <Button
-                  variant={liquiditySortBy === 'apy' ? 'default' : 'ghost'}
-                  size="sm"
-                  className="gap-1 text-xs"
-                  onClick={() => handleLiquiditySort('apy')}
+                <p className="text-muted-foreground text-sm m-0">
+                  {categoryInfo.description}
+                </p>
+              </div>
+              <div className="flex items-center gap-4 w-full md:w-auto">
+                <div className="flex-1 max-w-md">
+                  <Input
+                    placeholder={`Search ${categoryInfo.title.toLowerCase()} protocols...`}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="bg-surface border-border"
+                  />
+                </div>
+                
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="secondary" className="gap-2 bg-surface border-border">
+                      <Filter className="h-4 w-4" />
+                      Filter: {filterBy === "all" ? "All" : filterBy.charAt(0).toUpperCase() + filterBy.slice(1)}
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-background border-border">
+                    <DropdownMenuItem onClick={() => setFilterBy("all")}>
+                      All Protocols
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setFilterBy("active")}>
+                      Active Only
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setFilterBy("paused")}>
+                      Paused Only
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                
+                {activeTab === "liquidity" ? (
+                  // Liquidity-specific sorting buttons with arrows
+                  <div className="flex items-center gap-2 bg-surface border border-border rounded-lg p-1">
+                    <Button
+                      variant={liquiditySortBy === 'apy' ? 'default' : 'ghost'}
+                      size="sm"
+                      className="gap-1 text-xs"
+                      onClick={() => handleLiquiditySort('apy')}
+                    >
+                      APY
+                      {liquiditySortBy === 'apy' && (
+                        <span className="text-xs">
+                          {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                        </span>
+                      )}
+                    </Button>
+                    <Button
+                      variant={liquiditySortBy === 'pair' ? 'default' : 'ghost'}
+                      size="sm"
+                      className="gap-1 text-xs"
+                      onClick={() => handleLiquiditySort('pair')}
+                    >
+                      Pair
+                      {liquiditySortBy === 'pair' && (
+                        <span className="text-xs">
+                          {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                        </span>
+                      )}
+                    </Button>
+                    <Button
+                      variant={liquiditySortBy === 'tvl' ? 'default' : 'ghost'}
+                      size="sm"
+                      className="gap-1 text-xs"
+                      onClick={() => handleLiquiditySort('tvl')}
+                    >
+                      TVL
+                      {liquiditySortBy === 'tvl' && (
+                        <span className="text-xs">
+                          {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                        </span>
+                      )}
+                    </Button>
+                    <Button
+                      variant={liquiditySortBy === 'volume' ? 'default' : 'ghost'}
+                      size="sm"
+                      className="gap-1 text-xs"
+                      onClick={() => handleLiquiditySort('volume')}
+                    >
+                      Volume
+                      {liquiditySortBy === 'volume' && (
+                        <span className="text-xs">
+                          {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                        </span>
+                      )}
+                    </Button>
+                  </div>
+                ) : (
+                  // Regular sorting dropdown for other tabs
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="secondary" className="gap-2 bg-surface border-border">
+                        <SortDesc className="h-4 w-4" />
+                        Sort: {sortBy === "default" ? "Default" : sortBy === "apr" ? "APR" : "TVL"}
+                        <ChevronDown className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="bg-background border-border">
+                      <DropdownMenuItem onClick={() => setSortBy("default")}>
+                        Default Order
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setSortBy("apr")}>
+                        Sort by APR/APY
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setSortBy("tvl")}>
+                        Sort by TVL
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
+                
+                <Button 
+                  variant={viewMode === "list" ? "default" : "outline"} 
+                  className="gap-2"
+                  onClick={() => setViewMode(viewMode === "card" ? "list" : "card")}
                 >
-                  APY
-                  {liquiditySortBy === 'apy' && (
-                    <span className="text-xs">
-                      {liquiditySortDir === 'desc' ? '▼' : '▲'}
-                    </span>
-                  )}
-                </Button>
-                <Button
-                  variant={liquiditySortBy === 'pair' ? 'default' : 'ghost'}
-                  size="sm"
-                  className="gap-1 text-xs"
-                  onClick={() => handleLiquiditySort('pair')}
-                >
-                  Pair
-                  {liquiditySortBy === 'pair' && (
-                    <span className="text-xs">
-                      {liquiditySortDir === 'desc' ? '▼' : '▲'}
-                    </span>
-                  )}
-                </Button>
-                <Button
-                  variant={liquiditySortBy === 'tvl' ? 'default' : 'ghost'}
-                  size="sm"
-                  className="gap-1 text-xs"
-                  onClick={() => handleLiquiditySort('tvl')}
-                >
-                  TVL
-                  {liquiditySortBy === 'tvl' && (
-                    <span className="text-xs">
-                      {liquiditySortDir === 'desc' ? '▼' : '▲'}
-                    </span>
-                  )}
+                  {viewMode === "card" ? <List className="h-4 w-4" /> : <Grid3X3 className="h-4 w-4" />}
+                  {viewMode === "card" ? "View as List" : "View as Cards"}
                 </Button>
               </div>
-            ) : (
-              // Regular sorting dropdown for other tabs
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="secondary" className="gap-2 bg-surface border-border">
-                    <SortDesc className="h-4 w-4" />
-                    Sort: {sortBy === "default" ? "Default" : sortBy === "apr" ? "APR" : "TVL"}
-                    <ChevronDown className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-background border-border">
-                  <DropdownMenuItem onClick={() => setSortBy("default")}>
-                    Default Order
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setSortBy("apr")}>
-                    Sort by APR/APY
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setSortBy("tvl")}>
-                    Sort by TVL
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
-            
-            <Button 
-              variant={viewMode === "list" ? "default" : "outline"} 
-              className="gap-2"
-              onClick={() => setViewMode(viewMode === "card" ? "list" : "card")}
-            >
-              {viewMode === "card" ? <List className="h-4 w-4" /> : <Grid3X3 className="h-4 w-4" />}
-              {viewMode === "card" ? "View as List" : "View as Cards"}
-            </Button>
+            </div>
           </div>
 
-
+          
           {/* Protocol Display - Cards or List */}
           {activeTab === "liquidity" && isLoadingPools && (
             <div className="mb-4 text-sm text-muted-foreground">Loading live pools...</div>
@@ -822,7 +843,8 @@ export const Home = () => {
                     <TableHead>APY</TableHead>
                     <TableHead>Protocol</TableHead>
                     <TableHead>Chain</TableHead>
-                    <TableHead>TVL/Volume</TableHead>
+                    <TableHead>TVL</TableHead>
+                    <TableHead>Volume 24h</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -833,7 +855,11 @@ export const Home = () => {
                       <TableCell>
                         <div className="flex gap-1 flex-wrap">
                           {protocol.assets.map((asset) => (
-                            <Badge key={asset} variant="outline" className="text-xs font-semibold text-purple-400 bg-purple-500/10 border-purple-500/30">
+                            <Badge 
+                              key={asset} 
+                              variant="outline" 
+                              className={cn("text-xs font-semibold", categoryInfo.color, categoryInfo.bg, categoryInfo.border)}
+                            >
                               {asset}
                             </Badge>
                           ))}
@@ -843,7 +869,10 @@ export const Home = () => {
                         {(protocol.metrics as any).APY || Object.entries(protocol.metrics)[0]?.[1] || "—"}
                       </TableCell>
                       <TableCell>
-                        <Badge variant="outline" className="text-purple-400 bg-purple-500/10 border-purple-500/30">
+                        <Badge 
+                          variant="outline" 
+                          className={cn(categoryInfo.color, categoryInfo.bg, categoryInfo.border)}
+                        >
                           {protocol.protocol}
                         </Badge>
                       </TableCell>
@@ -852,7 +881,12 @@ export const Home = () => {
                       </TableCell>
                       <TableCell>
                         {(protocol.metrics as any).TVL || Object.entries(protocol.metrics).find(([key]) => 
-                          key.toLowerCase().includes('tvl') || key.toLowerCase().includes('volume')
+                          key.toLowerCase().includes('tvl')
+                        )?.[1] || "—"}
+                      </TableCell>
+                      <TableCell>
+                        {(protocol.metrics as any)["Volume (24h)"] || Object.entries(protocol.metrics).find(([key]) => 
+                          key.toLowerCase().includes('volume')
                         )?.[1] || "—"}
                       </TableCell>
                       <TableCell>

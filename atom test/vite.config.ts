@@ -9,11 +9,19 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
     proxy: {
-      "/osmo-sqs": {
-        target: "https://sqsprod.osmosis.zone",
+      // Proxy Astrovault API to avoid CORS during local development
+      '/av': {
+        target: 'https://ext.astrovault.io',
         changeOrigin: true,
         secure: true,
-        rewrite: (path) => path.replace(/^\/osmo-sqs\/?/, "/"),
+        rewrite: (path) => path.replace(/^\/av/, ''),
+      },
+      // Proxy Osmosis SQS API
+      '/osmo-sqs': {
+        target: 'https://sqsprod.osmosis.zone',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/osmo-sqs/, ''),
       },
     },
   },

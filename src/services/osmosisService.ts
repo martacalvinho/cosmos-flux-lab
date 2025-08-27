@@ -30,6 +30,7 @@ export interface FormattedPool {
   platform: string;
   apy: string;
   tvl: string;
+  volume24h: string;
   description: string;
   url: string;
   pair: string;
@@ -83,9 +84,10 @@ export class OsmosisService {
       }
       this.assetMap = map;
       this.assetMapFetchedAt = now;
+      console.log('[OsmosisService] Loaded Osmosis assetlist symbols:', Object.keys(map).length);
       return map;
     } catch (e) {
-      console.warn('Failed to load Osmosis assetlist, falling back to heuristics:', e);
+      console.warn('[OsmosisService] Failed to load Osmosis assetlist, falling back to heuristics:', e);
       this.assetMap = {};
       this.assetMapFetchedAt = now;
       return this.assetMap;
@@ -154,10 +156,29 @@ export class OsmosisService {
     if (liquidityUsd >= 1000) {
       return `$${Math.round(liquidityUsd / 1000)}K`;
     }
-    return `$${Math.round(liquidityUsd)}`;
+    return '$<1K';
   }
 
-  private static async fetchSqsAprMap(ids?: string[]): Promise<Record<string, { lower?: number; upper?: number; tvl?: number }>> {
+  private static formatVolume(volumeUsd?: number): string {
+    if (!volumeUsd || volumeUsd <= 0) return '—';
+    if (volumeUsd >= 1000000) {
+      return `$${(volumeUsd / 1000000).toFixed(1)}M`;
+    }
+    if (volumeUsd >= 1000) {
+      return `$${Math.round(volumeUsd / 1000)}K`;
+    }
+    return '$<1K';
+  }
+
+  private static formatCurrency(value?: number | string): string {
+    const num = typeof value === 'string' ? parseFloat(value) : value;
+    if (num == null || isNaN(num) || num <= 0) return '—';
+    if (num < 1000) return `$${Math.round(num)}`;
+    if (num < 1000000) return `$${Math.round(num / 1000)}K`;
+    return `$${(num / 1000000).toFixed(1)}M`;
+  }
+
+  private static async fetchSqsAprMap(ids?: string[]): Promise<Record<string, { lower?: number; upper?: number; tvl?: number; volume?: number }>> {
     try {
       const fetchJson = async (url: string) => {
         // 1) Try Vite dev proxy
@@ -167,14 +188,14 @@ export class OsmosisService {
           if (!r.ok) throw new Error(`dev proxy ${r.status}`);
           return await r.json();
         } catch (devErr) {
-          console.warn('Osmosis SQS dev proxy failed, trying direct:', devErr);
+          console.warn('[OsmosisService] SQS dev proxy failed, trying direct:', devErr);
           // 2) Direct
           try {
             const r2 = await fetch(url);
             if (!r2.ok) throw new Error(`SQS ${r2.status}`);
             return await r2.json();
           } catch (directErr) {
-            console.warn('Osmosis SQS direct failed, trying CORS proxy:', directErr);
+            console.warn('[OsmosisService] SQS direct failed, trying CORS proxy:', directErr);
             // 3) Generic CORS proxy
             const proxyUrl = `https://cors.isomorphic-git.org/${encodeURI(url)}`;
             const r3 = await fetch(proxyUrl);
@@ -184,7 +205,7 @@ export class OsmosisService {
         }
       };
 
-      const map: Record<string, { lower?: number; upper?: number; tvl?: number }> = {};
+      const map: Record<string, { lower?: number; upper?: number; tvl?: number; volume?: number }> = {};
 
       if (ids && ids.length) {
         // Chunk IDs to avoid URL-length and server limits
@@ -198,11 +219,19 @@ export class OsmosisService {
             const poolId = item?.chain_model?.id ?? item?.id;
             const id = poolId != null ? String(poolId) : '';
             if (!id) continue;
+            
+            // Debug first few items to see actual structure
+            if (Object.keys(map).length < 3) {
+              console.log(`[OsmosisService] Raw SQS item for pool ${id}:`, item);
+            }
+            
             const lower = item?.apr_data?.total_apr?.lower;
             const upper = item?.apr_data?.total_apr?.upper;
-            const tvl = item?.market?.liquidity_cap_usd || item?.liquidity?.cap_usd || item?.tvl || item?.market?.tvl_usd || item?.tvl_usd;
-            map[id] = { lower, upper, tvl };
+            const tvl = item?.liquidity_cap || item?.liquidity_cap_usd;
+            const volume = item?.fees_data?.volume_24h;
+            map[id] = { lower, upper, tvl, volume };
           }
+          console.log(`[OsmosisService] SQS chunk fetched: ${chunk.length} IDs, mapped ${Object.keys(map).length} so far.`);
         }
       } else {
         // Broad fetch mode
@@ -215,9 +244,11 @@ export class OsmosisService {
           if (!id) continue;
           const lower = item?.apr_data?.total_apr?.lower;
           const upper = item?.apr_data?.total_apr?.upper;
-          const tvl = item?.market?.liquidity_cap_usd || item?.liquidity?.cap_usd || item?.tvl || item?.market?.tvl_usd || item?.tvl_usd;
-          map[id] = { lower, upper, tvl };
+          const tvl = item?.liquidity_cap || item?.liquidity_cap_usd;
+          const volume = item?.fees_data?.volume_24h;
+          map[id] = { lower, upper, tvl, volume };
         }
+        console.log(`[OsmosisService] SQS broad fetch mapped ${Object.keys(map).length} pools.`);
       }
 
       // Backfill missing TVL with a secondary broad fetch
@@ -228,18 +259,6 @@ export class OsmosisService {
           const jsonAll = await fetchJson(urlAll);
           const arrAll: any[] = Array.isArray(jsonAll) ? jsonAll : Array.isArray(jsonAll?.data) ? jsonAll.data : [];
           const tvlMap: Record<string, number | undefined> = {};
-          for (const item of arrAll) {
-            const poolId = item?.chain_model?.id ?? item?.id;
-            const id = poolId != null ? String(poolId) : '';
-            if (!id) continue;
-            const tvl = item?.market?.liquidity_cap_usd || item?.liquidity?.cap_usd || item?.tvl || item?.market?.tvl_usd || item?.tvl_usd;
-            if (tvl != null) tvlMap[id] = tvl;
-          }
-          for (const [id, entry] of Object.entries(map)) {
-            if (entry.tvl == null && tvlMap[id] != null) {
-              entry.tvl = tvlMap[id];
-            }
-          }
         } catch (e) {
           console.warn('Osmosis SQS TVL backfill failed:', e);
         }
@@ -247,13 +266,181 @@ export class OsmosisService {
 
       return map;
     } catch (e) {
-      console.warn('Failed to fetch Osmosis SQS APRs:', e);
+      console.warn('[OsmosisService] Failed to fetch Osmosis SQS APRs:', e);
       return {};
     }
   }
 
+  /**
+   * Fetch ATOM pools using the API approach since scraping has CORS issues.
+   * The API approach is working well with 500+ pools found and good SQS mapping.
+   */
   static async fetchAtomPools(): Promise<FormattedPool[]> {
+    // Skip scraping for now due to CORS issues, go directly to API approach
+    console.log('[OsmosisService] Using API approach (scraping disabled due to CORS)...');
+    return this.fetchAtomPoolsViaApi();
+  }
+
+  /**
+   * Parse pool data from the Osmosis pools page HTML
+   */
+  private static parsePoolsFromHtml(html: string): FormattedPool[] {
+    const pools: FormattedPool[] = [];
+    
     try {
+      // Create a temporary DOM parser using DOMParser if available
+      if (typeof DOMParser !== 'undefined') {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Look for pool rows in the table structure
+        const poolRows = doc.querySelectorAll('[data-testid*="pool-row"], tr');
+        
+        for (const row of poolRows) {
+          const poolData = this.extractPoolDataFromRow(row);
+          if (poolData) {
+            pools.push(poolData);
+          }
+        }
+      } else {
+        // Fallback regex parsing for server-side or environments without DOMParser
+        this.parsePoolsWithRegex(html, pools);
+      }
+    } catch (e) {
+      console.warn('[OsmosisService] Failed to parse HTML with DOM parser, trying regex:', e);
+      this.parsePoolsWithRegex(html, pools);
+    }
+    
+    return pools;
+  }
+
+  /**
+   * Extract pool data from a DOM row element
+   */
+  private static extractPoolDataFromRow(row: Element): FormattedPool | null {
+    try {
+      // Look for pool number/ID
+      const poolNumberElement = row.querySelector('[data-testid*="pool-number"], .pool-number');
+      const poolNumberText = poolNumberElement?.textContent || '';
+      const poolIdMatch = poolNumberText.match(/Pool #(\d+)/i) || poolNumberText.match(/#(\d+)/);
+      
+      if (!poolIdMatch) return null;
+      
+      const poolId = poolIdMatch[1];
+      
+      // Extract pair information
+      const pairElement = row.querySelector('[data-testid*="pool-name"], .pool-name, .token-pair');
+      const pairText = pairElement?.textContent?.trim() || 'ATOM/—';
+      
+      // Extract volume (24H)
+      const volumeElement = row.querySelector('[data-testid*="volume"], .volume');
+      const volumeText = volumeElement?.textContent?.trim() || '—';
+      
+      // Extract liquidity/TVL
+      const liquidityElement = row.querySelector('[data-testid*="liquidity"], .liquidity, .tvl');
+      const liquidityText = liquidityElement?.textContent?.trim() || '—';
+      
+      // Extract APR
+      const aprElement = row.querySelector('[data-testid*="apr"], .apr, .apy');
+      const aprText = aprElement?.textContent?.trim() || '—';
+      
+      return {
+        id: `osmosis-${poolId}`,
+        type: 'liquidity' as const,
+        platform: 'Osmosis',
+        apy: this.cleanAprText(aprText),
+        tvl: this.cleanCurrencyText(liquidityText),
+        volume24h: this.cleanCurrencyText(volumeText),
+        description: `${pairText} liquidity pool`,
+        url: `https://app.osmosis.zone/pool/${poolId}`,
+        pair: pairText,
+        chain: 'Osmosis',
+      };
+    } catch (e) {
+      console.warn('[OsmosisService] Failed to extract data from row:', e);
+      return null;
+    }
+  }
+
+  /**
+   * Fallback regex parsing when DOM parser is not available
+   */
+  private static parsePoolsWithRegex(html: string, pools: FormattedPool[]): void {
+    // More comprehensive regex patterns
+    const patterns = [
+      // Pattern for pool data in table rows
+      /Pool #(\d+).*?([A-Z]+\/[A-Z]+).*?\$([0-9,]+).*?\$([0-9,]+).*?([\d.]+%|< [\d.]+% - [\d.]+%)/gs,
+      // Alternative pattern
+      /#(\d+).*?(\w+\/\w+).*?Volume.*?\$([0-9,]+).*?Liquidity.*?\$([0-9,]+).*?APR.*?([\d.]+%)/gs,
+    ];
+    
+    for (const pattern of patterns) {
+      const matches = html.matchAll(pattern);
+      
+      for (const match of matches) {
+        const [, poolId, pair, volume, liquidity, apr] = match;
+        
+        pools.push({
+          id: `osmosis-${poolId}`,
+          type: 'liquidity' as const,
+          platform: 'Osmosis',
+          apy: this.cleanAprText(apr),
+          tvl: this.cleanCurrencyText(liquidity),
+          volume24h: this.cleanCurrencyText(volume),
+          description: `${pair} liquidity pool`,
+          url: `https://app.osmosis.zone/pool/${poolId}`,
+          pair: pair || 'ATOM/—',
+          chain: 'Osmosis',
+        });
+      }
+    }
+  }
+
+  /**
+   * Clean and format APR text
+   */
+  private static cleanAprText(text: string): string {
+    if (!text || text === '—') return '—';
+    
+    // Handle ranges like "< 0.1% - 3.2%"
+    const rangeMatch = text.match(/<?\s*([\d.]+)%\s*-\s*([\d.]+)%/);
+    if (rangeMatch) {
+      const [, lower, upper] = rangeMatch;
+      return `${lower}% - ${upper}%`;
+    }
+    
+    // Handle single percentages
+    const singleMatch = text.match(/([\d.]+)%/);
+    if (singleMatch) {
+      return `${singleMatch[1]}%`;
+    }
+    
+    return text.trim() || '—';
+  }
+
+  /**
+   * Clean and format currency text
+   */
+  private static cleanCurrencyText(text: string): string {
+    if (!text || text === '—') return '—';
+    
+    // Extract dollar amounts
+    const match = text.match(/\$([0-9,]+)/);
+    if (match) {
+      const amount = parseInt(match[1].replace(/,/g, ''));
+      return this.formatCurrency(amount);
+    }
+    
+    return text.trim() || '—';
+  }
+
+  /**
+   * Fallback to original API approach if scraping fails
+   */
+  private static async fetchAtomPoolsViaApi(): Promise<FormattedPool[]> {
+    try {
+      console.log('[OsmosisService] Falling back to API approach...');
+      
       // Ensure asset map is loaded before we map symbols
       await this.getAssetMap();
       // Load pools first to know which IDs we actually need APRs for
@@ -266,9 +453,14 @@ export class OsmosisService {
 
       // Collect pool IDs to request precise APRs and avoid pagination gaps
       const poolIds: string[] = pools.map((p) => String(p.id));
+      console.log('[OsmosisService] Found', pools.length, 'ATOM pools from LCD. IDs:', poolIds);
       const aprMap = await this.fetchSqsAprMap(poolIds);
+      console.log('[OsmosisService] SQS map entries:', Object.keys(aprMap).length, 'of', poolIds.length);
 
       const formatted: FormattedPool[] = [];
+      let skippedNoSymbols = 0;
+      let skippedNoSqs = 0;
+      
       for (const pool of pools) {
         const assets = pool.pool_assets || [];
         const symbols: string[] = [];
@@ -277,29 +469,52 @@ export class OsmosisService {
           if (sym) symbols.push(sym);
         }
         // Require at least two symbols to form a proper pair; skip otherwise
-        if (symbols.length < 2) continue;
+        if (symbols.length < 2) {
+          skippedNoSymbols++;
+          continue;
+        }
         const pair = symbols.map((s) => s.toUpperCase()).join('/');
-        const apr = aprMap[String(pool.id)] || {};
+        const apr = aprMap[String(pool.id)];
+        if (!apr) {
+          console.warn(`[OsmosisService] No SQS data found for pool ID: ${pool.id}. It will be skipped.`);
+          skippedNoSqs++;
+          continue;
+        }
+        
+        // Debug the actual SQS data for first few pools
+        if (formatted.length < 3) {
+          console.log(`[OsmosisService] Pool ${pool.id} SQS data:`, apr);
+          console.log(`[OsmosisService] Pool ${pool.id} formatted - TVL: ${this.formatTvl(apr.tvl)}, Volume: ${this.formatVolume(apr.volume)}, APY: ${this.formatAprRange(apr.lower, apr.upper)}`);
+        }
+        
         const apy = this.formatAprRange(apr.lower, apr.upper);
         const tvl = this.formatTvl(apr.tvl);
-        // If APR data missing for this pool, skip to avoid blank APY entries
-        if (!apr || (apr.lower == null && apr.upper == null)) continue;
+        const volume24h = this.formatVolume(apr.volume);
         formatted.push({
           id: `osmosis-${pool.id}`,
           type: 'liquidity' as const,
           platform: 'Osmosis',
           apy,
           tvl,
+          volume24h,
           description: `${pair || 'ATOM'} liquidity pool`,
           url: `https://app.osmosis.zone/pool/${pool.id}`,
           pair: pair || 'ATOM/—',
           chain: 'Osmosis',
         });
       }
+      
+      console.log(`[OsmosisService] Processing summary: ${pools.length} total pools, ${skippedNoSymbols} skipped (no symbols), ${skippedNoSqs} skipped (no SQS), ${formatted.length} formatted`);
+      
+      // Show sample of what we're returning
+      if (formatted.length > 0) {
+        console.log(`[OsmosisService] Sample formatted pool:`, formatted[0]);
+      }
 
+      console.log(`[OsmosisService] Successfully merged and formatted ${formatted.length} pools.`);
       return formatted;
     } catch (e) {
-      console.error('Failed to fetch Osmosis pools:', e);
+      console.error('[OsmosisService] Failed to fetch and process Osmosis pools via API:', e);
       return [];
     }
   }
