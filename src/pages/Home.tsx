@@ -638,7 +638,7 @@ export const Home = () => {
                 activeTab === "lending" && "text-lending",
                 activeTab === "perps" && "text-perps",
                 activeTab === "nfts" && "text-primary",
-                activeTab === "others" && "text-primary"
+                activeTab === "others" && "text-others"
               )}>USE</span>
               <span className="ml-1 text-white">ATOM</span>
             </h1>
@@ -922,12 +922,38 @@ export const Home = () => {
           </section>
         )}
 
-        {/* Others Tab Placeholder */}
+        {/* Others Tab */}
         {activeTab === 'others' && (
           <section>
-            <Card className="p-8 text-center">
-              <h3 className="text-xl font-semibold mb-2">Others</h3>
-              <p className="text-muted-foreground">More ATOM use cases coming soon.</p>
+            <Card className="overflow-hidden">
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2 text-others">Others</h3>
+                <p className="text-muted-foreground mb-4">Additional ATOM ecosystem utilities.</p>
+              </div>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Platform</TableHead>
+                    <TableHead>Description</TableHead>
+                    <TableHead>Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      <Badge variant="outline" className="text-others bg-others/10 border-others/20">dVPN</Badge>
+                    </TableCell>
+                    <TableCell>
+                      Decentralized VPN services powered by the Cosmos ecosystem, providing privacy and security through blockchain technology.
+                    </TableCell>
+                    <TableCell>
+                      <Button size="sm" variant="outline" asChild>
+                        <a href="https://dvpn.me/" target="_blank" rel="noopener noreferrer">Visit</a>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
             </Card>
           </section>
         )}

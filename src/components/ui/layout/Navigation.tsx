@@ -65,8 +65,8 @@ const NAVIGATION_ITEMS = [
     label: "Others",
     value: "others",
     icon: Shield,
-    color: "text-primary",
-    bgColor: "bg-primary/10"
+    color: "text-others",
+    bgColor: "bg-others/10"
   }
 ];
 

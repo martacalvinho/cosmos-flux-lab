@@ -70,6 +70,7 @@ export default {
 				liquidity: 'hsl(var(--liquidity))',
 				lending: 'hsl(var(--lending))',
 				perps: 'hsl(var(--perps))',
+				others: 'hsl(var(--others))',
 				// Semantic Colors
 				success: 'hsl(var(--success))',
 				warning: 'hsl(var(--warning))',
