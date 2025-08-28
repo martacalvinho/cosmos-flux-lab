@@ -1,0 +1,24 @@
+/* Tab alignment utility - aligns content edges with navigation tab boundaries */
+.tab-aligned-content {
+  /* Calculate tab area width: 8 tabs × (content + 48px padding + spacing) */
+  max-width: calc(8 * (120px + 48px) + 7 * 8px); /* approx 1400px */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: calc((100vw - (8 * (120px + 48px) + 7 * 8px)) / 2);
+  padding-right: calc((100vw - (8 * (120px + 48px) + 7 * 8px)) / 2);
+}
+
+@media (max-width: 1400px) {
+  .tab-aligned-content {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Align with container on smaller screens */
+@media (max-width: 768px) {
+  .tab-aligned-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

@@ -8,12 +8,9 @@ import { WalletConnect } from "./WalletConnect";
 export const Header = () => {
   return (
     <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
-        {/* Spacer */}
-        <div></div>
-
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
         {/* Global Search */}
-        <div className="flex-1 max-w-2xl mx-4">
+        <div className="flex-1 max-w-md">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input

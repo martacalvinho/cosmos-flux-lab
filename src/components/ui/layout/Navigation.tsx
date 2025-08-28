@@ -13,8 +13,8 @@ import { Badge } from "@/components/ui/badge";
 
 const NAVIGATION_ITEMS = [
   {
-    label: "All",
-    value: "all",
+    label: "Dashboard",
+    value: "dashboard",
     icon: Home,
     color: "text-primary",
     bgColor: "bg-primary/10"
@@ -53,6 +53,20 @@ const NAVIGATION_ITEMS = [
     icon: TrendingUp,
     color: "text-perps",
     bgColor: "bg-perps/10"
+  },
+  {
+    label: "NFTs",
+    value: "nfts",
+    icon: User,
+    color: "text-primary",
+    bgColor: "bg-primary/10"
+  },
+  {
+    label: "Others",
+    value: "others",
+    icon: Shield,
+    color: "text-primary",
+    bgColor: "bg-primary/10"
   }
 ];
 
@@ -65,29 +79,47 @@ interface NavigationProps {
 export const Navigation = ({ className, activeTab, onTabChange }: NavigationProps) => {
   return (
     <nav className={cn("border-b border-border bg-surface/50", className)}>
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center justify-center">
-          {/* Main Navigation */}
-          <div className="flex items-center space-x-2">
-            {NAVIGATION_ITEMS.map((item) => (
-              <button
-                key={item.value}
-                onClick={() => onTabChange(item.value)}
-                className={cn(
-                  "flex items-center gap-2 px-16 py-3 text-sm font-medium rounded-lg transition-colors",
-                  "hover:bg-hover/50",
-                  activeTab === item.value
-                    ? `${item.bgColor || "bg-primary/10"} ${item.color || "text-primary"}`
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                <item.icon className="h-4 w-4" />
-                {item.label}
-              </button>
-            ))}
-          </div>
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Desktop: equal-width tabs fill container; Mobile: scrollable row */}
+        <div className="hidden md:grid md:grid-cols-8 md:gap-2 w-full py-2" id="navigation-tabs">
+          {NAVIGATION_ITEMS.map((item) => (
+            <button
+              key={item.value}
+              onClick={() => onTabChange(item.value)}
+              className={cn(
+                "w-full flex items-center justify-center gap-2 px-3 py-3 text-sm font-medium rounded-lg transition-colors",
+                "hover:bg-hover/50",
+                activeTab === item.value
+                  ? `${item.bgColor || "bg-primary/10"} ${item.color || "text-primary"}`
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <item.icon className="h-4 w-4" />
+              {item.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="md:hidden flex items-center gap-2 overflow-x-auto no-scrollbar py-2">
+          {NAVIGATION_ITEMS.map((item) => (
+            <button
+              key={`m-${item.value}`}
+              onClick={() => onTabChange(item.value)}
+              className={cn(
+                "flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap",
+                "hover:bg-hover/50",
+                activeTab === item.value
+                  ? `${item.bgColor || "bg-primary/10"} ${item.color || "text-primary"}`
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <item.icon className="h-4 w-4" />
+              {item.label}
+            </button>
+          ))}
         </div>
       </div>
     </nav>
   );
-};
+}
+;

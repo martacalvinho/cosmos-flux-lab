@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { AstroportService } from "@/services/astroportService";
 import { OsmosisService } from "@/services/osmosisService";
 import { AstrovaultService } from "@/services/astrovaultService";
+import NFTCollections from "@/components/nfts/NFTCollections";
 
 interface LiquidityPool {
   id: string;
@@ -338,7 +339,7 @@ const PROTOCOL_DATA = {
 };
 
 export const Home = () => {
-  const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState("dashboard");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterBy, setFilterBy] = useState<"all" | "active" | "paused">("all");
   const [sortBy, setSortBy] = useState("default");
@@ -625,17 +626,19 @@ export const Home = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-surface/30">
-        <div className="container mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
               <span className={cn(
                 "",
-                activeTab === "all" && "text-primary",
+                activeTab === "dashboard" && "text-primary",
                 activeTab === "staking" && "text-staking",
                 activeTab === "liquid-staking" && "text-liquid-staking",
                 activeTab === "liquidity" && "text-liquidity",
                 activeTab === "lending" && "text-lending",
-                activeTab === "perps" && "text-perps"
+                activeTab === "perps" && "text-perps",
+                activeTab === "nfts" && "text-primary",
+                activeTab === "others" && "text-primary"
               )}>USE</span>
               <span className="ml-1 text-white">ATOM</span>
             </h1>
@@ -651,9 +654,9 @@ export const Home = () => {
       {/* Navigation Tabs */}
       <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
 
-      <div className="max-w-6xl mx-auto px-4 py-12 space-y-12">
-        {/* Featured Protocols - Only show on All tab */}
-        {activeTab === "all" && (
+      <div className="max-w-7xl mx-auto px-6 py-8 space-y-10">
+        {/* Featured Protocols - Only show on Dashboard tab */}
+        {activeTab === "dashboard" && (
           <section className="mb-8">
             <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
               <TrendingUp className="h-4 w-4 text-primary" />
@@ -685,9 +688,10 @@ export const Home = () => {
           </section>
         )}
 
-        {/* Tab Content Header */}
+        {/* Protocol Tabs Content - hide on dashboard/nfts/others */}
+        {!['dashboard','nfts','others'].includes(activeTab) && (
         <section>
-          <div className="border-b border-border bg-surface/30 -mx-4 px-4 py-6 mb-8">
+          <div className="border-b border-border bg-surface/30 py-6 mb-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
               <div className="flex items-center gap-3">
                 <div className={cn("w-6 h-6 rounded-lg flex items-center justify-center", categoryInfo.bg)}>
@@ -826,7 +830,7 @@ export const Home = () => {
             <div className="mb-4 text-sm text-muted-foreground">Loading live pools...</div>
           )}
           {viewMode === "card" ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
               {filteredProtocols.map((protocol, index) => (
                 <ProtocolCard
                   key={`${protocol.protocol}-${protocol.chain}-${index}`}
@@ -909,37 +913,57 @@ export const Home = () => {
             </div>
           )}
         </section>
+        )}
 
-        {/* Recent Updates */}
-        <section>
-          <h2 className="text-2xl font-bold mb-6">Recent Updates</h2>
-          <Card className="divide-y divide-border">
-            {RECENT_UPDATES.map((update, index) => (
-              <div key={index} className="p-4 flex items-center justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Badge variant="outline" className="text-xs">{update.protocol}</Badge>
-                    <span className="text-xs text-muted-foreground">{update.time}</span>
+        {/* NFTs Tab */}
+        {activeTab === 'nfts' && (
+          <section>
+            <NFTCollections />
+          </section>
+        )}
+
+        {/* Others Tab Placeholder */}
+        {activeTab === 'others' && (
+          <section>
+            <Card className="p-8 text-center">
+              <h3 className="text-xl font-semibold mb-2">Others</h3>
+              <p className="text-muted-foreground">More ATOM use cases coming soon.</p>
+            </Card>
+          </section>
+        )}
+
+        {/* Recent Updates - show on Dashboard */}
+        {activeTab === 'dashboard' && (
+          <section>
+            <h2 className="text-2xl font-bold mb-6">Recent Updates</h2>
+            <Card className="divide-y divide-border">
+              {RECENT_UPDATES.map((update, index) => (
+                <div key={index} className="p-4 flex items-center justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Badge variant="outline" className="text-xs">{update.protocol}</Badge>
+                      <span className="text-xs text-muted-foreground">{update.time}</span>
+                    </div>
+                    <p className="text-sm">{update.update}</p>
                   </div>
-                  <p className="text-sm">{update.update}</p>
+                  <div className="flex items-center gap-2">
+                    {update.positive ? (
+                      <TrendingUp className="h-4 w-4 text-success" />
+                    ) : (
+                      <TrendingDown className="h-4 w-4 text-error" />
+                    )}
+                    <span className={cn(
+                      "text-sm font-medium",
+                      update.positive ? "text-success" : "text-error"
+                    )}>
+                      {update.change}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  {update.positive ? (
-                    <TrendingUp className="h-4 w-4 text-success" />
-                  ) : (
-                    <TrendingDown className="h-4 w-4 text-error" />
-                  )}
-                  <span className={cn(
-                    "text-sm font-medium",
-                    update.positive ? "text-success" : "text-error"
-                  )}>
-                    {update.change}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </Card>
-        </section>
+              ))}
+            </Card>
+          </section>
+        )}
       </div>
     </div>
   );

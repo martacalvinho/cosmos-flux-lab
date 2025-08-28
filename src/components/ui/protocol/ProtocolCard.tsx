@@ -22,27 +22,90 @@ export interface ProtocolCardProps {
   lastUpdated: string;
 }
 
-// note: header pills removed for a cleaner, informational-only card UI
+// Header shows action label + category-colored asset pills in the title
 
 export const ProtocolCard = ({ 
   category,
   title, 
+  assets,
   metrics,
   howItWorks,
   links,
   dataSource,
   lastUpdated
 }: ProtocolCardProps) => {
+  // Helpers for header styling
+  const pillClasses = (cat: ProtocolCardProps["category"]) => {
+    switch (cat) {
+      case "liquid-staking":
+        return "inline-flex items-center rounded-full border border-liquid-staking/20 bg-liquid-staking/10 text-liquid-staking px-2.5 py-0.5 text-xs font-semibold";
+      case "liquidity":
+        return "inline-flex items-center rounded-full border border-liquidity/20 bg-liquidity/10 text-liquidity px-2.5 py-0.5 text-xs font-semibold";
+      case "lending":
+        return "inline-flex items-center rounded-full border border-lending/20 bg-lending/10 text-lending px-2.5 py-0.5 text-xs font-semibold";
+      case "perps":
+        return "inline-flex items-center rounded-full border border-perps/20 bg-perps/10 text-perps px-2.5 py-0.5 text-xs font-semibold";
+      case "staking":
+      default:
+        return "inline-flex items-center rounded-full border border-yellow-400/30 bg-yellow-500/15 text-yellow-300 px-2.5 py-0.5 text-xs font-semibold";
+    }
+  };
+
+  const actionLabel = (cat: ProtocolCardProps["category"]) => {
+    switch (cat) {
+      case "liquid-staking":
+        return "Liquid Stake";
+      case "liquidity":
+        return "Liquidity";
+      case "lending":
+        return "Lend/Borrow";
+      case "perps":
+        return "Trade";
+      case "staking":
+      default:
+        return "Stake";
+    }
+  };
 
   return (
     <Card className="p-6 shadow-card border-border hover:shadow-elevated transition-all duration-200">
       {/* Header */}
-      <div className="flex items-start justify-between mb-4">
-        <div className="space-y-2">
-          <h3 className="text-lg font-semibold">{title}</h3>
+      <div className="flex flex-wrap items-start gap-3 mb-4">
+        <div className="space-y-2 min-w-0 flex-1">
+          {/* Title rendering with category-colored asset pills */}
+          <h3 className="text-lg font-semibold flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span className="uppercase tracking-wide">{actionLabel(category)}</span>
+            {category === "staking" && Array.isArray(assets) && assets[0] && (
+              <span className={pillClasses("staking")}>{assets[0]}</span>
+            )}
+            {category === "liquid-staking" && Array.isArray(assets) && assets.length > 0 && (
+              <span className="flex items-center gap-2">
+                <span className={pillClasses("liquid-staking")}>{assets[0]}</span>
+                {assets[1] && <span className="text-muted-foreground">→</span>}
+                {assets[1] && <span className={pillClasses("liquid-staking")}>{assets[1]}</span>}
+              </span>
+            )}
+            {category === "liquidity" && Array.isArray(assets) && assets.length > 0 && (
+              <span className="flex items-center gap-2">
+                <span className={pillClasses("liquidity")}>{assets[0]}</span>
+                {assets[1] && <span className="text-muted-foreground">/</span>}
+                {assets[1] && <span className={pillClasses("liquidity")}>{assets[1]}</span>}
+              </span>
+            )}
+            {category === "lending" && Array.isArray(assets) && assets.length > 0 && (
+              <span className="flex items-center gap-2 flex-wrap">
+                {assets.slice(0, 3).map((a) => (
+                  <span key={a} className={pillClasses("lending")}>{a}</span>
+                ))}
+              </span>
+            )}
+            {category === "perps" && Array.isArray(assets) && assets[0] && (
+              <span className={pillClasses("perps")}>{assets[0]}</span>
+            )}
+          </h3>
         </div>
 
-        <div className="flex gap-1">
+        <div className="flex gap-1 flex-none ml-auto">
           {links.app && (
             <Button size="sm" variant="outline" asChild>
               <a href={links.app} target="_blank" rel="noopener noreferrer" aria-label="Open App">
