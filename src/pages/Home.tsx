@@ -27,6 +27,9 @@ import { AstroportService } from "@/services/astroportService";
 import { OsmosisService } from "@/services/osmosisService";
 import { AstrovaultService } from "@/services/astrovaultService";
 import NFTCollections from "@/components/nfts/NFTCollections";
+import { Progress } from "@/components/ui/progress";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CosmosHubService, HubValidator } from "@/services/cosmosHub";
 
 interface LiquidityPool {
   id: string;
@@ -40,6 +43,28 @@ interface LiquidityPool {
   pair: string;
   chain: string;
 }
+
+interface Validator {
+  name: string;
+  commission: number; // percent
+  uptime: number; // 0-100
+  status: "Active" | "Inactive" | "Jailed";
+  votingPower: number; // ATOM
+}
+
+const VALIDATORS: Validator[] = [
+  { name: "Inter Blockchain Services", commission: 5, uptime: 100, status: "Active", votingPower: 11173263 },
+  { name: "BLockPI", commission: 5, uptime: 100, status: "Active", votingPower: 2254567 },
+  { name: "cosmos hub", commission: 5, uptime: 100, status: "Active", votingPower: 3135182 },
+  { name: "Coinage x DAIC", commission: 5, uptime: 100, status: "Active", votingPower: 6342633 },
+  { name: "CrowdControl", commission: 5, uptime: 100, status: "Active", votingPower: 9627277 },
+  { name: "OWALLET", commission: 5, uptime: 100, status: "Active", votingPower: 9717370 },
+  { name: "Oleg", commission: 5, uptime: 100, status: "Active", votingPower: 1411684 },
+  { name: "bLockscape", commission: 5, uptime: 100, status: "Active", votingPower: 1635373 },
+  { name: "EthicaNode", commission: 5, uptime: 100, status: "Active", votingPower: 1659810 },
+];
+
+const formatNumber = (n: number) => new Intl.NumberFormat("en-US").format(n);
 
 const CATEGORIES = [
   {
@@ -350,6 +375,65 @@ export const Home = () => {
   // Liquidity sorting state
   const [liquiditySortBy, setLiquiditySortBy] = useState<'apy' | 'pair' | 'tvl' | 'volume'>('apy');
   const [liquiditySortDir, setLiquiditySortDir] = useState<'asc' | 'desc'>('desc');
+
+  // Staking: live validators from Cosmos Hub
+  const [validators, setValidators] = useState<HubValidator[]>([]);
+  const [loadingValidators, setLoadingValidators] = useState(false);
+  const [logoMap, setLogoMap] = useState<Record<string, string | null>>({});
+  const [loadingLogos, setLoadingLogos] = useState(false);
+
+  useEffect(() => {
+    if (activeTab !== 'staking') return;
+    let cancelled = false;
+    (async () => {
+      setLoadingValidators(true);
+      try {
+        const vals = await CosmosHubService.fetchActiveValidators();
+        if (!cancelled) setValidators(vals);
+      } catch (e) {
+        console.error('Failed to load validators', e);
+        if (!cancelled) setValidators([]);
+      } finally {
+        if (!cancelled) setLoadingValidators(false);
+      }
+    })();
+    return () => { cancelled = true };
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (activeTab !== 'staking') return;
+    if (!validators.length) { setLogoMap({}); return; }
+    let cancelled = false;
+    (async () => {
+      setLoadingLogos(true);
+      try {
+        const logos = await CosmosHubService.fetchValidatorLogos(validators);
+        if (!cancelled) setLogoMap(logos);
+      } catch (e) {
+        console.error('Failed to load validator logos', e);
+        if (!cancelled) setLogoMap({});
+      } finally {
+        if (!cancelled) setLoadingLogos(false);
+      }
+    })();
+    return () => { cancelled = true };
+  }, [activeTab, validators]);
+
+  // Staking: filter and map live validators for display
+  const filteredValidators = validators
+    .filter((v) => (v.description?.moniker || v.operator_address)
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+    )
+    .map((v) => ({
+      id: v.operator_address,
+      name: v.description?.moniker || v.operator_address,
+      logoUrl: logoMap[v.operator_address] ?? null,
+      commission: Number(v.commission?.commission_rates?.rate || '0') * 100,
+      uptime: 99, // TODO: derive from slashing params/signing infos
+      status: "Active" as const, // active set only
+      votingPower: Math.round(Number(v.tokens || '0') / 1_000_000),
+    }));
 
   // Convert liquidity pools to protocol format for display - simplified atom test pattern
   const convertPoolsToProtocols = (pools: LiquidityPool[]) => {
@@ -690,229 +774,305 @@ export const Home = () => {
 
         {/* Protocol Tabs Content - hide on dashboard/nfts/others */}
         {!['dashboard','nfts','others'].includes(activeTab) && (
-        <section>
-          <div className="border-b border-border bg-surface/30 py-6 mb-8">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className={cn("w-6 h-6 rounded-lg flex items-center justify-center", categoryInfo.bg)}>
-                  <div className={cn("w-3 h-3 rounded-full", categoryInfo.color.replace("text-", "bg-"))} />
+          <section>
+            <div className="border-b border-border bg-surface/30 py-6 mb-8">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className={cn("w-6 h-6 rounded-lg flex items-center justify-center", categoryInfo.bg)}>
+                    <div className={cn("w-3 h-3 rounded-full", categoryInfo.color.replace("text-", "bg-"))} />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-semibold">{categoryInfo.title}</h2>
+                    <p className="text-sm text-muted-foreground">{categoryInfo.description}</p>
+                  </div>
                 </div>
-                <p className="text-muted-foreground text-sm m-0">
-                  {categoryInfo.description}
-                </p>
+                <div className="flex items-center gap-4 w-full md:w-auto">
+                  {activeTab === 'staking' ? (
+                    <>
+                      <div className="flex-1 max-w-md">
+                        <Input
+                          placeholder="Search validators..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="bg-surface border-border"
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex-1 max-w-md">
+                        <Input
+                          placeholder={`Search ${categoryInfo.title.toLowerCase()} protocols...`}
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="bg-surface border-border"
+                        />
+                      </div>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="secondary" className="gap-2 bg-surface border-border">
+                            <Filter className="h-4 w-4" />
+                            Filter: {filterBy === "all" ? "All" : filterBy.charAt(0).toUpperCase() + filterBy.slice(1)}
+                            <ChevronDown className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="bg-background border-border">
+                          <DropdownMenuItem onClick={() => setFilterBy("all")}>
+                            All Protocols
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => setFilterBy("active")}>
+                            Active Only
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => setFilterBy("paused")}>
+                            Paused Only
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                      {activeTab === "liquidity" ? (
+                        <div className="flex items-center gap-2 bg-surface border border-border rounded-lg p-1">
+                          <Button
+                            variant={liquiditySortBy === 'apy' ? 'default' : 'ghost'}
+                            size="sm"
+                            className="gap-1 text-xs"
+                            onClick={() => handleLiquiditySort('apy')}
+                          >
+                            APY
+                            {liquiditySortBy === 'apy' && (
+                              <span className="text-xs">
+                                {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                              </span>
+                            )}
+                          </Button>
+                          <Button
+                            variant={liquiditySortBy === 'pair' ? 'default' : 'ghost'}
+                            size="sm"
+                            className="gap-1 text-xs"
+                            onClick={() => handleLiquiditySort('pair')}
+                          >
+                            Pair
+                            {liquiditySortBy === 'pair' && (
+                              <span className="text-xs">
+                                {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                              </span>
+                            )}
+                          </Button>
+                          <Button
+                            variant={liquiditySortBy === 'tvl' ? 'default' : 'ghost'}
+                            size="sm"
+                            className="gap-1 text-xs"
+                            onClick={() => handleLiquiditySort('tvl')}
+                          >
+                            TVL
+                            {liquiditySortBy === 'tvl' && (
+                              <span className="text-xs">
+                                {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                              </span>
+                            )}
+                          </Button>
+                          <Button
+                            variant={liquiditySortBy === 'volume' ? 'default' : 'ghost'}
+                            size="sm"
+                            className="gap-1 text-xs"
+                            onClick={() => handleLiquiditySort('volume')}
+                          >
+                            Volume
+                            {liquiditySortBy === 'volume' && (
+                              <span className="text-xs">
+                                {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                              </span>
+                            )}
+                          </Button>
+                        </div>
+                      ) : (
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="secondary" className="gap-2 bg-surface border-border">
+                              <SortDesc className="h-4 w-4" />
+                              Sort: {sortBy === "default" ? "Default" : sortBy === "apr" ? "APR" : "TVL"}
+                              <ChevronDown className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent className="bg-background border-border">
+                            <DropdownMenuItem onClick={() => setSortBy("default")}>
+                              Default Order
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setSortBy("apr")}>
+                              Sort by APR/APY
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setSortBy("tvl")}>
+                              Sort by TVL
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      )}
+                      <Button 
+                        variant={viewMode === "list" ? "default" : "outline"} 
+                        className="gap-2"
+                        onClick={() => setViewMode(viewMode === "card" ? "list" : "card")}
+                      >
+                        {viewMode === "card" ? <List className="h-4 w-4" /> : <Grid3X3 className="h-4 w-4" />}
+                        {viewMode === "card" ? "View as List" : "View as Cards"}
+                      </Button>
+                    </>
+                  )}
+                </div>
               </div>
-              <div className="flex items-center gap-4 w-full md:w-auto">
-                <div className="flex-1 max-w-md">
-                  <Input
-                    placeholder={`Search ${categoryInfo.title.toLowerCase()} protocols...`}
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="bg-surface border-border"
-                  />
-                </div>
-                
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="secondary" className="gap-2 bg-surface border-border">
-                      <Filter className="h-4 w-4" />
-                      Filter: {filterBy === "all" ? "All" : filterBy.charAt(0).toUpperCase() + filterBy.slice(1)}
-                      <ChevronDown className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-background border-border">
-                    <DropdownMenuItem onClick={() => setFilterBy("all")}>
-                      All Protocols
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setFilterBy("active")}>
-                      Active Only
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setFilterBy("paused")}>
-                      Paused Only
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                
-                {activeTab === "liquidity" ? (
-                  // Liquidity-specific sorting buttons with arrows
-                  <div className="flex items-center gap-2 bg-surface border border-border rounded-lg p-1">
-                    <Button
-                      variant={liquiditySortBy === 'apy' ? 'default' : 'ghost'}
-                      size="sm"
-                      className="gap-1 text-xs"
-                      onClick={() => handleLiquiditySort('apy')}
-                    >
-                      APY
-                      {liquiditySortBy === 'apy' && (
-                        <span className="text-xs">
-                          {liquiditySortDir === 'desc' ? '▼' : '▲'}
-                        </span>
-                      )}
-                    </Button>
-                    <Button
-                      variant={liquiditySortBy === 'pair' ? 'default' : 'ghost'}
-                      size="sm"
-                      className="gap-1 text-xs"
-                      onClick={() => handleLiquiditySort('pair')}
-                    >
-                      Pair
-                      {liquiditySortBy === 'pair' && (
-                        <span className="text-xs">
-                          {liquiditySortDir === 'desc' ? '▼' : '▲'}
-                        </span>
-                      )}
-                    </Button>
-                    <Button
-                      variant={liquiditySortBy === 'tvl' ? 'default' : 'ghost'}
-                      size="sm"
-                      className="gap-1 text-xs"
-                      onClick={() => handleLiquiditySort('tvl')}
-                    >
-                      TVL
-                      {liquiditySortBy === 'tvl' && (
-                        <span className="text-xs">
-                          {liquiditySortDir === 'desc' ? '▼' : '▲'}
-                        </span>
-                      )}
-                    </Button>
-                    <Button
-                      variant={liquiditySortBy === 'volume' ? 'default' : 'ghost'}
-                      size="sm"
-                      className="gap-1 text-xs"
-                      onClick={() => handleLiquiditySort('volume')}
-                    >
-                      Volume
-                      {liquiditySortBy === 'volume' && (
-                        <span className="text-xs">
-                          {liquiditySortDir === 'desc' ? '▼' : '▲'}
-                        </span>
-                      )}
-                    </Button>
+            </div>
+
+            {activeTab === "staking" ? (
+              <Card className="overflow-hidden">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Validator</TableHead>
+                      <TableHead>Commission</TableHead>
+                      <TableHead>Uptime</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Voting Power</TableHead>
+                      <TableHead>Action</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {loadingValidators ? (
+                      <TableRow>
+                        <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">Loading…</TableCell>
+                      </TableRow>
+                    ) : filteredValidators.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">No validators found</TableCell>
+                      </TableRow>
+                    ) : (
+                      filteredValidators.map((v) => (
+                        <TableRow key={v.id}>
+                          <TableCell>
+                            <div className="flex items-center gap-3">
+                              <Avatar className="h-8 w-8">
+                                {v.logoUrl ? (
+                                  <AvatarImage src={v.logoUrl} alt={v.name} />
+                                ) : null}
+                                <AvatarFallback>{v.name.charAt(0)}</AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <div className="font-medium">{v.name}</div>
+                                <div className="text-xs text-muted-foreground">Cosmos Hub</div>
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell>{v.commission.toFixed(2).replace(/\.00$/, '')}%</TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              <Progress value={v.uptime} className="h-2" />
+                              <span className="text-xs text-muted-foreground">{v.uptime}%</span>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className={cn(
+                              'text-green-500 border-green-500/30 bg-green-500/10'
+                            )}>
+                              Active
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{formatNumber(v.votingPower)} ATOM</TableCell>
+                          <TableCell>
+                            <Button size="sm" variant="outline">Delegate</Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
+              </Card>
+            ) : (
+              <>
+                {activeTab === "liquidity" && isLoadingPools && (
+                  <div className="mb-4 text-sm text-muted-foreground">Loading live pools...</div>
+                )}
+                {viewMode === "card" ? (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+                    {filteredProtocols.map((protocol, index) => (
+                      <ProtocolCard
+                        key={`${protocol.protocol}-${protocol.chain}-${index}`}
+                        {...protocol}
+                      />
+                    ))}
                   </div>
                 ) : (
-                  // Regular sorting dropdown for other tabs
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="secondary" className="gap-2 bg-surface border-border">
-                        <SortDesc className="h-4 w-4" />
-                        Sort: {sortBy === "default" ? "Default" : sortBy === "apr" ? "APR" : "TVL"}
-                        <ChevronDown className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="bg-background border-border">
-                      <DropdownMenuItem onClick={() => setSortBy("default")}>
-                        Default Order
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setSortBy("apr")}>
-                        Sort by APR/APY
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setSortBy("tvl")}>
-                        Sort by TVL
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <Card className="overflow-hidden">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Assets</TableHead>
+                          <TableHead>APY</TableHead>
+                          <TableHead>Protocol</TableHead>
+                          <TableHead>Chain</TableHead>
+                          <TableHead>TVL</TableHead>
+                          <TableHead>Volume 24h</TableHead>
+                          <TableHead>Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {filteredProtocols.map((protocol, index) => {
+                          return (
+                            <TableRow key={`${protocol.protocol}-${protocol.chain}-${index}`}>
+                              <TableCell>
+                                <div className="flex gap-1 flex-wrap">
+                                  {protocol.assets.map((asset) => (
+                                    <Badge 
+                                      key={asset} 
+                                      variant="outline" 
+                                      className={cn("text-xs font-semibold", categoryInfo.color, categoryInfo.bg, categoryInfo.border)}
+                                    >
+                                      {asset}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </TableCell>
+                              <TableCell className="font-medium">
+                                {(protocol.metrics as any).APY || Object.entries(protocol.metrics)[0]?.[1] || "—"}
+                              </TableCell>
+                              <TableCell>
+                                <Badge 
+                                  variant="outline" 
+                                  className={cn(categoryInfo.color, categoryInfo.bg, categoryInfo.border)}
+                                >
+                                  {protocol.protocol}
+                                </Badge>
+                              </TableCell>
+                              <TableCell>
+                                <Badge variant="outline">{protocol.chain}</Badge>
+                              </TableCell>
+                              <TableCell>
+                                {(protocol.metrics as any).TVL || Object.entries(protocol.metrics).find(([key]) => 
+                                  key.toLowerCase().includes('tvl')
+                                )?.[1] || "—"}
+                              </TableCell>
+                              <TableCell>
+                                {(protocol.metrics as any)["Volume (24h)"] || Object.entries(protocol.metrics).find(([key]) => 
+                                  key.toLowerCase().includes('volume')
+                                )?.[1] || "—"}
+                              </TableCell>
+                              <TableCell>
+                                <Button size="sm" variant="outline" asChild>
+                                  <a href={protocol.links.app || "#"} target="_blank" rel="noopener noreferrer">
+                                    Open App
+                                  </a>
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          )})}
+                      </TableBody>
+                    </Table>
+                  </Card>
                 )}
-                
-                <Button 
-                  variant={viewMode === "list" ? "default" : "outline"} 
-                  className="gap-2"
-                  onClick={() => setViewMode(viewMode === "card" ? "list" : "card")}
-                >
-                  {viewMode === "card" ? <List className="h-4 w-4" /> : <Grid3X3 className="h-4 w-4" />}
-                  {viewMode === "card" ? "View as List" : "View as Cards"}
-                </Button>
+              </>
+            )}
+
+            {activeTab !== 'staking' && filteredProtocols.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">No protocols found matching your search.</p>
               </div>
-            </div>
-          </div>
-
-          
-          {/* Protocol Display - Cards or List */}
-          {activeTab === "liquidity" && isLoadingPools && (
-            <div className="mb-4 text-sm text-muted-foreground">Loading live pools...</div>
-          )}
-          {viewMode === "card" ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-              {filteredProtocols.map((protocol, index) => (
-                <ProtocolCard
-                  key={`${protocol.protocol}-${protocol.chain}-${index}`}
-                  {...protocol}
-                />
-              ))}
-            </div>
-          ) : (
-            <Card className="overflow-hidden">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Assets</TableHead>
-                    <TableHead>APY</TableHead>
-                    <TableHead>Protocol</TableHead>
-                    <TableHead>Chain</TableHead>
-                    <TableHead>TVL</TableHead>
-                    <TableHead>Volume 24h</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredProtocols.map((protocol, index) => {
-                    return (
-                    <TableRow key={`${protocol.protocol}-${protocol.chain}-${index}`}>
-                      <TableCell>
-                        <div className="flex gap-1 flex-wrap">
-                          {protocol.assets.map((asset) => (
-                            <Badge 
-                              key={asset} 
-                              variant="outline" 
-                              className={cn("text-xs font-semibold", categoryInfo.color, categoryInfo.bg, categoryInfo.border)}
-                            >
-                              {asset}
-                            </Badge>
-                          ))}
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {(protocol.metrics as any).APY || Object.entries(protocol.metrics)[0]?.[1] || "—"}
-                      </TableCell>
-                      <TableCell>
-                        <Badge 
-                          variant="outline" 
-                          className={cn(categoryInfo.color, categoryInfo.bg, categoryInfo.border)}
-                        >
-                          {protocol.protocol}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline">{protocol.chain}</Badge>
-                      </TableCell>
-                      <TableCell>
-                        {(protocol.metrics as any).TVL || Object.entries(protocol.metrics).find(([key]) => 
-                          key.toLowerCase().includes('tvl')
-                        )?.[1] || "—"}
-                      </TableCell>
-                      <TableCell>
-                        {(protocol.metrics as any)["Volume (24h)"] || Object.entries(protocol.metrics).find(([key]) => 
-                          key.toLowerCase().includes('volume')
-                        )?.[1] || "—"}
-                      </TableCell>
-                      <TableCell>
-                        <Button size="sm" variant="outline" asChild>
-                          <a href={protocol.links.app || "#"} target="_blank" rel="noopener noreferrer">
-                            Open App
-                          </a>
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  )})}
-                </TableBody>
-              </Table>
-            </Card>
-          )}
-
-          {filteredProtocols.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No protocols found matching your search.</p>
-            </div>
-          )}
-        </section>
+            )}
+          </section>
         )}
 
         {/* NFTs Tab */}

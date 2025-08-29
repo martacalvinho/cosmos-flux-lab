@@ -1,103 +1,42 @@
 import { useState } from "react";
-import { Filter, SortDesc } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { ProtocolCard } from "@/components/ui/protocol/ProtocolCard";
+import { Card } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Progress } from "@/components/ui/progress";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-// Mock data for staking protocols
-const STAKING_PROTOCOLS = [
-  {
-    category: "staking" as const,
-    protocol: "Cosmos Hub",
-    chain: "Cosmos", 
-    title: "Stake ATOM",
-    assets: ["ATOM"],
-    status: "active" as const,
-    metrics: {
-      "APR": "18.5%",
-      "Commission": "5-10%", 
-      "Validators": "180 active",
-      "Unbonding": "21 days"
-    },
-    risks: ["Unbonding", "Slashing"],
-    howItWorks: [
-      "Choose a validator from active set",
-      "Delegate your ATOM tokens", 
-      "Earn staking rewards daily",
-      "Unbond with 21-day waiting period"
-    ],
-    links: {
-      app: "https://wallet.keplr.app",
-      docs: "https://hub.cosmos.network/main/delegators/delegator-guide-cli.html"
-    },
-    dataSource: "Cosmos Hub API",
-    lastUpdated: "2 mins ago"
-  },
-  {
-    category: "staking" as const,
-    protocol: "Osmosis",
-    chain: "Osmosis",
-    title: "Stake OSMO",
-    assets: ["OSMO"],
-    status: "active" as const,
-    metrics: {
-      "APR": "22.1%",
-      "Commission": "1-8%",
-      "Validators": "150 active", 
-      "Unbonding": "14 days"
-    },
-    risks: ["Unbonding", "Slashing"],
-    howItWorks: [
-      "Connect to Osmosis network",
-      "Select validator with good performance",
-      "Delegate OSMO tokens",
-      "Compound rewards regularly"
-    ],
-    links: {
-      app: "https://app.osmosis.zone",
-      docs: "https://docs.osmosis.zone/overview/validate"
-    },
-    dataSource: "Osmosis API",
-    lastUpdated: "3 mins ago"
-  },
-  {
-    category: "staking" as const,
-    protocol: "Juno Network", 
-    chain: "Juno",
-    title: "Stake JUNO",
-    assets: ["JUNO"],
-    status: "active" as const,
-    metrics: {
-      "APR": "25.8%",
-      "Commission": "5-12%",
-      "Validators": "125 active",
-      "Unbonding": "28 days" 
-    },
-    risks: ["Unbonding", "Slashing"],
-    howItWorks: [
-      "Set up Juno wallet",
-      "Research validator performance and commission",
-      "Delegate JUNO tokens",
-      "Monitor validator performance"
-    ],
-    links: {
-      app: "https://www.mintscan.io/juno",
-      docs: "https://docs.junonetwork.io/validators"
-    },
-    dataSource: "Juno RPC",
-    lastUpdated: "5 mins ago"
-  }
+// Mock data for Cosmos Hub validators (sampled)
+type Validator = {
+  name: string;
+  commission: number; // percent
+  uptime: number; // 0-100
+  status: "Active" | "Inactive" | "Jailed";
+  votingPower: number; // ATOM
+};
+
+const VALIDATORS: Validator[] = [
+  { name: "Inter Blockchain Services", commission: 5, uptime: 100, status: "Active", votingPower: 11173263 },
+  { name: "BLockPI", commission: 5, uptime: 100, status: "Active", votingPower: 2254567 },
+  { name: "cosmos hub", commission: 5, uptime: 100, status: "Active", votingPower: 3135182 },
+  { name: "Coinage x DAIC", commission: 5, uptime: 100, status: "Active", votingPower: 6342633 },
+  { name: "CrowdControl", commission: 5, uptime: 100, status: "Active", votingPower: 9627277 },
+  { name: "OWALLET", commission: 5, uptime: 100, status: "Active", votingPower: 9717370 },
+  { name: "Oleg", commission: 5, uptime: 100, status: "Active", votingPower: 1411684 },
+  { name: "bLockscape", commission: 5, uptime: 100, status: "Active", votingPower: 1635373 },
+  { name: "EthicaNode", commission: 5, uptime: 100, status: "Active", votingPower: 1659810 },
 ];
+
+const formatNumber = (n: number) => new Intl.NumberFormat("en-US").format(n);
+
+// (Protocol list removed in favor of validators table)
 
 export default function Staking() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("apr");
 
-  const filteredProtocols = STAKING_PROTOCOLS.filter(protocol =>
-    protocol.protocol.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    protocol.chain.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    protocol.title.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredValidators = VALIDATORS.filter((v) =>
+    v.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -111,61 +50,84 @@ export default function Staking() {
                 <div className="w-8 h-8 rounded-lg bg-staking/10 flex items-center justify-center">
                   <div className="w-4 h-4 bg-staking rounded-full" />
                 </div>
-                Staking
+                Cosmos Hub Staking
               </h1>
-              <p className="text-muted-foreground mt-2">
-                Secure networks and earn rewards by staking your tokens
-              </p>
+              <p className="text-muted-foreground mt-2">Browse validators and delegate your ATOM</p>
             </div>
             
             <div className="flex items-center gap-4">
-              <Badge variant="outline" className="bg-staking/10 text-staking border-staking/20">
-                {filteredProtocols.length} protocols
-              </Badge>
-              <Badge variant="outline">
-                Avg APR: 22.1%
-              </Badge>
+              <Button variant="staking">Connect Keplr</Button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
-        {/* Filters and Search */}
-        <div className="flex items-center gap-4 mb-8">
+      <div className="container mx-auto px-4 py-8 space-y-6">
+        {/* Search */}
+        <div className="flex items-center gap-4">
           <div className="flex-1 max-w-md">
             <Input
-              placeholder="Search protocols, chains, assets..."
+              placeholder="Search validators…"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="bg-surface border-border"
             />
           </div>
-          
-          <Button variant="outline" className="gap-2">
-            <Filter className="h-4 w-4" />
-            Filters
-          </Button>
-          
-          <Button variant="outline" className="gap-2">
-            <SortDesc className="h-4 w-4" />
-            Sort by APR
-          </Button>
         </div>
 
-        {/* Protocol Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-          {filteredProtocols.map((protocol, index) => (
-            <ProtocolCard
-              key={`${protocol.protocol}-${index}`}
-              {...protocol}
-            />
-          ))}
-        </div>
+        {/* Validators Table */}
+        <Card className="overflow-hidden">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Validator</TableHead>
+                <TableHead className="w-32">Commission</TableHead>
+                <TableHead className="w-64">Uptime</TableHead>
+                <TableHead className="w-28">Status</TableHead>
+                <TableHead className="w-56">Voting Power</TableHead>
+                <TableHead className="w-40 text-right">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredValidators.map((v) => (
+                <TableRow key={v.name}>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <Avatar className="h-8 w-8 bg-muted/50">
+                        <AvatarFallback className="text-xs font-semibold">
+                          {v.name[0]?.toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="font-medium truncate">{v.name}</div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="font-medium">{v.commission}%</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <div className="w-40">
+                        <Progress value={v.uptime} className="h-2 bg-muted/40" />
+                      </div>
+                      <div className="text-xs text-muted-foreground">{v.uptime.toFixed(2)}%</div>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className="bg-success/10 text-success border-success/20">
+                      {v.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="font-medium">{formatNumber(v.votingPower)} ATOM</TableCell>
+                  <TableCell className="text-right">
+                    <Button size="sm" variant="staking">Delegate</Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
 
-        {filteredProtocols.length === 0 && (
+        {filteredValidators.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-muted-foreground">No protocols found matching your search.</p>
+            <p className="text-muted-foreground">No validators match your search.</p>
           </div>
         )}
       </div>
