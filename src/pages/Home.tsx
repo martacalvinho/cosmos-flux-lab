@@ -1,367 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { 
-  Coins, 
-  Layers, 
-  Droplets, 
-  PiggyBank, 
-  TrendingUp,
-  TrendingDown,
-  ArrowRight,
-  Clock,
   Filter,
   SortDesc,
   Grid3X3,
   List,
   ChevronDown
 } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Navigation } from "@/components/ui/layout/Navigation";
-import { ProtocolCard } from "@/components/ui/protocol/ProtocolCard";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { AstroportService } from "@/services/astroportService";
-import { OsmosisService } from "@/services/osmosisService";
-import { AstrovaultService } from "@/services/astrovaultService";
-import NFTCollections from "@/components/nfts/NFTCollections";
-import { Progress } from "@/components/ui/progress";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CosmosHubService, HubValidator } from "@/services/cosmosHub";
+import { CATEGORIES } from "@/pages/tabs/categories";
+import { PROTOCOL_DATA } from "@/pages/tabs/data/protocols";
+import { useLiquidityPools } from "@/pages/tabs/liquidity/useLiquidityPools";
+import OthersTab from "@/pages/tabs/OthersTab";
+import StakingTab from "@/pages/tabs/StakingTab";
+import DashboardTab from "@/pages/tabs/DashboardTab";
+import LiquidStakingTab from "@/pages/tabs/LiquidStakingTab";
+import LiquidityTab from "@/pages/tabs/LiquidityTab";
+import LendingTab from "@/pages/tabs/LendingTab";
+import PerpsTab from "@/pages/tabs/PerpsTab";
+import NFTsTab from "@/pages/tabs/NFTsTab";
 
-interface LiquidityPool {
-  id: string;
-  type: 'liquidity';
-  platform: string;
-  apy: string;
-  tvl: string;
-  volume24h: string;
-  description: string;
-  url: string;
-  pair: string;
-  chain: string;
-}
+// Liquidity handled via useLiquidityPools hook
+// CATEGORIES moved to src/pages/tabs/categories
 
-interface Validator {
-  name: string;
-  commission: number; // percent
-  uptime: number; // 0-100
-  status: "Active" | "Inactive" | "Jailed";
-  votingPower: number; // ATOM
-}
-
-const VALIDATORS: Validator[] = [
-  { name: "Inter Blockchain Services", commission: 5, uptime: 100, status: "Active", votingPower: 11173263 },
-  { name: "BLockPI", commission: 5, uptime: 100, status: "Active", votingPower: 2254567 },
-  { name: "cosmos hub", commission: 5, uptime: 100, status: "Active", votingPower: 3135182 },
-  { name: "Coinage x DAIC", commission: 5, uptime: 100, status: "Active", votingPower: 6342633 },
-  { name: "CrowdControl", commission: 5, uptime: 100, status: "Active", votingPower: 9627277 },
-  { name: "OWALLET", commission: 5, uptime: 100, status: "Active", votingPower: 9717370 },
-  { name: "Oleg", commission: 5, uptime: 100, status: "Active", votingPower: 1411684 },
-  { name: "bLockscape", commission: 5, uptime: 100, status: "Active", votingPower: 1635373 },
-  { name: "EthicaNode", commission: 5, uptime: 100, status: "Active", votingPower: 1659810 },
-];
-
-const formatNumber = (n: number) => new Intl.NumberFormat("en-US").format(n);
-
-const CATEGORIES = [
-  {
-    title: "Staking",
-    description: "Earn rewards by securing the network",
-    icon: Coins,
-    path: "/staking",
-    color: "text-staking",
-    bg: "bg-staking/10",
-    border: "border-staking/20",
-    stats: { protocols: 12, tvl: "$2.1B", apy: "18.5%" }
-  },
-  {
-    title: "Liquid Staking",
-    description: "Stake while keeping liquidity with LSTs",
-    icon: Layers,
-    path: "/liquid-staking", 
-    color: "text-liquid-staking",
-    bg: "bg-liquid-staking/10",
-    border: "border-liquid-staking/20",
-    stats: { protocols: 8, tvl: "$890M", apy: "16.2%" }
-  },
-  {
-    title: "Liquidity",
-    description: "Provide liquidity to DEXs and earn fees",
-    icon: Droplets,
-    path: "/liquidity",
-    color: "text-liquidity", 
-    bg: "bg-liquidity/10",
-    border: "border-liquidity/20",
-    stats: { protocols: 15, tvl: "$1.5B", apy: "24.1%" }
-  },
-  {
-    title: "Lending",
-    description: "Lend assets or use them as collateral",
-    icon: PiggyBank,
-    path: "/lending",
-    color: "text-lending",
-    bg: "bg-lending/10", 
-    border: "border-lending/20",
-    stats: { protocols: 6, tvl: "$450M", apy: "12.8%" }
-  },
-  {
-    title: "Perps",
-    description: "Trade perpetual futures with leverage",
-    icon: TrendingUp,
-    path: "/perps",
-    color: "text-perps",
-    bg: "bg-perps/10",
-    border: "border-perps/20", 
-    stats: { protocols: 4, tvl: "$280M", funding: "-0.02%" }
-  }
-];
-
-const RECENT_UPDATES = [
-  {
-    protocol: "Osmosis",
-    update: "New ATOM/OSMO superfluid staking pool",
-    time: "2 mins ago",
-    change: "+2.4%",
-    positive: true
-  },
-  {
-    protocol: "Stride",
-    update: "stATOM exchange rate updated",
-    time: "5 mins ago",
-    change: "1.087",
-    positive: true
-  },
-  {
-    protocol: "Mars Protocol", 
-    update: "ATOM supply APY increased",
-    time: "12 mins ago",
-    change: "+0.8%",
-    positive: true
-  },
-  {
-    protocol: "dYdX",
-    update: "ATOM-PERP funding rate changed",
-    time: "18 mins ago", 
-    change: "-0.05%",
-    positive: false
-  }
-];
-
-// Protocol data for each category
-const STAKING_PROTOCOLS = [
-  {
-    category: "staking" as const,
-    protocol: "Cosmos Hub",
-    chain: "Cosmos", 
-    title: "Stake ATOM",
-    assets: ["ATOM"],
-    status: "active" as const,
-    metrics: {
-      "APR": "18.5%",
-      "Commission": "5-10%", 
-      "Validators": "180 active",
-      "Unbonding": "21 days"
-    },
-    risks: ["Unbonding", "Slashing"],
-    howItWorks: [
-      "Choose a validator from active set",
-      "Delegate your ATOM tokens", 
-      "Earn staking rewards daily",
-      "Unbond with 21-day waiting period"
-    ],
-    links: {
-      app: "https://wallet.keplr.app",
-      docs: "https://hub.cosmos.network/main/delegators/delegator-guide-cli.html"
-    },
-    dataSource: "Cosmos Hub API",
-    lastUpdated: "2 mins ago"
-  },
-  {
-    category: "staking" as const,
-    protocol: "Osmosis",
-    chain: "Osmosis",
-    title: "Stake OSMO",
-    assets: ["OSMO"],
-    status: "active" as const,
-    metrics: {
-      "APR": "22.1%",
-      "Commission": "1-8%",
-      "Validators": "150 active", 
-      "Unbonding": "14 days"
-    },
-    risks: ["Unbonding", "Slashing"],
-    howItWorks: [
-      "Connect to Osmosis network",
-      "Select validator with good performance",
-      "Delegate OSMO tokens",
-      "Compound rewards regularly"
-    ],
-    links: {
-      app: "https://app.osmosis.zone",
-      docs: "https://docs.osmosis.zone/overview/validate"
-    },
-    dataSource: "Osmosis API",
-    lastUpdated: "3 mins ago"
-  }
-];
-
-const LIQUID_STAKING_PROTOCOLS = [
-  {
-    category: "liquid-staking" as const,
-    protocol: "Stride",
-    chain: "Stride",
-    title: "Liquid Stake ATOM → stATOM",
-    assets: ["ATOM", "stATOM"],
-    status: "active" as const,
-    metrics: {
-      "APR": "16.2%", 
-      "Exchange Rate": "1.087 ATOM",
-      "Protocol Fee": "10%",
-      "TVL": "$450M",
-      "Redemption": "Instant swap"
-    },
-    risks: ["Smart-contract", "Unbonding"],
-    howItWorks: [
-      "Send ATOM to Stride protocol",
-      "Receive liquid stATOM tokens",
-      "Use stATOM in DeFi while earning staking rewards",
-      "Redeem anytime via DEX or wait for unbonding"
-    ],
-    links: {
-      app: "https://app.stride.zone",
-      docs: "https://docs.stride.zone",
-      pool: "https://app.osmosis.zone/pool/803"
-    },
-    dataSource: "Stride API",
-    lastUpdated: "1 min ago"
-  }
-];
-
-const LIQUIDITY_PROTOCOLS = [
-  {
-    category: "liquidity" as const,
-    protocol: "Osmosis",
-    chain: "Osmosis",
-    title: "ATOM/OSMO Pool",
-    assets: ["ATOM", "OSMO"],
-    status: "active" as const,
-    metrics: {
-      "APR": "24.1%",
-      "Pool TVL": "$125M",
-      "Volume 24h": "$8.2M",
-      "Fees": "0.2%"
-    },
-    risks: ["Impermanent Loss", "Smart-contract"],
-    howItWorks: [
-      "Provide equal value ATOM and OSMO",
-      "Receive LP tokens representing your share",
-      "Earn trading fees and liquidity rewards",
-      "Remove liquidity anytime"
-    ],
-    links: {
-      app: "https://app.osmosis.zone",
-      docs: "https://docs.osmosis.zone"
-    },
-    dataSource: "Osmosis API",
-    lastUpdated: "1 min ago"
-  }
-];
-
-const LENDING_PROTOCOLS = [
-  {
-    category: "lending" as const,
-    protocol: "Mars Protocol",
-    chain: "Osmosis",
-    title: "Supply/Borrow ATOM",
-    assets: ["ATOM", "OSMO", "stATOM"],
-    status: "active" as const,
-    metrics: {
-      "Supply APY": "8.2%",
-      "Borrow APY": "12.5%",
-      "Collateral Factor": "75%",
-      "Liquidation Threshold": "80%",
-      "TVL": "$125M",
-      "Oracle": "Pyth Network"
-    },
-    risks: ["Liquidation", "Smart-contract", "Oracle-Peg"],
-    howItWorks: [
-      "Supply assets to earn interest",
-      "Use supplied assets as collateral",
-      "Borrow against your collateral",
-      "Monitor health factor to avoid liquidation"
-    ],
-    links: {
-      app: "https://app.marsprotocol.io",
-      docs: "https://docs.marsprotocol.io"
-    },
-    dataSource: "Mars API",
-    lastUpdated: "2 mins ago"
-  }
-];
-
-const PERPS_PROTOCOLS = [
-  {
-    category: "perps" as const,
-    protocol: "dYdX",
-    chain: "dYdX",
-    title: "ATOM Perpetuals",
-    assets: ["ATOM-PERP"],
-    status: "active" as const,
-    metrics: {
-      "Funding Rate": "-0.02%",
-      "Open Interest": "$45M",
-      "24h Volume": "$125M",
-      "Max Leverage": "20x"
-    },
-    risks: ["Liquidation", "Funding", "Market"],
-    howItWorks: [
-      "Deposit collateral (USDC)",
-      "Open long/short ATOM position",
-      "Pay/receive funding every hour",
-      "Close position or get liquidated"
-    ],
-    links: {
-      app: "https://trade.dydx.exchange",
-      docs: "https://docs.dydx.exchange"
-    },
-    dataSource: "dYdX API",
-    lastUpdated: "30 secs ago"
-  }
-];
-
-// Featured protocols - new or interesting opportunities
-const FEATURED_PROTOCOLS = [
-  {
-    ...LIQUID_STAKING_PROTOCOLS[0], // Stride
-    featured: true,
-    featuredReason: "New liquid staking with instant redemption"
-  },
-  {
-    ...PERPS_PROTOCOLS[0], // dYdX
-    featured: true,
-    featuredReason: "Recently launched ATOM perpetuals"
-  }
-];
-
-const ALL_PROTOCOLS = [
-  ...STAKING_PROTOCOLS,
-  ...LIQUID_STAKING_PROTOCOLS,
-  ...LIQUIDITY_PROTOCOLS,
-  ...LENDING_PROTOCOLS,
-  ...PERPS_PROTOCOLS
-];
-
-const PROTOCOL_DATA = {
-  "all": ALL_PROTOCOLS,
-  "staking": STAKING_PROTOCOLS,
-  "liquid-staking": LIQUID_STAKING_PROTOCOLS,
-  "liquidity": LIQUIDITY_PROTOCOLS,
-  "lending": LENDING_PROTOCOLS,
-  "perps": PERPS_PROTOCOLS
-};
+// Protocol lists moved to src/pages/tabs/data/protocols
 
 export const Home = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -369,282 +34,10 @@ export const Home = () => {
   const [filterBy, setFilterBy] = useState<"all" | "active" | "paused">("all");
   const [sortBy, setSortBy] = useState("default");
   const [viewMode, setViewMode] = useState("card");
-  const [liquidityPools, setLiquidityPools] = useState<LiquidityPool[]>([]);
-  const [isLoadingPools, setIsLoadingPools] = useState(false);
-  
-  // Liquidity sorting state
-  const [liquiditySortBy, setLiquiditySortBy] = useState<'apy' | 'pair' | 'tvl' | 'volume'>('apy');
-  const [liquiditySortDir, setLiquiditySortDir] = useState<'asc' | 'desc'>('desc');
+  const { protocols: liquidityProtocols, isLoading: isLoadingPools, sortBy: liquiditySortBy, sortDir: liquiditySortDir, handleSort: handleLiquiditySort } = useLiquidityPools(activeTab);
 
-  // Staking: live validators from Cosmos Hub
-  const [validators, setValidators] = useState<HubValidator[]>([]);
-  const [loadingValidators, setLoadingValidators] = useState(false);
-  const [logoMap, setLogoMap] = useState<Record<string, string | null>>({});
-  const [loadingLogos, setLoadingLogos] = useState(false);
+  // Staking moved into StakingTab component
 
-  useEffect(() => {
-    if (activeTab !== 'staking') return;
-    let cancelled = false;
-    (async () => {
-      setLoadingValidators(true);
-      try {
-        const vals = await CosmosHubService.fetchActiveValidators();
-        if (!cancelled) setValidators(vals);
-      } catch (e) {
-        console.error('Failed to load validators', e);
-        if (!cancelled) setValidators([]);
-      } finally {
-        if (!cancelled) setLoadingValidators(false);
-      }
-    })();
-    return () => { cancelled = true };
-  }, [activeTab]);
-
-  useEffect(() => {
-    if (activeTab !== 'staking') return;
-    if (!validators.length) { setLogoMap({}); return; }
-    let cancelled = false;
-    (async () => {
-      setLoadingLogos(true);
-      try {
-        const logos = await CosmosHubService.fetchValidatorLogos(validators);
-        if (!cancelled) setLogoMap(logos);
-      } catch (e) {
-        console.error('Failed to load validator logos', e);
-        if (!cancelled) setLogoMap({});
-      } finally {
-        if (!cancelled) setLoadingLogos(false);
-      }
-    })();
-    return () => { cancelled = true };
-  }, [activeTab, validators]);
-
-  // Staking: filter and map live validators for display
-  const filteredValidators = validators
-    .filter((v) => (v.description?.moniker || v.operator_address)
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-    )
-    .map((v) => ({
-      id: v.operator_address,
-      name: v.description?.moniker || v.operator_address,
-      logoUrl: logoMap[v.operator_address] ?? null,
-      commission: Number(v.commission?.commission_rates?.rate || '0') * 100,
-      uptime: 99, // TODO: derive from slashing params/signing infos
-      status: "Active" as const, // active set only
-      votingPower: Math.round(Number(v.tokens || '0') / 1_000_000),
-    }));
-
-  // Convert liquidity pools to protocol format for display - simplified atom test pattern
-  const convertPoolsToProtocols = (pools: LiquidityPool[]) => {
-    return pools.map((pool) => {
-      const isOsmosis = pool.platform === 'Osmosis';
-      const isAstroport = pool.platform === 'Astroport';
-      const isAstrovault = pool.platform === 'Astrovault';
-      
-      const poolId = isOsmosis ? pool.id.replace('osmosis-', '') : undefined;
-      const links = {
-        app: isOsmosis 
-          ? 'https://app.osmosis.zone' 
-          : isAstroport 
-          ? 'https://app.astroport.fi'
-          : isAstrovault
-          ? 'https://astrovault.io'
-          : pool.url,
-        docs: isOsmosis 
-          ? 'https://docs.osmosis.zone' 
-          : isAstroport 
-          ? 'https://docs.astroport.fi'
-          : isAstrovault
-          ? 'https://docs.astrovault.io'
-          : undefined,
-        pool: isOsmosis && poolId ? `https://app.osmosis.zone/pool/${poolId}` : pool.url,
-      } as const;
-      
-      const dataSource = isOsmosis 
-        ? 'Osmosis SQS + LCD API'
-        : isAstroport 
-        ? 'Astroport API'
-        : isAstrovault
-        ? 'Astrovault API'
-        : 'Live API Data';
-
-      // Parse assets from pair string
-      const assets = pool.pair ? pool.pair.split('/').filter(Boolean) : ['ATOM'];
-
-      return {
-        category: "liquidity" as const,
-        protocol: pool.platform,
-        chain: pool.chain || "unknown",
-        title: pool.description,
-        assets,
-        status: "active" as const,
-        metrics: {
-          "APY": pool.apy,
-          "TVL": pool.tvl,
-          "Volume (24h)": pool.volume24h,
-          "Pair": pool.pair || 'ATOM',
-          "Chain": pool.chain || 'Unknown',
-        },
-        risks: ["Impermanent Loss Risk", "Smart Contract Risk"],
-        howItWorks: [
-          `Provide liquidity to the ${pool.pair || 'ATOM'} pool on ${pool.platform}`,
-          `Earn trading fees from swaps and liquidity provision`,
-          `${pool.platform} pools offer ${pool.apy || 'variable'} APY`,
-          `Withdraw liquidity at any time (subject to pool conditions)`,
-        ],
-        links,
-        dataSource,
-        lastUpdated: "Just now",
-      };
-    });
-  };
-
-  // Effect to fetch liquidity pools when liquidity tab is active - simplified atom test pattern
-  useEffect(() => {
-    if (activeTab === "liquidity") {
-      setIsLoadingPools(true);
-      const fetchLiquidityData = async () => {
-        try {
-          const [astroPools, osmoPools, avPools] = await Promise.all([
-            AstroportService.fetchPools(),
-            OsmosisService.fetchAtomPools(),
-            AstrovaultService.fetchAtomPools(),
-          ]);
-          
-          // Convert all to LiquidityPool format since services return different types
-          const avFormatted: LiquidityPool[] = await Promise.all(
-            avPools.map(async pool => {
-              // Use service helpers for correct symbol and chain mapping
-              const poolData = pool as any;
-              const symbols = await AstrovaultService.symbolsForPool(pool as any);
-              const pair = symbols.length >= 2 ? symbols.join('/') : symbols[0] ? `${symbols[0]}/ATOM` : 'ATOM';
-
-              const aprRaw = (pool as any).percentageAPRs?.[0];
-              let apy = '—';
-              if (aprRaw != null && !isNaN(aprRaw)) {
-                let v = Number(aprRaw);
-                if (v > 0 && v < 1) v = v * 100; // scale fraction to percentage
-                const s = v.toFixed(2);
-                apy = `${s}%`;
-              }
-
-              // Extract TVL from pool data
-              const tvlRaw = poolData.totalValueLockedUSD || poolData.tvl || poolData.totalLiquidity;
-              let tvlFormatted = '—';
-              if (tvlRaw && typeof tvlRaw === 'number' && tvlRaw > 0) {
-                if (tvlRaw >= 1_000_000) {
-                  tvlFormatted = `$${(tvlRaw / 1_000_000).toFixed(1)}M`;
-                } else if (tvlRaw >= 1_000) {
-                  tvlFormatted = `$${Math.round(tvlRaw / 1_000)}K`;
-                } else {
-                  tvlFormatted = '$<1K';
-                }
-              }
-
-              return {
-                id: `astrovault-${poolData.id || poolData.poolId || Math.random()}`,
-                type: 'liquidity' as const,
-                platform: 'Astrovault',
-                apy,
-                tvl: tvlFormatted,
-                volume24h: '—',
-                description: `${pair} AMM Pool on Astrovault`,
-                url: poolData.detailsUrl || 'https://astrovault.io',
-                pair,
-                chain: AstrovaultService.chainNameFromId(poolData.contextChainId),
-              };
-            })
-          );
-
-          const normalizedPools: LiquidityPool[] = [
-            ...astroPools.map(pool => ({
-              id: pool.id,
-              type: 'liquidity' as const,
-              platform: pool.platform,
-              apy: pool.apy,
-              tvl: pool.tvl,
-              volume24h: (pool as any).volume24h || '—',
-              description: pool.description,
-              url: pool.url,
-              pair: pool.pair,
-              chain: pool.chain,
-            })),
-            ...osmoPools.map(pool => ({
-              id: pool.id,
-              type: 'liquidity' as const,
-              platform: pool.platform,
-              apy: pool.apy,
-              tvl: pool.tvl,
-              volume24h: (pool as any).volume24h || '—',
-              description: pool.description,
-              url: pool.url,
-              pair: pool.pair,
-              chain: pool.chain,
-            })),
-            ...avFormatted,
-          ];
-          
-          setLiquidityPools(normalizedPools);
-        } catch (error) {
-          console.error('Failed to fetch liquidity pools:', error);
-        } finally {
-          setIsLoadingPools(false);
-        }
-      };
-      fetchLiquidityData();
-    }
-  }, [activeTab]);
-
-  // Helper function to parse TVL strings to numbers for sorting
-  const parseTvlToNumber = (tvl: string): number => {
-    if (!tvl || tvl === '—') return 0;
-    const cleanTvl = tvl.replace(/[$,]/g, '');
-    if (cleanTvl.includes('<')) return 500; // treat <$1K as midpoint for ordering
-    const multiplier = cleanTvl.includes('M') ? 1_000_000 : cleanTvl.includes('K') ? 1_000 : 1;
-    const number = parseFloat(cleanTvl.replace(/[MK]/g, ''));
-    return isNaN(number) ? 0 : number * multiplier;
-  };
-
-  // Sort liquidity pools before converting to protocols
-  const sortedLiquidityPools = [...liquidityPools].sort((a, b) => {
-    let comparison = 0;
-    
-    switch (liquiditySortBy) {
-      case 'apy':
-        const apyA = parseFloat(a.apy.replace('%', '').replace('—', '0'));
-        const apyB = parseFloat(b.apy.replace('%', '').replace('—', '0'));
-        comparison = apyA - apyB;
-        break;
-      case 'pair':
-        comparison = (a.pair || '').localeCompare(b.pair || '');
-        break;
-      case 'tvl':
-        const tvlA = parseTvlToNumber(a.tvl);
-        const tvlB = parseTvlToNumber(b.tvl);
-        comparison = tvlA - tvlB;
-        break;
-      case 'volume':
-        const volA = parseTvlToNumber(a.volume24h || '—');
-        const volB = parseTvlToNumber(b.volume24h || '—');
-        comparison = volA - volB;
-        break;
-    }
-    
-    return liquiditySortDir === 'desc' ? -comparison : comparison;
-  });
-  
-  const liquidityProtocols = convertPoolsToProtocols(sortedLiquidityPools);
-  
-  // Handle liquidity sorting toggle
-  const handleLiquiditySort = (sortKey: 'apy' | 'pair' | 'tvl' | 'volume') => {
-    if (liquiditySortBy === sortKey) {
-      setLiquiditySortDir(liquiditySortDir === 'desc' ? 'asc' : 'desc');
-    } else {
-      setLiquiditySortBy(sortKey);
-      setLiquiditySortDir('desc');
-    }
-  };
 
   const currentProtocols = activeTab === "liquidity" 
     ? liquidityProtocols
@@ -689,17 +82,6 @@ export const Home = () => {
   }
 
   const getCategoryInfo = (tab: string) => {
-    if (tab === "all") {
-      return {
-        title: "All Protocols",
-        description: "Explore all DeFi opportunities across the Cosmos ecosystem",
-        icon: ArrowRight,
-        color: "text-primary",
-        bg: "bg-primary/10",
-        border: "border-primary/20",
-        stats: { protocols: ALL_PROTOCOLS.length, tvl: "$3.2B", apy: "18.5%" }
-      };
-    }
     const category = CATEGORIES.find(cat => cat.title.toLowerCase().replace(" ", "-") === tab);
     return category || CATEGORIES[0];
   };
@@ -739,37 +121,9 @@ export const Home = () => {
       <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
 
       <div className="max-w-7xl mx-auto px-6 py-8 space-y-10">
-        {/* Featured Protocols - Only show on Dashboard tab */}
+        {/* Dashboard content */}
         {activeTab === "dashboard" && (
-          <section className="mb-8">
-            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-primary" />
-              Featured Opportunities
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {FEATURED_PROTOCOLS.map((protocol, index) => (
-                <Card key={`featured-${protocol.protocol}-${index}`} className="p-3 shadow-sm border-primary/20 bg-primary/5 hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 text-xs">
-                      Featured
-                    </Badge>
-                    <Badge variant="outline" className="text-xs text-purple-400 bg-purple-500/10 border-purple-500/30">
-                      {protocol.protocol}
-                    </Badge>
-                  </div>
-                  <h4 className="font-medium text-sm mb-1">{protocol.title}</h4>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">
-                      {Object.entries(protocol.metrics)[0]?.[1] || "N/A"}
-                    </span>
-                    <Button size="sm" variant="outline" className="h-6 px-2 text-xs">
-                      View
-                    </Button>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </section>
+          <DashboardTab />
         )}
 
         {/* Protocol Tabs Content - hide on dashboard/nfts/others */}
@@ -920,152 +274,33 @@ export const Home = () => {
             </div>
 
             {activeTab === "staking" ? (
-              <Card className="overflow-hidden">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Validator</TableHead>
-                      <TableHead>Commission</TableHead>
-                      <TableHead>Uptime</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Voting Power</TableHead>
-                      <TableHead>Action</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {loadingValidators ? (
-                      <TableRow>
-                        <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">Loading…</TableCell>
-                      </TableRow>
-                    ) : filteredValidators.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">No validators found</TableCell>
-                      </TableRow>
-                    ) : (
-                      filteredValidators.map((v) => (
-                        <TableRow key={v.id}>
-                          <TableCell>
-                            <div className="flex items-center gap-3">
-                              <Avatar className="h-8 w-8">
-                                {v.logoUrl ? (
-                                  <AvatarImage src={v.logoUrl} alt={v.name} />
-                                ) : null}
-                                <AvatarFallback>{v.name.charAt(0)}</AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <div className="font-medium">{v.name}</div>
-                                <div className="text-xs text-muted-foreground">Cosmos Hub</div>
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell>{v.commission.toFixed(2).replace(/\.00$/, '')}%</TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <Progress value={v.uptime} className="h-2" />
-                              <span className="text-xs text-muted-foreground">{v.uptime}%</span>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="outline" className={cn(
-                              'text-green-500 border-green-500/30 bg-green-500/10'
-                            )}>
-                              Active
-                            </Badge>
-                          </TableCell>
-                          <TableCell>{formatNumber(v.votingPower)} ATOM</TableCell>
-                          <TableCell>
-                            <Button size="sm" variant="outline">Delegate</Button>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    )}
-                  </TableBody>
-                </Table>
-              </Card>
-            ) : (
-              <>
-                {activeTab === "liquidity" && isLoadingPools && (
-                  <div className="mb-4 text-sm text-muted-foreground">Loading live pools...</div>
-                )}
-                {viewMode === "card" ? (
-                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-                    {filteredProtocols.map((protocol, index) => (
-                      <ProtocolCard
-                        key={`${protocol.protocol}-${protocol.chain}-${index}`}
-                        {...protocol}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <Card className="overflow-hidden">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Assets</TableHead>
-                          <TableHead>APY</TableHead>
-                          <TableHead>Protocol</TableHead>
-                          <TableHead>Chain</TableHead>
-                          <TableHead>TVL</TableHead>
-                          <TableHead>Volume 24h</TableHead>
-                          <TableHead>Actions</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {filteredProtocols.map((protocol, index) => {
-                          return (
-                            <TableRow key={`${protocol.protocol}-${protocol.chain}-${index}`}>
-                              <TableCell>
-                                <div className="flex gap-1 flex-wrap">
-                                  {protocol.assets.map((asset) => (
-                                    <Badge 
-                                      key={asset} 
-                                      variant="outline" 
-                                      className={cn("text-xs font-semibold", categoryInfo.color, categoryInfo.bg, categoryInfo.border)}
-                                    >
-                                      {asset}
-                                    </Badge>
-                                  ))}
-                                </div>
-                              </TableCell>
-                              <TableCell className="font-medium">
-                                {(protocol.metrics as any).APY || Object.entries(protocol.metrics)[0]?.[1] || "—"}
-                              </TableCell>
-                              <TableCell>
-                                <Badge 
-                                  variant="outline" 
-                                  className={cn(categoryInfo.color, categoryInfo.bg, categoryInfo.border)}
-                                >
-                                  {protocol.protocol}
-                                </Badge>
-                              </TableCell>
-                              <TableCell>
-                                <Badge variant="outline">{protocol.chain}</Badge>
-                              </TableCell>
-                              <TableCell>
-                                {(protocol.metrics as any).TVL || Object.entries(protocol.metrics).find(([key]) => 
-                                  key.toLowerCase().includes('tvl')
-                                )?.[1] || "—"}
-                              </TableCell>
-                              <TableCell>
-                                {(protocol.metrics as any)["Volume (24h)"] || Object.entries(protocol.metrics).find(([key]) => 
-                                  key.toLowerCase().includes('volume')
-                                )?.[1] || "—"}
-                              </TableCell>
-                              <TableCell>
-                                <Button size="sm" variant="outline" asChild>
-                                  <a href={protocol.links.app || "#"} target="_blank" rel="noopener noreferrer">
-                                    Open App
-                                  </a>
-                                </Button>
-                              </TableCell>
-                            </TableRow>
-                          )})}
-                      </TableBody>
-                    </Table>
-                  </Card>
-                )}
-              </>
-            )}
+              <StakingTab searchTerm={searchTerm} />
+            ) : activeTab === "liquid-staking" ? (
+              <LiquidStakingTab 
+                protocols={filteredProtocols} 
+                viewMode={viewMode as any} 
+                categoryInfo={{ color: categoryInfo.color, bg: categoryInfo.bg, border: categoryInfo.border }}
+              />
+            ) : activeTab === "lending" ? (
+              <LendingTab
+                protocols={filteredProtocols}
+                viewMode={viewMode as any}
+                categoryInfo={{ color: categoryInfo.color, bg: categoryInfo.bg, border: categoryInfo.border }}
+              />
+            ) : activeTab === "perps" ? (
+              <PerpsTab
+                protocols={filteredProtocols}
+                viewMode={viewMode as any}
+                categoryInfo={{ color: categoryInfo.color, bg: categoryInfo.bg, border: categoryInfo.border }}
+              />
+            ) : activeTab === "liquidity" ? (
+              <LiquidityTab
+                protocols={filteredProtocols}
+                viewMode={viewMode as any}
+                categoryInfo={{ color: categoryInfo.color, bg: categoryInfo.bg, border: categoryInfo.border }}
+                isLoading={isLoadingPools}
+              />
+            ) : null}
 
             {activeTab !== 'staking' && filteredProtocols.length === 0 && (
               <div className="text-center py-12">
@@ -1077,79 +312,13 @@ export const Home = () => {
 
         {/* NFTs Tab */}
         {activeTab === 'nfts' && (
-          <section>
-            <NFTCollections />
-          </section>
+          <NFTsTab />
         )}
 
         {/* Others Tab */}
-        {activeTab === 'others' && (
-          <section>
-            <Card className="overflow-hidden">
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 text-others">Others</h3>
-                <p className="text-muted-foreground mb-4">Additional ATOM ecosystem utilities.</p>
-              </div>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Platform</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell className="font-medium">
-                      <Badge variant="outline" className="text-others bg-others/10 border-others/20">dVPN</Badge>
-                    </TableCell>
-                    <TableCell>
-                      Decentralized VPN services powered by the Cosmos ecosystem, providing privacy and security through blockchain technology.
-                    </TableCell>
-                    <TableCell>
-                      <Button size="sm" variant="outline" asChild>
-                        <a href="https://dvpn.me/" target="_blank" rel="noopener noreferrer">Visit</a>
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </Card>
-          </section>
-        )}
+        {activeTab === 'others' && <OthersTab />}
 
-        {/* Recent Updates - show on Dashboard */}
-        {activeTab === 'dashboard' && (
-          <section>
-            <h2 className="text-2xl font-bold mb-6">Recent Updates</h2>
-            <Card className="divide-y divide-border">
-              {RECENT_UPDATES.map((update, index) => (
-                <div key={index} className="p-4 flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Badge variant="outline" className="text-xs">{update.protocol}</Badge>
-                      <span className="text-xs text-muted-foreground">{update.time}</span>
-                    </div>
-                    <p className="text-sm">{update.update}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {update.positive ? (
-                      <TrendingUp className="h-4 w-4 text-success" />
-                    ) : (
-                      <TrendingDown className="h-4 w-4 text-error" />
-                    )}
-                    <span className={cn(
-                      "text-sm font-medium",
-                      update.positive ? "text-success" : "text-error"
-                    )}>
-                      {update.change}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </Card>
-          </section>
-        )}
+        {/* Recent updates moved into DashboardTab */}
       </div>
     </div>
   );

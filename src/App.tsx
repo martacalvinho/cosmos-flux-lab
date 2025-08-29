@@ -4,13 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Header } from "@/components/ui/layout/Header";
-import { Navigation } from "@/components/ui/layout/Navigation";
 import Home from "./pages/Home";
-import Staking from "./pages/Staking";
-import LiquidStaking from "./pages/LiquidStaking";
-import Liquidity from "./pages/Liquidity";
-import Lending from "./pages/Lending";
-import Perps from "./pages/Perps";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,11 +19,6 @@ const App = () => (
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/staking" element={<Staking />} />
-            <Route path="/liquid-staking" element={<LiquidStaking />} />
-            <Route path="/liquidity" element={<Liquidity />} />
-            <Route path="/lending" element={<Lending />} />
-            <Route path="/perps" element={<Perps />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
