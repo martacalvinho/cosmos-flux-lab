@@ -48,8 +48,8 @@ const NAVIGATION_ITEMS = [
     bgColor: "bg-lending/10"
   },
   {
-    label: "Perps",
-    value: "perps",
+    label: "Leverage",
+    value: "leverage",
     icon: TrendingUp,
     color: "text-perps",
     bgColor: "bg-perps/10"

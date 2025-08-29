@@ -44,11 +44,20 @@ export const Home = () => {
     : PROTOCOL_DATA[activeTab as keyof typeof PROTOCOL_DATA] || [];
   
   // Apply search filter
-  let filteredProtocols = currentProtocols.filter(protocol =>
-    protocol.protocol.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    protocol.chain.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    protocol.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  let filteredProtocols = currentProtocols.filter(protocol => {
+    const p: any = protocol as any;
+    const term = searchTerm.toLowerCase();
+    const protocolName = String(p?.protocol || '').toLowerCase();
+    const chain = String(p?.chain || '').toLowerCase();
+    const title = String(p?.title || '').toLowerCase();
+    const description = String(p?.description || '').toLowerCase();
+    return (
+      protocolName.includes(term) ||
+      chain.includes(term) ||
+      title.includes(term) ||
+      description.includes(term)
+    );
+  });
 
   // Apply status filter
   if (filterBy !== "all") {
@@ -64,7 +73,7 @@ export const Home = () => {
     filteredProtocols.sort((a, b) => {
       // Extract APR/APY values from metrics
       const getAPR = (protocol: any) => {
-        const apr = protocol.metrics["APR"] || protocol.metrics["Fee APR"] || protocol.metrics["Supply APY"] || "0%";
+        const apr = protocol.metrics?.["APR"] || protocol.metrics?.["Fee APR"] || protocol.metrics?.["Supply APY"] || "0%";
         return parseFloat(String(apr).replace('%', ''));
       };
       return getAPR(b) - getAPR(a); // Descending order
@@ -73,8 +82,8 @@ export const Home = () => {
     filteredProtocols.sort((a, b) => {
       // Extract TVL values from metrics
       const getTVL = (protocol: any) => {
-        const tvl = protocol.metrics["TVL"] || protocol.metrics["Pool TVL"] || "$0";
-        const numValue = tvl.replace(/[$M]/g, '');
+        const tvl = protocol.metrics?.["TVL"] || protocol.metrics?.["Pool TVL"] || "$0";
+        const numValue = String(tvl).replace(/[$M]/g, '');
         return parseFloat(numValue) * (tvl.includes('M') ? 1000000 : 1);
       };
       return getTVL(b) - getTVL(a); // Descending order
@@ -102,7 +111,7 @@ export const Home = () => {
                 activeTab === "liquid-staking" && "text-liquid-staking",
                 activeTab === "liquidity" && "text-liquidity",
                 activeTab === "lending" && "text-lending",
-                activeTab === "perps" && "text-perps",
+                activeTab === "leverage" && "text-perps",
                 activeTab === "nfts" && "text-primary",
                 activeTab === "others" && "text-others"
               )}>USE</span>
@@ -287,7 +296,7 @@ export const Home = () => {
                 viewMode={viewMode as any}
                 categoryInfo={{ color: categoryInfo.color, bg: categoryInfo.bg, border: categoryInfo.border }}
               />
-            ) : activeTab === "perps" ? (
+            ) : activeTab === "leverage" ? (
               <PerpsTab
                 protocols={filteredProtocols}
                 viewMode={viewMode as any}

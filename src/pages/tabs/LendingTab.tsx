@@ -1,10 +1,7 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ProtocolCard } from "@/components/ui/protocol/ProtocolCard";
-import { cn } from "@/lib/utils";
+import { ExternalLink } from "lucide-react";
 
 interface LendingTabProps {
   protocols: any[];
@@ -12,82 +9,41 @@ interface LendingTabProps {
   categoryInfo: { color: string; bg: string; border: string };
 }
 
-const LendingTab: React.FC<LendingTabProps> = ({ protocols, viewMode, categoryInfo }) => {
-  if (viewMode === "card") {
-    return (
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-        {protocols.map((protocol, index) => (
-          <ProtocolCard
-            key={`${protocol.protocol}-${protocol.chain}-${index}`}
-            {...protocol}
-          />
-        ))}
-      </div>
-    );
-  }
-
+const LendingTab: React.FC<LendingTabProps> = ({ protocols }) => {
   return (
     <Card className="overflow-hidden">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Assets</TableHead>
+            <TableHead>Platform</TableHead>
             <TableHead>APY</TableHead>
-            <TableHead>Protocol</TableHead>
-            <TableHead>Chain</TableHead>
             <TableHead>TVL</TableHead>
-            <TableHead>Volume 24h</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead>Description</TableHead>
+            <TableHead className="w-24">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {protocols.map((protocol, index) => (
             <TableRow key={`${protocol.protocol}-${protocol.chain}-${index}`}>
-              <TableCell>
-                <div className="flex gap-1 flex-wrap">
-                  {protocol.assets.map((asset: string) => (
-                    <Badge
-                      key={asset}
-                      variant="outline"
-                      className={cn(
-                        "text-xs font-semibold",
-                        categoryInfo.color,
-                        categoryInfo.bg,
-                        categoryInfo.border
-                      )}
-                    >
-                      {asset}
-                    </Badge>
-                  ))}
-                </div>
+              <TableCell className="font-medium">{protocol.protocol}</TableCell>
+              <TableCell className="text-primary font-semibold">
+                {protocol.metrics?.["Supply APY"] || protocol.metrics?.["APR"] || "—"}
               </TableCell>
-              <TableCell className="font-medium">
-                {(protocol.metrics as any).APY || Object.entries(protocol.metrics)[0]?.[1] || "—"}
+              <TableCell className="text-accent font-medium">
+                {protocol.metrics?.["TVL"] || "—"}
+              </TableCell>
+              <TableCell className="text-muted-foreground max-w-xs">
+                {protocol.description || protocol.title || "—"}
               </TableCell>
               <TableCell>
-                <Badge variant="outline" className={cn(categoryInfo.color, categoryInfo.bg, categoryInfo.border)}>
-                  {protocol.protocol}
-                </Badge>
-              </TableCell>
-              <TableCell>
-                <Badge variant="outline">{protocol.chain}</Badge>
-              </TableCell>
-              <TableCell>
-                {(protocol.metrics as any).TVL ||
-                  Object.entries(protocol.metrics).find(([key]) => key.toLowerCase().includes("tvl"))?.[1] ||
-                  "—"}
-              </TableCell>
-              <TableCell>
-                {(protocol.metrics as any)["Volume (24h)"] ||
-                  Object.entries(protocol.metrics).find(([key]) => key.toLowerCase().includes("volume"))?.[1] ||
-                  "—"}
-              </TableCell>
-              <TableCell>
-                <Button size="sm" variant="outline" asChild>
-                  <a href={protocol.links.app || "#"} target="_blank" rel="noopener noreferrer">
-                    Open App
-                  </a>
-                </Button>
+                <a
+                  href={protocol.links?.app || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-colors group"
+                >
+                  <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                </a>
               </TableCell>
             </TableRow>
           ))}
@@ -98,3 +54,5 @@ const LendingTab: React.FC<LendingTabProps> = ({ protocols, viewMode, categoryIn
 };
 
 export default LendingTab;
+
+

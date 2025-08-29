@@ -42,10 +42,10 @@ export const CATEGORIES = [
     stats: { protocols: 6, tvl: "$450M", apy: "12.8%" }
   },
   {
-    title: "Perps",
+    title: "Leverage",
     description: "Trade perpetual futures with leverage",
     icon: TrendingUp,
-    path: "/perps",
+    path: "/leverage",
     color: "text-perps",
     bg: "bg-perps/10",
     border: "border-perps/20",
