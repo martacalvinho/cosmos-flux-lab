@@ -54,11 +54,11 @@ const staticOpportunities: Opportunity[] = [
   {
     id: '3',
     type: 'staking',
-    platform: 'pStake',
-    apy: '17.5%',
-    tvl: '$12M',
-    description: 'Liquid staking derivatives',
-    url: 'https://pstake.finance/',
+    platform: 'Pryzm',
+    apy: '227%',
+    tvl: '$—',
+    description: 'Turbo Liquid Staking with przATOM',
+    url: 'https://app.pryzm.zone/',
   },
 
   // Lending
@@ -747,13 +747,13 @@ const OpportunityTable = () => {
                   </TableCell>
                 </TableRow>
                 <TableRow className="border-border/20 hover:bg-muted/5 transition-colors">
-                  <TableCell className="font-medium text-foreground">pStake</TableCell>
+                  <TableCell className="font-medium text-foreground">Pryzm</TableCell>
                   <TableCell className="text-muted-foreground max-w-xs">
-                    Multi-chain liquid staking platform offering stkATOM for liquid staking derivatives.
+                    Turbo Liquid Staking protocol offering high-yield staking with przATOM tokens on Pryzm network.
                   </TableCell>
                   <TableCell>
                     <a
-                      href="https://pstake.finance/"
+                      href="https://app.pryzm.zone/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-colors group"

@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { ExternalLink } from "lucide-react";
 import { useStride } from "@/hooks/useStride";
 import { useDropMoney } from "@/hooks/useDropMoney";
+import { usePryzm } from "@/hooks/usePryzm";
 
 interface LiquidStakingTabProps {
   protocols: any[];
@@ -14,6 +15,7 @@ interface LiquidStakingTabProps {
 const LiquidStakingTab: React.FC<LiquidStakingTabProps> = ({ protocols }) => {
   const { isLoading: isStrideLoading, isError: isStrideError, tvlUsd: strideTvl, apy: strideApy, apr: strideApr } = useStride();
   const { data: dropMoneyData, isLoading: isDropMoneyLoading, isError: isDropMoneyError } = useDropMoney();
+  const { isLoading: isPryzmLoading, isError: isPryzmError, tvlUsd: pryzmTvl, apy: pryzmApy, apr: pryzmApr } = usePryzm();
 
   const fmtPct = (v?: number | string) => {
     if (v === undefined || v === null || v === "—") return "—";
@@ -47,6 +49,7 @@ const LiquidStakingTab: React.FC<LiquidStakingTabProps> = ({ protocols }) => {
           {protocols.map((protocol, index) => {
             const isStride = protocol.protocol === "Stride";
             const isDropMoney = protocol.protocol === "Drop.money";
+            const isPryzm = protocol.protocol === "Pryzm";
 
             let aprDisplay = protocol.metrics?.["APR"] || "—";
             let apyDisplay = "—";
@@ -63,6 +66,10 @@ const LiquidStakingTab: React.FC<LiquidStakingTabProps> = ({ protocols }) => {
               apyDisplay = isDropMoneyLoading || isDropMoneyError ? "—" : fmtPct(dropMoneyData?.apy);
               tvlDisplay = isDropMoneyLoading || isDropMoneyError ? "—" : fmtUsd(dropMoneyData?.tvlUsd);
               feeDisplay = "10% of rewards";
+            } else if (isPryzm) {
+              aprDisplay = isPryzmLoading || isPryzmError ? "—" : fmtPct(pryzmApr);
+              apyDisplay = isPryzmLoading || isPryzmError ? "—" : fmtPct(pryzmApy);
+              tvlDisplay = isPryzmLoading || isPryzmError ? "—" : fmtUsd(pryzmTvl);
             }
             return (
               <TableRow key={`${protocol.protocol}-${protocol.chain}-${index}`}>

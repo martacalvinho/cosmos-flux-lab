@@ -12,7 +12,9 @@
     "snapshot:stride": "node scripts/snapshotStride.js",
     "snapshot:stride:append": "node scripts/snapshotStride.js --append",
     "snapshot:dropmoney": "node scripts/snapshotDropMoney.js",
-    "snapshot:dropmoney:append": "node scripts/snapshotDropMoney.js --append"
+    "snapshot:dropmoney:append": "node scripts/snapshotDropMoney.js --append",
+    "snapshot:pryzm": "node scripts/snapshotPryzm.js",
+    "snapshot:pryzm:append": "node scripts/snapshotPryzm.js --append"
   },
   "dependencies": {
     "@apollo/client": "^4.0.2",
