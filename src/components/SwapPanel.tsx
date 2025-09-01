@@ -26,7 +26,7 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="max-w-2xl bg-card border-border p-0 overflow-visible" style={{ zIndex: 9999 }}>
+      <DialogContent noTransformCenter overlayClassName="z-0 pointer-events-none" className="z-10 max-w-xl bg-card border-border p-0 overflow-visible shadow-modal sm:rounded-lg">
         <DialogHeader className="p-6 pb-4">
           <DialogTitle className="text-center text-xl font-semibold flex items-center justify-center gap-2">
             <ArrowLeftRight className="w-5 h-5 text-primary" />
@@ -51,20 +51,47 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
 
         {/* Widget Container */}
         <div className="px-6 pb-6">
-          <div 
+          <div
             className="w-full"
-            style={{ 
-              width: '100%', 
-              height: '600px',
+            style={{
+              width: '100%',
+              height: '560px',
               position: 'relative'
             }}
           >
             {isOpen && (
-              <div style={{ width: '100%', height: '100%', position: 'relative', zIndex: 1 }}>
+              <div style={{ width: '100%', height: '100%', position: 'relative' }}>
                 <Widget
                   key={widgetKey}
-                  theme="dark"
-                  brandColor="#8b5cf6"
+                  theme={{
+                    brandColor: '#3366ff',
+                    borderRadius: {
+                      main: 12,
+                      selectionButton: 12,
+                      ghostButton: 12,
+                      modalContainer: 12,
+                      rowItem: 12,
+                    },
+                    primary: {
+                      background: { normal: 'hsl(var(--surface))' },
+                      text: {
+                        normal: 'hsl(var(--foreground))',
+                        lowContrast: 'hsl(var(--muted-foreground))',
+                        ultraLowContrast: 'hsl(var(--muted-foreground))',
+                      },
+                      ghostButtonHover: 'hsl(var(--hover))',
+                    },
+                    secondary: {
+                      background: {
+                        normal: 'hsl(var(--card))',
+                        transparent: 'transparent',
+                        hover: 'hsl(var(--hover))',
+                      },
+                    },
+                    success: { background: 'hsl(var(--success))', text: 'hsl(var(--background))' },
+                    warning: { background: 'hsl(var(--warning))', text: 'hsl(var(--background))' },
+                    error: { background: 'hsl(var(--error))', text: 'hsl(var(--background))' },
+                  }}
                   defaultRoute={{
                     srcChainId: 'cosmoshub-4',
                     srcAssetDenom: 'uatom',

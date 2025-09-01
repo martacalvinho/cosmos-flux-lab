@@ -125,7 +125,7 @@ export const LIQUID_STAKING_PROTOCOLS = [
     metrics: {
       APR: "227%",
       "Exchange Rate": "1.0 ATOM",
-      "Protocol Fee": "—",
+      "Protocol Fee": "10% of rewards",
       TVL: "$—",
       Redemption: "Instant swap",
     },
@@ -140,29 +140,6 @@ export const LIQUID_STAKING_PROTOCOLS = [
     links: {
       app: "https://app.pryzm.zone/",
       docs: "https://docs.pryzm.zone/",
-    },
-    dataSource: "Static",
-    lastUpdated: "just now",
-  },
-  {
-    category: "liquid-staking" as const,
-    protocol: "Milky Way",
-    chain: "",
-    title: "Liquid Stake ATOM → milkATOM",
-    description:
-      "Liquid staking protocol providing milkATOM tokens with automated staking rewards distribution.",
-    assets: ["ATOM", "milkATOM"],
-    status: "active" as const,
-    metrics: {
-      APR: "0%",
-    },
-    risks: ["Smart-contract", "Unbonding"],
-    howItWorks: [
-      "Stake to mint milkATOM",
-      "Keep liquidity and earn rewards",
-    ],
-    links: {
-      app: "https://milkyway.zone/",
     },
     dataSource: "Static",
     lastUpdated: "just now",
