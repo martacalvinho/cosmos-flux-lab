@@ -1,9 +1,10 @@
-import { Search, Settings, Bell, Zap, User, Moon, Sun, Volume2 } from "lucide-react";
+import { Search, Settings, Bell, User, Moon, Volume2, ArrowLeftRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { WalletConnect } from "./WalletConnect";
+import SwapWidget from "@/components/SwapPanel";
 
 export const Header = () => {
   return (
@@ -89,6 +90,17 @@ export const Header = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            
+            {/* Skip.go Swap Button */}
+            <SwapWidget>
+              <Button 
+                className="bg-blue-600 hover:bg-blue-700 text-white border border-blue-500 gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
+                size="sm"
+              >
+                <ArrowLeftRight className="h-4 w-4" />
+                Swap
+              </Button>
+            </SwapWidget>
             
             {/* Wallet Connect */}
             <WalletConnect />
