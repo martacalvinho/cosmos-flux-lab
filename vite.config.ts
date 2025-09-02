@@ -30,9 +30,11 @@ export default defineConfig(({ mode }) => ({
   define: {
     global: 'globalThis',
   },
+  optimizeDeps: {
+    include: ['declarative-shadow-dom-polyfill', 'buffer'],
+  },
   build: {
     rollupOptions: {
-      external: ['declarative-shadow-dom-polyfill'],
       plugins: [
         {
           name: 'buffer-polyfill',
