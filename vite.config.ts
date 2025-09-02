@@ -27,4 +27,32 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  define: {
+    global: 'globalThis',
+  },
+  build: {
+    rollupOptions: {
+      external: ['declarative-shadow-dom-polyfill'],
+      plugins: [
+        {
+          name: 'buffer-polyfill',
+          resolveId(id) {
+            if (id === 'buffer') {
+              return 'browser-buffer';
+            }
+          },
+          load(id) {
+            if (id === 'browser-buffer') {
+              return `import { Buffer } from 'buffer'; export default Buffer;`;
+            }
+          }
+        }
+      ],
+      output: {
+        manualChunks: {
+          buffer: ['buffer'],
+        }
+      }
+    }
+  }
 }));
