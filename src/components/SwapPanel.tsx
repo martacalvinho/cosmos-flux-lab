@@ -63,6 +63,7 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
               <div style={{ width: '100%', height: '100%', position: 'relative' }}>
                 <Widget
                   key={widgetKey}
+                  apiUrl="https://api.skip.build"
                   theme={{
                     brandColor: '#3366ff',
                     borderRadius: {
