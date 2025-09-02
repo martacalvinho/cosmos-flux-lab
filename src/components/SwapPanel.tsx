@@ -26,7 +26,12 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent noTransformCenter overlayClassName="z-0 pointer-events-none" className="z-10 max-w-xl bg-card border-border p-0 overflow-visible shadow-modal sm:rounded-lg">
+      <DialogContent 
+        noTransformCenter 
+        overlayClassName="z-0 pointer-events-none" 
+        className="z-10 max-w-xl bg-card border-border p-0 overflow-visible shadow-modal sm:rounded-lg"
+        aria-describedby="swap-dialog-description"
+      >
         <DialogHeader className="p-6 pb-4">
           <DialogTitle className="text-center text-xl font-semibold flex items-center justify-center gap-2">
             <ArrowLeftRight className="w-5 h-5 text-primary" />
@@ -35,6 +40,9 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
               Skip.go
             </Badge>
           </DialogTitle>
+          <div id="swap-dialog-description" className="sr-only">
+            Swap tokens across different blockchain networks using the Skip Protocol widget
+          </div>
         </DialogHeader>
         
         {/* Fee Notice */}
