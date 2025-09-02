@@ -5,6 +5,7 @@ import { ExternalLink } from "lucide-react";
 import { useStride } from "@/hooks/useStride";
 import { useDropMoney } from "@/hooks/useDropMoney";
 import { usePryzm } from "@/hooks/usePryzm";
+import { useQuicksilver } from "@/hooks/useQuicksilver";
 
 interface LiquidStakingTabProps {
   protocols: any[];
@@ -16,6 +17,7 @@ const LiquidStakingTab: React.FC<LiquidStakingTabProps> = ({ protocols }) => {
   const { isLoading: isStrideLoading, isError: isStrideError, tvlUsd: strideTvl, apy: strideApy, apr: strideApr } = useStride();
   const { data: dropMoneyData, isLoading: isDropMoneyLoading, isError: isDropMoneyError } = useDropMoney();
   const { isLoading: isPryzmLoading, isError: isPryzmError, tvlUsd: pryzmTvl, apy: pryzmApy, apr: pryzmApr } = usePryzm();
+  const { isLoading: isQsLoading, isError: isQsError, tvlUsd: qsTvl, apy: qsApy, apr: qsApr } = useQuicksilver();
 
   const fmtPct = (v?: number | string) => {
     if (v === undefined || v === null || v === "—") return "—";
@@ -50,6 +52,7 @@ const LiquidStakingTab: React.FC<LiquidStakingTabProps> = ({ protocols }) => {
             const isStride = protocol.protocol === "Stride";
             const isDropMoney = protocol.protocol === "Drop.money";
             const isPryzm = protocol.protocol === "Pryzm";
+            const isQuicksilver = protocol.protocol === "Quicksilver";
 
             let aprDisplay = protocol.metrics?.["APR"] || "—";
             let apyDisplay = "—";
@@ -70,6 +73,11 @@ const LiquidStakingTab: React.FC<LiquidStakingTabProps> = ({ protocols }) => {
               aprDisplay = isPryzmLoading || isPryzmError ? "—" : fmtPct(pryzmApr);
               apyDisplay = isPryzmLoading || isPryzmError ? "—" : fmtPct(pryzmApy);
               tvlDisplay = isPryzmLoading || isPryzmError ? "—" : fmtUsd(pryzmTvl);
+            } else if (isQuicksilver) {
+              aprDisplay = isQsLoading || isQsError ? "—" : fmtPct(qsApr);
+              apyDisplay = isQsLoading || isQsError ? "—" : fmtPct(qsApy);
+              tvlDisplay = isQsLoading || isQsError ? "—" : fmtUsd(qsTvl);
+              feeDisplay = "3.5% of rewards";
             }
             return (
               <TableRow key={`${protocol.protocol}-${protocol.chain}-${index}`}>
@@ -79,7 +87,7 @@ const LiquidStakingTab: React.FC<LiquidStakingTabProps> = ({ protocols }) => {
                 <TableCell className="text-foreground font-medium">{tvlDisplay}</TableCell>
                 <TableCell className="text-muted-foreground">{feeDisplay}</TableCell>
                 <TableCell className="text-muted-foreground max-w-xs">
-                  {protocol.description || protocol.title || "—"}
+                  {protocol.description || protocol.title || "—" }
                 </TableCell>
                 <TableCell>
                   <a
@@ -101,4 +109,3 @@ const LiquidStakingTab: React.FC<LiquidStakingTabProps> = ({ protocols }) => {
 };
 
 export default LiquidStakingTab;
-

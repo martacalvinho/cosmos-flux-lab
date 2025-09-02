@@ -22,6 +22,7 @@ import LiquidityTab from "@/pages/tabs/LiquidityTab";
 import LendingTab from "@/pages/tabs/LendingTab";
 import PerpsTab from "@/pages/tabs/PerpsTab";
 import NFTsTab from "@/pages/tabs/NFTsTab";
+import { useKavaLend } from "@/hooks/useKavaLend";
 
 // Liquidity handled via useLiquidityPools hook
 // CATEGORIES moved to src/pages/tabs/categories
@@ -35,6 +36,7 @@ export const Home = () => {
   const [sortBy, setSortBy] = useState("default");
   const [viewMode, setViewMode] = useState("card");
   const { protocols: liquidityProtocols, isLoading: isLoadingPools, sortBy: liquiditySortBy, sortDir: liquiditySortDir, handleSort: handleLiquiditySort } = useLiquidityPools(activeTab);
+  const { supplyApyPct: kavaSupplyApyPct } = useKavaLend();
 
   // Staking moved into StakingTab component
 
@@ -73,8 +75,12 @@ export const Home = () => {
     filteredProtocols.sort((a, b) => {
       // Extract APR/APY values from metrics
       const getAPR = (protocol: any) => {
-        const apr = protocol.metrics?.["APR"] || protocol.metrics?.["Fee APR"] || protocol.metrics?.["Supply APY"] || "0%";
-        return parseFloat(String(apr).replace('%', ''));
+        if (protocol?.protocol === "Kava Lend") {
+          return Number.isFinite(kavaSupplyApyPct) ? (kavaSupplyApyPct as number) : 0;
+        }
+        const apr = protocol?.metrics?.["APR"] || protocol?.metrics?.["Fee APR"] || protocol?.metrics?.["Supply APY"] || "0%";
+        const n = parseFloat(String(apr).replace('%', ''));
+        return Number.isFinite(n) ? n : 0;
       };
       return getAPR(b) - getAPR(a); // Descending order
     });

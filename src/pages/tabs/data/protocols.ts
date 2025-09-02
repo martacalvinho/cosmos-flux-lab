@@ -178,7 +178,7 @@ export const LENDING_PROTOCOLS = [
     description: "Supply ATOM to earn yield",
     status: "active" as const,
     metrics: {
-      "Supply APY": "12.3%",
+      "Supply APY": "—",
       TVL: "$25M",
     },
     links: {
