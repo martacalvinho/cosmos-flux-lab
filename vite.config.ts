@@ -34,6 +34,7 @@ export default defineConfig(({ mode }) => ({
   },
   optimizeDeps: {
     include: ['declarative-shadow-dom-polyfill', 'buffer'],
+    exclude: ['index.es-BEfNQQ0w-ZAVDO5BA.js'],
   },
   build: {
     rollupOptions: {

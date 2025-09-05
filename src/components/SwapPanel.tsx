@@ -21,6 +21,11 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
     }
   }, [isOpen]);
 
+  // Conditionally include Skip API credentials from env for testing
+  const apiUrl = import.meta.env.VITE_SKIP_API_URL as string | undefined;
+  const apiKey = import.meta.env.VITE_SKIP_API_KEY as string | undefined;
+  const includeApiCreds = Boolean(apiUrl && apiKey);
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -103,58 +108,77 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
                   settings={{
                     slippage: 3,
                   }}
+                  cumulative_affiliate_fee_bps="75"
                   chainIdsToAffiliates={{
                     'cosmoshub-4': {
                       affiliates: [{
-                        basisPointsFee: '75', // 0.75% fee
                         address: 'cosmos13lkew03teg5sukpgy5lj6z27x9nqylcxjzx4mc',
                       }]
                     },
                     'osmosis-1': {
                       affiliates: [{
-                        basisPointsFee: '75', // 0.75% fee
                         address: 'osmo13lkew03teg5sukpgy5lj6z27x9nqylcx6e49d2',
                       }]
                     },
                     'noble-1': {
                       affiliates: [{
-                        basisPointsFee: '75', // 0.75% fee
-                        address: 'noble13lkew03teg5sukpgy5lj6z27x9nqylcxpnark',
+                        address: 'noble13lkew03teg5sukpgy5lj6z27x9nqylcx6pnark',
                       }]
                     },
                     'neutron-1': {
                       affiliates: [{
-                        basisPointsFee: '75', // 0.75% fee
                         address: 'neutron13lkew03teg5sukpgy5lj6z27x9nqylcxka0hpl',
                       }]
                     },
                     'stargaze-1': {
                       affiliates: [{
-                        basisPointsFee: '75', // 0.75% fee
                         address: 'stars13lkew03teg5sukpgy5lj6z27x9nqylcxx73gsf',
                       }]
                     },
                     'juno-1': {
                       affiliates: [{
-                        basisPointsFee: '75', // 0.75% fee
                         address: 'juno13lkew03teg5sukpgy5lj6z27x9nqylcxys9wuy',
                       }]
                     },
                     'akashnet-2': {
                       affiliates: [{
-                        basisPointsFee: '75', // 0.75% fee
                         address: 'akash13lkew03teg5sukpgy5lj6z27x9nqylcxletjzz',
                       }]
                     },
                     'secret-4': {
                       affiliates: [{
-                        basisPointsFee: '75', // 0.75% fee
                         address: 'secret19txusvc7xf54utpxcheljxuphyrq8sm2ugdwcr',
                       }]
                     }
                   }}
                   onTransactionComplete={(txInfo) => {
-                    console.log('Swap completed:', txInfo);
+                    console.log('=== SKIP TRANSACTION COMPLETED ===');
+                    console.log('Full transaction info:', JSON.stringify(txInfo, null, 2));
+                    console.log('Using API credentials:', includeApiCreds, includeApiCreds ? { apiUrl } : {});
+                    console.log('Cumulative affiliate fee bps:', '75');
+                    console.log('Affiliate addresses:', {
+                      'cosmoshub-4': { affiliates: [{ address: 'cosmos13lkew03teg5sukpgy5lj6z27x9nqylcxjzx4mc' }] },
+                      'osmosis-1': { affiliates: [{ address: 'osmo13lkew03teg5sukpgy5lj6z27x9nqylcx6e49d2' }] },
+                      'noble-1': { affiliates: [{ address: 'noble13lkew03teg5sukpgy5lj6z27x9nqylcx6pnark' }] },
+                      'neutron-1': { affiliates: [{ address: 'neutron13lkew03teg5sukpgy5lj6z27x9nqylcxka0hpl' }] },
+                      'stargaze-1': { affiliates: [{ address: 'stars13lkew03teg5sukpgy5lj6z27x9nqylcxx73gsf' }] },
+                      'juno-1': { affiliates: [{ address: 'juno13lkew03teg5sukpgy5lj6z27x9nqylcxys9wuy' }] },
+                      'akashnet-2': { affiliates: [{ address: 'akash13lkew03teg5sukpgy5lj6z27x9nqylcxletjzz' }] },
+                      'secret-4': { affiliates: [{ address: 'secret19txusvc7xf54utpxcheljxuphyrq8sm2ugdwcr' }] }
+                    });
+                    
+                    // Check if transaction contains fee information
+                    if (txInfo && txInfo.txs) {
+                      txInfo.txs.forEach((tx, index) => {
+                        console.log(`Transaction ${index + 1}:`, tx);
+                        if (tx.msgs) {
+                          tx.msgs.forEach((msg, msgIndex) => {
+                            console.log(`Message ${msgIndex + 1}:`, msg);
+                          });
+                        }
+                      });
+                    }
+                    console.log('=== END TRANSACTION INFO ===');
                   }}
                 />
               </div>
