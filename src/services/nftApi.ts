@@ -99,7 +99,7 @@ export interface NFTsResponse {
 export const NFTApiService = {
   async fetchCollections(): Promise<Collection[]> {
     try {
-      const response = await fetch('https://api.useatom.fun/api/nfts/collections');
+      const response = await fetch('https://cosmosexpress.onrender.com/api/nfts/collections');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -118,7 +118,7 @@ export const NFTApiService = {
 
   async fetchTokensByCollection(collectionAddress: string, limit: number = 50, offset: number = 0): Promise<NFTToken[]> {
     try {
-      const url = `https://api.useatom.fun/api/nfts/collections/${collectionAddress}/nfts?limit=${limit}&offset=${offset}`;
+      const url = `https://cosmosexpress.onrender.com/api/nfts/collections/${collectionAddress}/nfts?limit=${limit}&offset=${offset}`;
       const response = await fetch(url);
       
       // Log response details for debugging

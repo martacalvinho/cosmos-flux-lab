@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { AstroportService } from "@/services/astroportService";
-import { OsmosisService } from "@/services/osmosisService";
-import { AstrovaultService } from "@/services/astrovaultService";
+import { CosmosExpressService } from "@/services/cosmosExpress";
 
 export interface LiquidityPool {
   id: string;
@@ -50,13 +48,9 @@ const convertPoolsToProtocols = (pools: LiquidityPool[]) => {
       pool: isOsmosis && poolId ? `https://app.osmosis.zone/pool/${poolId}` : pool.url,
     } as const;
     
-    const dataSource = isOsmosis 
-      ? 'Osmosis SQS + LCD API'
-      : isAstroport 
-      ? 'Astroport API'
-      : isAstrovault
-      ? 'Astrovault API'
-      : 'Live API Data';
+    const dataSource = `CosmosExpress API${
+      isOsmosis ? ' (Osmosis)' : isAstroport ? ' (Astroport)' : isAstrovault ? ' (Astrovault)' : ''
+    }`;
 
     // Parse assets from pair string
     const assets = pool.pair ? pool.pair.split('/').filter(Boolean) : ['ATOM'];
@@ -95,88 +89,52 @@ export const useLiquidityPools = (activeTab: string) => {
   const [sortBy, setSortBy] = useState<'apy' | 'pair' | 'tvl' | 'volume'>('apy');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
 
+  const CACHE_KEY = 'liquidity:pools:v1';
+  const CACHE_TTL_MS = 5 * 60_000; // 5 minutes
+
   useEffect(() => {
     if (activeTab !== 'liquidity') return;
     setIsLoading(true);
+
+    // 1) Try to serve cached data instantly for fast paint
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as { ts: number; data: LiquidityPool[] };
+        if (parsed && parsed.data && Date.now() - parsed.ts < CACHE_TTL_MS) {
+          setLiquidityPools(parsed.data);
+        }
+      }
+    } catch {}
+
     const fetchLiquidityData = async () => {
       try {
-        const [astroPools, osmoPools, avPools] = await Promise.all([
-          AstroportService.fetchPools(),
-          OsmosisService.fetchAtomPools(),
-          AstrovaultService.fetchAtomPools(),
+        const [osmo, astro, av] = await Promise.all([
+          CosmosExpressService.fetchOsmosisPools(),
+          CosmosExpressService.fetchAstroportPools(),
+          CosmosExpressService.fetchAstrovaultPools(),
         ]);
 
-        const avFormatted: LiquidityPool[] = await Promise.all(
-          avPools.map(async (pool) => {
-            const poolData = pool as any;
-            const symbols = await AstrovaultService.symbolsForPool(pool as any);
-            const pair = symbols.length >= 2 ? symbols.join('/') : symbols[0] ? `${symbols[0]}/ATOM` : 'ATOM';
-
-            const aprRaw = (pool as any).percentageAPRs?.[0];
-            let apy = '—';
-            if (aprRaw != null && !isNaN(aprRaw)) {
-              let v = Number(aprRaw);
-              if (v > 0 && v < 1) v = v * 100;
-              const s = v.toFixed(2);
-              apy = `${s}%`;
-            }
-
-            const tvlRaw = poolData.totalValueLockedUSD || poolData.tvl || poolData.totalLiquidity;
-            let tvlFormatted = '—';
-            if (tvlRaw && typeof tvlRaw === 'number' && tvlRaw > 0) {
-              if (tvlRaw >= 1_000_000) {
-                tvlFormatted = `$${(tvlRaw / 1_000_000).toFixed(1)}M`;
-              } else if (tvlRaw >= 1_000) {
-                tvlFormatted = `$${Math.round(tvlRaw / 1_000)}K`;
-              } else {
-                tvlFormatted = '$<1K';
-              }
-            }
-
-            return {
-              id: `astrovault-${poolData.id || poolData.poolId || Math.random()}`,
-              type: 'liquidity' as const,
-              platform: 'Astrovault',
-              apy,
-              tvl: tvlFormatted,
-              volume24h: '—',
-              description: `${pair} AMM Pool on Astrovault`,
-              url: poolData.detailsUrl || 'https://astrovault.io',
-              pair,
-              chain: AstrovaultService.chainNameFromId(poolData.contextChainId),
-            };
-          })
-        );
-
-        const normalized: LiquidityPool[] = [
-          ...astroPools.map((pool) => ({
-            id: pool.id,
-            type: 'liquidity' as const,
-            platform: pool.platform,
-            apy: pool.apy,
-            tvl: pool.tvl,
-            volume24h: (pool as any).volume24h || '—',
-            description: pool.description,
-            url: pool.url,
-            pair: pool.pair,
-            chain: pool.chain,
-          })),
-          ...osmoPools.map((pool) => ({
-            id: pool.id,
-            type: 'liquidity' as const,
-            platform: pool.platform,
-            apy: pool.apy,
-            tvl: pool.tvl,
-            volume24h: (pool as any).volume24h || '—',
-            description: pool.description,
-            url: pool.url,
-            pair: pool.pair,
-            chain: pool.chain,
-          })),
-          ...avFormatted,
-        ];
+        const all = [...osmo, ...astro, ...av];
+        const normalized: LiquidityPool[] = all.map((pool) => ({
+          id: pool.id,
+          type: 'liquidity' as const,
+          platform: pool.platform,
+          apy: pool.apy,
+          tvl: pool.tvl,
+          volume24h: (pool as any).volume24h || '—',
+          description: pool.description,
+          url: pool.url,
+          pair: pool.pair,
+          chain: pool.chain,
+        }));
 
         setLiquidityPools(normalized);
+
+        // 2) Save to cache
+        try {
+          localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: normalized }));
+        } catch {}
       } catch (e) {
         console.error('Failed to fetch liquidity pools:', e);
         setLiquidityPools([]);

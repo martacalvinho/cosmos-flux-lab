@@ -142,24 +142,29 @@ export const ProtocolCard = ({
 
       {/* Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
-        {Object.entries(metrics).map(([key, value]) => (
-          <div key={key} className="space-y-1">
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">{key}</p>
-            <p className="text-sm font-semibold">{value}</p>
-          </div>
-        ))}
+        {Object.entries(metrics)
+          .filter(([key]) => key !== 'Chain')
+          .map(([key, value]) => (
+            <div key={key} className="space-y-1">
+              <p className="text-xs text-muted-foreground uppercase tracking-wider">{key}</p>
+              {key === 'Pair' ? (
+                <div className="text-sm font-semibold">
+                  <div>{String(value)}</div>
+                  {/* Render chain directly under pair */}
+                  <div className="text-xs text-muted-foreground mt-0.5">Chain: {String((metrics as any).Chain ?? '')}</div>
+                </div>
+              ) : (
+                <p className="text-sm font-semibold">{value}</p>
+              )}
+            </div>
+          ))}
       </div>
 
       {/* Risk chips removed for a cleaner, informational-only card UI */}
 
 
-      {/* Footer */}
-      <div className="flex items-center justify-between pt-4 border-t border-border">
-        <div className="text-xs text-muted-foreground">
-          <div>Data: {dataSource}</div>
-          <div>Updated: {lastUpdated}</div>
-        </div>
-        
+      {/* Footer: only action buttons */}
+      <div className="flex items-center justify-end pt-4 border-t border-border">
         <div className="flex gap-2">
           {links.pool && (
             <Button size="sm" variant="outline" asChild>
