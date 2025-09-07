@@ -109,13 +109,26 @@ export const useLiquidityPools = (activeTab: string) => {
 
     const fetchLiquidityData = async () => {
       try {
-        const [osmo, astro, av] = await Promise.all([
+        const results = await Promise.allSettled([
           CosmosExpressService.fetchOsmosisPools(),
           CosmosExpressService.fetchAstroportPools(),
           CosmosExpressService.fetchAstrovaultPools(),
         ]);
 
+        const osmo = results[0].status === 'fulfilled' ? results[0].value : [];
+        const astro = results[1].status === 'fulfilled' ? results[1].value : [];
+        const av = results[2].status === 'fulfilled' ? results[2].value : [];
+
+        // Log failures but continue with available data
+        if (results[0].status === 'rejected') console.warn('Osmosis pools failed:', results[0].reason);
+        if (results[1].status === 'rejected') console.warn('Astroport pools failed:', results[1].reason);
+        if (results[2].status === 'rejected') console.warn('Astrovault pools failed:', results[2].reason);
+
         const all = [...osmo, ...astro, ...av];
+        if (all.length === 0) {
+          throw new Error('All liquidity sources failed');
+        }
+
         const normalized: LiquidityPool[] = all.map((pool) => ({
           id: pool.id,
           type: 'liquidity' as const,

@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ExternalLink } from "lucide-react";
 import { useKavaLend } from "@/hooks/useKavaLend";
+import { useMarsLend } from "@/hooks/useMarsLend";
 
 interface LendingTabProps {
   protocols: any[];
@@ -12,6 +13,7 @@ interface LendingTabProps {
 
 const LendingTab: React.FC<LendingTabProps> = ({ protocols }) => {
   const { isLoading: isKavaLoading, isError: isKavaError, supplyApyPct, supplyRewardApyPct, borrowApyPct, totalSupplyUsd, totalBorrowUsd } = useKavaLend();
+  const { isLoading: isMarsLoading, isError: isMarsError, supplyApyPct: marsSupplyApyPct, borrowApyPct: marsBorrowApyPct, utilizationPct: marsUtilizationPct } = useMarsLend();
 
   const fmtPct = (v?: number) => {
     if (v === undefined || v === null || !Number.isFinite(v)) return "—";
@@ -41,6 +43,7 @@ const LendingTab: React.FC<LendingTabProps> = ({ protocols }) => {
         <TableBody>
           {protocols.map((protocol, index) => {
             const isKava = protocol.protocol === "Kava Lend";
+            const isMars = protocol.protocol === "Mars Protocol";
             const apyCell = isKava
               ? (isKavaLoading || isKavaError
                   ? "—"
@@ -51,7 +54,16 @@ const LendingTab: React.FC<LendingTabProps> = ({ protocols }) => {
                       <div><span className="text-muted-foreground">Borrow Interest:</span> <span className="font-medium">{fmtPct(borrowApyPct)}</span></div>
                     </div>
                   ))
-              : (protocol.metrics?.["Supply APY"] || protocol.metrics?.["APR"] || "—");
+              : isMars
+                ? (isMarsLoading || isMarsError
+                    ? "—"
+                    : (
+                      <div className="space-y-1">
+                        <div><span className="text-muted-foreground">Supply APY:</span> <span className="font-medium">{fmtPct(marsSupplyApyPct)}</span></div>
+                        <div><span className="text-muted-foreground">Borrow Interest:</span> <span className="font-medium">{fmtPct(marsBorrowApyPct)}</span></div>
+                      </div>
+                    ))
+                : (protocol.metrics?.["Supply APY"] || protocol.metrics?.["APR"] || "—");
             return (
               <TableRow key={`${protocol.protocol}-${protocol.chain}-${index}`}>
                 <TableCell className="font-medium">{protocol.protocol}</TableCell>
@@ -72,7 +84,17 @@ const LendingTab: React.FC<LendingTabProps> = ({ protocols }) => {
                         </div>
                       </div>
                     )
-                  ) : (<span className="text-white font-semibold">{protocol.metrics?.["TVL"] || "—"}</span>)}
+                  ) : isMars ? (
+                    isMarsLoading || isMarsError ? "—" : (
+                      <div>
+                        <span className="text-muted-foreground">Utilization:</span>
+                        {' '}
+                        <span className="text-white font-semibold">{fmtPct(marsUtilizationPct)}</span>
+                      </div>
+                    )
+                  ) : (
+                    <span className="text-white font-semibold">{protocol.metrics?.["TVL"] || "—"}</span>
+                  )}
                 </TableCell>
                 <TableCell className="text-muted-foreground max-w-xs">
                   {protocol.description || protocol.title || "—"}
