@@ -13,7 +13,7 @@ interface LendingTabProps {
 
 const LendingTab: React.FC<LendingTabProps> = ({ protocols }) => {
   const { isLoading: isKavaLoading, isError: isKavaError, supplyApyPct, supplyRewardApyPct, borrowApyPct, totalSupplyUsd, totalBorrowUsd } = useKavaLend();
-  const { isLoading: isMarsLoading, isError: isMarsError, supplyApyPct: marsSupplyApyPct, borrowApyPct: marsBorrowApyPct, utilizationPct: marsUtilizationPct } = useMarsLend();
+  const { isLoading: isMarsLoading, isError: isMarsError, supplyApyPct: marsSupplyApyPct, borrowApyPct: marsBorrowApyPct, totalSupplyUsd: marsTotalSupplyUsd, totalBorrowUsd: marsTotalBorrowUsd } = useMarsLend('neutron', 'atom');
 
   const fmtPct = (v?: number) => {
     if (v === undefined || v === null || !Number.isFinite(v)) return "—";
@@ -86,15 +86,20 @@ const LendingTab: React.FC<LendingTabProps> = ({ protocols }) => {
                     )
                   ) : isMars ? (
                     isMarsLoading || isMarsError ? "—" : (
-                      <div>
-                        <span className="text-muted-foreground">Utilization:</span>
-                        {' '}
-                        <span className="text-white font-semibold">{fmtPct(marsUtilizationPct)}</span>
+                      <div className="space-y-1">
+                        <div>
+                          <span className="text-muted-foreground">Supply:</span>
+                          {' '}
+                          <span className="text-white font-semibold">{fmtUsd(marsTotalSupplyUsd)}</span>
+                        </div>
+                        <div>
+                          <span className="text-muted-foreground">Borrow:</span>
+                          {' '}
+                          <span className="text-white font-semibold">{fmtUsd(marsTotalBorrowUsd)}</span>
+                        </div>
                       </div>
                     )
-                  ) : (
-                    <span className="text-white font-semibold">{protocol.metrics?.["TVL"] || "—"}</span>
-                  )}
+                  ) : (<span className="text-white font-semibold">{protocol.metrics?.["TVL"] || "—"}</span>)}
                 </TableCell>
                 <TableCell className="text-muted-foreground max-w-xs">
                   {protocol.description || protocol.title || "—"}

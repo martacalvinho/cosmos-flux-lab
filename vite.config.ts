@@ -16,18 +16,6 @@ export default defineConfig(({ mode }) => ({
         secure: true,
         rewrite: (path) => path.replace(/^\/osmo-sqs\/?/, "/"),
       },
-      "/osmo-lcd": {
-        target: "https://rest.cosmos.directory/osmosis",
-        changeOrigin: true,
-        secure: true,
-        rewrite: (path) => path.replace(/^\/osmo-lcd\/?/, "/"),
-      },
-      "/mars-backend": {
-        target: "https://backend.prod.mars-dev.net",
-        changeOrigin: true,
-        secure: true,
-        rewrite: (path) => path.replace(/^\/mars-backend\/?/, "/"),
-      },
     },
   },
   plugins: [
