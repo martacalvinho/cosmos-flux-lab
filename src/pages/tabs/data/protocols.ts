@@ -221,22 +221,6 @@ export const LENDING_PROTOCOLS = [
   },
   {
     category: "lending" as const,
-    protocol: "Inter Protocol",
-    chain: "Agoric",
-    description: "Add collateral to mint IST",
-    status: "active" as const,
-    metrics: {
-      "Supply APY": "—",
-      TVL: "—",
-    },
-    links: {
-      app: "https://app.inter.trade/#/vaults",
-    },
-    dataSource: "Static",
-    lastUpdated: "just now",
-  },
-  {
-    category: "lending" as const,
     protocol: "Shade Lend",
     chain: "Secret",
     description: "Privacy-focused lending protocol on Secret Network",

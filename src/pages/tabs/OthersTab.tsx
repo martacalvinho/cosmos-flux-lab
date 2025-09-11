@@ -34,6 +34,19 @@ const OthersTab: React.FC = () => {
                 </Button>
               </TableCell>
             </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">
+                <Badge variant="outline" className="text-others bg-others/10 border-others/20">DCA</Badge>
+              </TableCell>
+              <TableCell>
+                App.calculated.fi lets you DCA with ATOM by choosing a specific strategy to follow. Create your own strategy or use a predefined one.
+              </TableCell>
+              <TableCell>
+                <Button size="sm" variant="outline" asChild>
+                  <a href="https://app.calculated.fi" target="_blank" rel="noopener noreferrer">Visit</a>
+                </Button>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </Card>
