@@ -112,50 +112,68 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
                   chainIdsToAffiliates={{
                     'cosmoshub-4': {
                       affiliates: [{
-                        address: 'cosmos13lkew03teg5sukpgy5lj6z27x9nqylcxjzx4mc',
-                        basisPointFee: '75',
+                        address: 'cosmos1s5830rdds5fpwjh9ewwqjduax3ucg8nv4kqd7g',
+                        basisPointsFee: '75',
                       }]
                     },
                     'osmosis-1': {
                       affiliates: [{
                         address: 'osmo13lkew03teg5sukpgy5lj6z27x9nqylcx6e49d2',
-                        basisPointFee: '0',
+                        basisPointsFee: '75',
                       }]
                     },
                     'noble-1': {
                       affiliates: [{
-                        address: 'noble13lkew03teg5sukpgy5lj6z27x9nqylcx6pnark',
-                        basisPointFee: '0',
+                        address: 'noble1s5830rdds5fpwjh9ewwqjduax3ucg8nva449xx',
+                        basisPointsFee: '75',
                       }]
                     },
                     'neutron-1': {
                       affiliates: [{
                         address: 'neutron13lkew03teg5sukpgy5lj6z27x9nqylcxka0hpl',
-                        basisPointFee: '0',
+                        basisPointsFee: '75',
                       }]
                     },
                     'stargaze-1': {
                       affiliates: [{
-                        address: 'stars13lkew03teg5sukpgy5lj6z27x9nqylcxx73gsf',
-                        basisPointFee: '0',
+                        address: 'stars1s5830rdds5fpwjh9ewwqjduax3ucg8nvp2hs4e',
+                        basisPointsFee: '75',
                       }]
                     },
                     'juno-1': {
                       affiliates: [{
-                        address: 'juno13lkew03teg5sukpgy5lj6z27x9nqylcxys9wuy',
-                        basisPointFee: '0',
+                        address: 'juno1s5830rdds5fpwjh9ewwqjduax3ucg8nvryrke5',
+                        basisPointsFee: '75',
                       }]
                     },
                     'akashnet-2': {
                       affiliates: [{
-                        address: 'akash13lkew03teg5sukpgy5lj6z27x9nqylcxletjzz',
-                        basisPointFee: '0',
+                        address: 'akash1s5830rdds5fpwjh9ewwqjduax3ucg8nvcdd28j',
+                        basisPointsFee: '75',
+                      }]
+                    },
+                    'pryzm-1': {
+                      affiliates: [{
+                        address: 'pryzm13lkew03teg5sukpgy5lj6z27x9nqylcx2j3j9t',
+                        basisPointsFee: '75',
+                      }]
+                    },
+                    'phoenix-1': {
+                      affiliates: [{
+                        address: 'terra1h0vzxqkdyyxjd7np37ns9ltrdqpmd6xdth78vm',
+                        basisPointsFee: '75',
+                      }]
+                    },
+                    'elys-1': {
+                      affiliates: [{
+                        address: 'elys13lkew03teg5sukpgy5lj6z27x9nqylcxjzljk6',
+                        basisPointsFee: '75',
                       }]
                     },
                     'secret-4': {
                       affiliates: [{
-                        address: 'secret19txusvc7xf54utpxcheljxuphyrq8sm2ugdwcr',
-                        basisPointFee: '0',
+                        address: 'secret1s5830rdds5fpwjh9ewwqjduax3ucg8nvhn5yr5',
+                        basisPointsFee: '75',
                       }]
                     }
                   }}
