@@ -1,8 +1,9 @@
-import { Search, ArrowLeftRight } from "lucide-react";
+import { Search, ArrowLeftRight, CalendarDays } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { WalletConnect } from "./WalletConnect";
 import SwapWidget from "@/components/SwapPanel";
+import AgendaModal from "@/components/AgendaModal";
 
 export const Header = () => {
   return (
@@ -23,8 +24,13 @@ export const Header = () => {
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             
-            {/* Settings and Notifications removed for now */}
-            
+            {/* Agenda */}
+            <AgendaModal>
+              <Button variant="ghost" size="sm" aria-label="Open Cosmos Agenda">
+                <CalendarDays className="h-4 w-4" />
+              </Button>
+            </AgendaModal>
+
             {/* Skip.go Swap Button */}
             <SwapWidget>
               <Button 
