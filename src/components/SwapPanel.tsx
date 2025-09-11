@@ -113,41 +113,49 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
                     'cosmoshub-4': {
                       affiliates: [{
                         address: 'cosmos13lkew03teg5sukpgy5lj6z27x9nqylcxjzx4mc',
+                        basisPointFee: '75',
                       }]
                     },
                     'osmosis-1': {
                       affiliates: [{
                         address: 'osmo13lkew03teg5sukpgy5lj6z27x9nqylcx6e49d2',
+                        basisPointFee: '0',
                       }]
                     },
                     'noble-1': {
                       affiliates: [{
                         address: 'noble13lkew03teg5sukpgy5lj6z27x9nqylcx6pnark',
+                        basisPointFee: '0',
                       }]
                     },
                     'neutron-1': {
                       affiliates: [{
                         address: 'neutron13lkew03teg5sukpgy5lj6z27x9nqylcxka0hpl',
+                        basisPointFee: '0',
                       }]
                     },
                     'stargaze-1': {
                       affiliates: [{
                         address: 'stars13lkew03teg5sukpgy5lj6z27x9nqylcxx73gsf',
+                        basisPointFee: '0',
                       }]
                     },
                     'juno-1': {
                       affiliates: [{
                         address: 'juno13lkew03teg5sukpgy5lj6z27x9nqylcxys9wuy',
+                        basisPointFee: '0',
                       }]
                     },
                     'akashnet-2': {
                       affiliates: [{
                         address: 'akash13lkew03teg5sukpgy5lj6z27x9nqylcxletjzz',
+                        basisPointFee: '0',
                       }]
                     },
                     'secret-4': {
                       affiliates: [{
                         address: 'secret19txusvc7xf54utpxcheljxuphyrq8sm2ugdwcr',
+                        basisPointFee: '0',
                       }]
                     }
                   }}
