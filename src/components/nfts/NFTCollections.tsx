@@ -11,12 +11,13 @@ const NFTCollections: React.FC = () => {
   const [filteredNfts, setFilteredNfts] = useState<NFTToken[]>([]);
   const [loading, setLoading] = useState(true);
   const [nftsLoading, setNftsLoading] = useState(false);
-  const [collectionSort, setCollectionSort] = useState<'alpha-asc' | 'alpha-desc' | 'floor-asc' | 'floor-desc' | 'volume-desc' | 'volume-asc' | 'owners-desc' | 'owners-asc' | 'listed-desc' | 'listed-asc' | 'top12'>('alpha-asc');
+  const [collectionSort, setCollectionSort] = useState<'alpha-asc' | 'alpha-desc' | 'floor-asc' | 'floor-desc' | 'volume-desc' | 'volume-asc' | 'owners-desc' | 'owners-asc' | 'listed-desc' | 'listed-asc' | 'top12'>('volume-desc');
   const [showTop12InSidebar, setShowTop12InSidebar] = useState(false);
   const [volumeTimeframe, setVolumeTimeframe] = useState<'24h' | '7d' | '30d'>('24h');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const [nftSort, setNftSort] = useState<'relevance-24h' | 'alpha-asc' | 'alpha-desc' | 'price-asc' | 'price-desc'>('relevance-24h');
 
   useEffect(() => {
     const fetchCollectionsAndNfts = async () => {
@@ -27,14 +28,21 @@ const NFTCollections: React.FC = () => {
         console.log('Starting to fetch collections...');
         const collectionsData = await NFTApiService.fetchCollections();
         console.log('Collections fetched:', collectionsData.length);
-        setCollections(collectionsData);
+        // Filter to ATOM-only collections
+        // Rule: trading asset MUST be ATOM, and floor symbol MUST be ATOM if present
+        const atomCollections = collectionsData.filter((c) => {
+          const ta = c?.trading_asset?.symbol?.toUpperCase?.();
+          const fs = c?.floor_price?.symbol?.toUpperCase?.();
+          return ta === 'ATOM' && (!fs || fs === 'ATOM');
+        });
+        setCollections(atomCollections);
         
         // Set loading to false immediately after collections are fetched
         setLoading(false);
         
         // Fetch NFTs from all collections using the API
         console.log('Fetching NFTs from all collections...');
-        const allNftsPromises = collectionsData.map(collection => 
+        const allNftsPromises = atomCollections.map(collection =>
           NFTApiService.fetchTokensByCollection(collection.contract_address)
         );
         
@@ -43,6 +51,7 @@ const NFTCollections: React.FC = () => {
         
         allNftsResults.forEach((nfts, collectionIndex) => {
           nfts.forEach(nft => {
+            // Do not over-filter by denom; rely on collection trading asset (ATOM)
             combinedNfts.push({
               ...nft,
               collectionAddress: nft.collection_address
@@ -108,7 +117,12 @@ const NFTCollections: React.FC = () => {
 
   // Derived: collections to show in the left sidebar according to sorting and optional top-12 view
   const displayCollections = useMemo(() => {
-    let arr = [...collections];
+    // Extra guard: ensure only ATOM collections are shown (same rule as fetch layer)
+    let arr = collections.filter((c) => {
+      const ta = c?.trading_asset?.symbol?.toUpperCase?.();
+      const fs = c?.floor_price?.symbol?.toUpperCase?.();
+      return ta === 'ATOM' && (!fs || fs === 'ATOM');
+    });
     // Text search
     if (searchText.trim()) {
       const q = searchText.toLowerCase();
@@ -177,6 +191,52 @@ const NFTCollections: React.FC = () => {
     }
   }, [displayCollections, selectedCollections, selectedCategories, searchText, allNfts]);
 
+  // NFT grid sorting
+  const displayNfts = useMemo(() => {
+    // Show all NFTs from filtered collections. If not listed, price block will be hidden.
+    let arr = [...filteredNfts];
+    switch (nftSort) {
+      case 'relevance-24h': {
+        // Sort tokens by their collection's 24h volume (desc)
+        const volMap = new Map<string, number>();
+        for (const c of collections) {
+          volMap.set(c.contract_address, c.stats?.volume_24h || 0);
+        }
+        arr.sort((a, b) => {
+          const va = volMap.get(a.collection_address) || 0;
+          const vb = volMap.get(b.collection_address) || 0;
+          if (vb !== va) return vb - va;
+          // tie-breaker by price desc if available
+          const pa = a.list_price ? parseFloat(NFTApiService.formatPrice(a.list_price.amount, 6)) : -1;
+          const pb = b.list_price ? parseFloat(NFTApiService.formatPrice(b.list_price.amount, 6)) : -1;
+          return pb - pa;
+        });
+        break;
+      }
+      case 'alpha-asc':
+        arr.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+        break;
+      case 'alpha-desc':
+        arr.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+        break;
+      case 'price-asc':
+        arr.sort((a, b) => {
+          const pa = a.list_price ? parseFloat(NFTApiService.formatPrice(a.list_price.amount, 6)) : Number.POSITIVE_INFINITY;
+          const pb = b.list_price ? parseFloat(NFTApiService.formatPrice(b.list_price.amount, 6)) : Number.POSITIVE_INFINITY;
+          return pa - pb;
+        });
+        break;
+      case 'price-desc':
+        arr.sort((a, b) => {
+          const pa = a.list_price ? parseFloat(NFTApiService.formatPrice(a.list_price.amount, 6)) : -1;
+          const pb = b.list_price ? parseFloat(NFTApiService.formatPrice(b.list_price.amount, 6)) : -1;
+          return pb - pa;
+        });
+        break;
+    }
+    return arr;
+  }, [filteredNfts, nftSort]);
+
   const handleCollectionFilter = (collectionAddress: string) => {
     const newSelected = selectedCollections.includes(collectionAddress)
       ? selectedCollections.filter(addr => addr !== collectionAddress)
@@ -218,7 +278,7 @@ const NFTCollections: React.FC = () => {
   return (
     <div className="flex gap-6 h-full">
       {/* Left Sidebar - Collections Filter */}
-      <div className="w-80 flex-shrink-0">
+      <div className="w-80 min-w-0 flex-shrink-0">
         <Card className="backdrop-blur-sm bg-card/80 border-border/30 shadow-table h-full">
           <div className="p-4 border-b border-border/20">
             <div className="flex items-center gap-2 mb-2">
@@ -278,35 +338,45 @@ const NFTCollections: React.FC = () => {
               )}
             </div>
             {/* Volume timeframe, sort, and Top 12 */}
-            <div className="mt-2 flex items-center gap-2">
-              <label className="text-xs text-muted-foreground">Volume:</label>
-              <select
-                value={volumeTimeframe}
-                onChange={(e) => setVolumeTimeframe(e.target.value as any)}
-                className="text-xs bg-transparent border border-border/30 rounded px-2 py-1 focus:outline-none"
-              >
-                <option value="24h">24h</option>
-                <option value="7d">7d</option>
-                <option value="30d">30d</option>
-              </select>
-              <label className="text-xs text-muted-foreground ml-2">Sort:</label>
-              <select
-                value={collectionSort}
-                onChange={(e) => setCollectionSort(e.target.value as any)}
-                className="text-xs bg-transparent border border-border/30 rounded px-2 py-1 focus:outline-none"
-              >
-                <option value="alpha-asc">A → Z</option>
-                <option value="alpha-desc">Z → A</option>
-                <option value="floor-asc">Floor: Low → High</option>
-                <option value="floor-desc">Floor: High → Low</option>
-                <option value="volume-desc">Volume: High → Low</option>
-                <option value="volume-asc">Volume: Low → High</option>
-                <option value="owners-desc">Owners %: High → Low</option>
-                <option value="owners-asc">Owners %: Low → High</option>
-                <option value="listed-desc">Listed %: High → Low</option>
-                <option value="listed-asc">Listed %: Low → High</option>
-                <option value="top12">Top 12 by Volume</option>
-              </select>
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              <div className="col-span-1">
+                <label className="block text-xs text-muted-foreground mb-1">Volume</label>
+                <div className="relative">
+                  <select
+                    value={volumeTimeframe}
+                    onChange={(e) => setVolumeTimeframe(e.target.value as any)}
+                    className="w-full text-xs bg-card text-foreground border border-border/30 rounded px-2 py-1 pr-7 focus:outline-none appearance-none"
+                  >
+                    <option value="24h">24h</option>
+                    <option value="7d">7d</option>
+                    <option value="30d">30d</option>
+                  </select>
+                  <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground">▾</span>
+                </div>
+              </div>
+              <div className="col-span-1">
+                <label className="block text-xs text-muted-foreground mb-1">Sort</label>
+                <div className="relative">
+                  <select
+                    value={collectionSort}
+                    onChange={(e) => setCollectionSort(e.target.value as any)}
+                    className="w-full text-xs bg-card text-foreground border border-border/30 rounded px-2 py-1 pr-7 focus:outline-none appearance-none"
+                  >
+                    <option value="alpha-asc">A → Z</option>
+                    <option value="alpha-desc">Z → A</option>
+                    <option value="floor-asc">Floor: Low → High</option>
+                    <option value="floor-desc">Floor: High → Low</option>
+                    <option value="volume-desc">Volume: High → Low</option>
+                    <option value="volume-asc">Volume: Low → High</option>
+                    <option value="owners-desc">Owners %: High → Low</option>
+                    <option value="owners-asc">Owners %: Low → High</option>
+                    <option value="listed-desc">Listed %: High → Low</option>
+                    <option value="listed-asc">Listed %: Low → High</option>
+                    <option value="top12">Top 12 by Volume</option>
+                  </select>
+                  <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground">▾</span>
+                </div>
+              </div>
               <button
                 onClick={() => {
                   setShowTop12InSidebar((v) => {
@@ -394,7 +464,7 @@ const NFTCollections: React.FC = () => {
               <h2 className="text-2xl font-bold text-foreground">NFT Marketplace</h2>
               <p className="text-muted-foreground">
                 {selectedCollections.length === 0 
-                  ? `Showing all ${filteredNfts.length} NFTs from ${collections.length} collections`
+                  ? `Showing all ${filteredNfts.length} NFTs from ${displayCollections.length} collections`
                   : `Showing ${filteredNfts.length} NFTs from ${selectedCollections.length} selected collection${selectedCollections.length > 1 ? 's' : ''}`
                 }
               </p>
@@ -418,10 +488,29 @@ const NFTCollections: React.FC = () => {
                 <div className="text-center py-12 text-muted-foreground">Loading NFTs...</div>
               ) : (
                 <div>
-                  <div className="text-xs text-muted-foreground mb-4">
-                    Debug: Showing {filteredNfts.length} NFTs | Loading: {nftsLoading.toString()} | All NFTs: {allNfts.length}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="text-xs text-muted-foreground">
+                      Debug: Showing {displayNfts.length} NFTs | Loading: {nftsLoading.toString()} | All NFTs: {allNfts.length}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs min-w-[200px]">
+                      <label className="text-muted-foreground">Sort NFTs:</label>
+                      <div className="relative w-40">
+                        <select
+                          value={nftSort}
+                          onChange={(e) => setNftSort(e.target.value as any)}
+                          className="w-full text-xs bg-card text-foreground border border-border/30 rounded px-2 py-1 pr-7 focus:outline-none appearance-none"
+                        >
+                          <option value="relevance-24h">Relevance: Top 24h</option>
+                          <option value="alpha-asc">A → Z</option>
+                          <option value="alpha-desc">Z → A</option>
+                          <option value="price-asc">Price: Low → High</option>
+                          <option value="price-desc">Price: High → Low</option>
+                        </select>
+                        <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground">▾</span>
+                      </div>
+                    </div>
                   </div>
-                  {filteredNfts.length === 0 ? (
+                  {displayNfts.length === 0 ? (
                     <div className="text-center py-12 text-muted-foreground">
                       {allNfts.length === 0 
                         ? 'No NFTs currently listed for sale' 
@@ -435,7 +524,7 @@ const NFTCollections: React.FC = () => {
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                      {filteredNfts.map((nft) => {
+                      {displayNfts.map((nft) => {
                         const collection = collections.find(c => c.contract_address === nft.collection_address);
                         return (
                           <div
@@ -470,7 +559,13 @@ const NFTCollections: React.FC = () => {
                                     {NFTApiService.formatPrice(nft.list_price.amount, 6)} ATOM
                                   </div>
                                   <div className="text-xs text-muted-foreground">
-                                    {nft.list_price.formatted_usd}
+                                    {(() => {
+                                      // Prefer computing USD using collection's ATOM price
+                                      const atomUsd = collection?.trading_asset?.price ? parseFloat(collection.trading_asset.price) : undefined;
+                                      const atomAmount = parseFloat(NFTApiService.formatPrice(nft.list_price.amount, 6));
+                                      const usd = atomUsd ? atomAmount * atomUsd : nft.list_price.amount_usd;
+                                      return usd ? usd.toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '$0.00';
+                                    })()}
                                   </div>
                                 </div>
                               )}
