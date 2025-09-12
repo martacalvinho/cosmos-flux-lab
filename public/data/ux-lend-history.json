@@ -1,0 +1,77 @@
+[
+  {
+    "timestamp": "2025-09-12T10:25:33.987Z",
+    "chain": "UX",
+    "asset": "ATOM",
+    "url": "https://app.ux.xyz/assets/ibc%2FC4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9",
+    "raw": {}
+  },
+  {
+    "timestamp": "2025-09-12T10:36:49.651Z",
+    "chain": "UX",
+    "asset": "ATOM",
+    "url": "https://app.ux.xyz/assets/ibc%2FC4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9",
+    "raw": {}
+  },
+  {
+    "timestamp": "2025-09-12T10:37:27.882Z",
+    "chain": "UX",
+    "asset": "ATOM",
+    "url": "https://app.ux.xyz/assets/ibc%2FC4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9",
+    "raw": {}
+  },
+  {
+    "timestamp": "2025-09-12T11:18:08.468Z",
+    "chain": "UX",
+    "asset": "ATOM",
+    "url": "https://app.ux.xyz/assets/ibc%2FC4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9",
+    "supplyApyPct": 46.32,
+    "borrowApyPct": 46.32,
+    "utilizationPct": 46.32,
+    "totalSupplyUsd": 4.64,
+    "totalBorrowUsd": 4.64,
+    "raw": {
+      "supplyApyTxt": "46.32%",
+      "borrowApyTxt": "46.32%",
+      "utilRateTxt": "46.32%",
+      "totalSupplyTxt": "$4.64",
+      "totalBorrowTxt": "$4.64"
+    }
+  },
+  {
+    "timestamp": "2025-09-12T11:46:25.882Z",
+    "chain": "UX",
+    "asset": "ATOM",
+    "url": "https://app.ux.xyz/assets/ibc%2FC4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9",
+    "supplyApyPct": 2.99,
+    "borrowApyPct": 8.38,
+    "utilizationPct": 46.32,
+    "totalSupplyUsd": 273702.76,
+    "totalBorrowUsd": 273702.76,
+    "raw": {
+      "supplyApyTxt": "2.99%",
+      "borrowApyTxt": "8.38%",
+      "utilRateTxt": "46.32%",
+      "totalSupplyTxt": "$273,702.76",
+      "totalBorrowTxt": "$273,702.76"
+    }
+  },
+  {
+    "timestamp": "2025-09-12T11:52:41.415Z",
+    "chain": "UX",
+    "asset": "ATOM",
+    "url": "https://app.ux.xyz/assets/ibc%2FC4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9",
+    "supplyApyPct": 2.99,
+    "borrowApyPct": 8.38,
+    "utilizationPct": 46.32,
+    "totalSupplyUsd": 273396.08,
+    "totalBorrowUsd": 126626.02,
+    "raw": {
+      "supplyApyTxt": "2.99%",
+      "borrowApyTxt": "8.38%",
+      "utilRateTxt": "46.32%",
+      "totalSupplyTxt": "$273,396.08",
+      "totalBorrowTxt": "$126,626.02"
+    }
+  }
+]
