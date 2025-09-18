@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Widget } from '@skip-go/widget';
+import { useWallet } from '@/context/WalletContext';
 
 interface SwapWidgetProps {
   children: React.ReactNode;
@@ -13,13 +14,31 @@ interface SwapWidgetProps {
 const SwapWidget = ({ children }: SwapWidgetProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [widgetKey, setWidgetKey] = useState(0);
+  const { address, client, walletType, chainId } = useWallet();
 
-  // Force widget re-render when dialog opens
+  // Force widget re-render when dialog opens or wallet changes
   useEffect(() => {
     if (isOpen) {
       setWidgetKey(prev => prev + 1);
     }
-  }, [isOpen]);
+  }, [isOpen, address, walletType, chainId]);
+
+  // Prepare connected addresses for Skip widget
+  const connectedAddresses = address ? { [chainId]: address } : undefined;
+
+  // Cosmos signer function for Skip widget
+  const getCosmosSigner = async () => {
+    if (!walletType || !chainId) {
+      throw new Error('No wallet connected');
+    }
+
+    const wallet = walletType === 'keplr' ? window.keplr : window.leap;
+    if (!wallet) {
+      throw new Error(`${walletType} wallet not found`);
+    }
+
+    return await wallet.getOfflineSigner(chainId);
+  };
 
   // Conditionally include Skip API credentials from env for testing
   const apiUrl = import.meta.env.VITE_SKIP_API_URL as string | undefined;
@@ -31,7 +50,7 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent noTransformCenter overlayClassName="z-0 pointer-events-none" className="z-10 max-w-xl bg-card border-border p-0 overflow-visible shadow-modal sm:rounded-lg">
+      <DialogContent noTransformCenter overlayClassName="z-[60] bg-black/50" className="z-[70] max-w-xl bg-card border-border p-0 overflow-visible shadow-modal sm:rounded-lg">
         <DialogHeader className="p-6 pb-4">
           <DialogTitle className="text-center text-xl font-semibold flex items-center justify-center gap-2">
             <ArrowLeftRight className="w-5 h-5 text-primary" />
@@ -57,7 +76,7 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
         {/* Widget Container */}
         <div className="px-6 pb-6">
           <div
-            className="w-full"
+            className="w-full relative"
             style={{
               width: '100%',
               height: '560px',
@@ -65,11 +84,22 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
             }}
           >
             {isOpen && (
-              <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+              <div 
+                style={{ width: '100%', height: '100%', position: 'relative' }}
+                data-skip-widget
+              >
                 <Widget
                   key={widgetKey}
                   apiUrl="https://api.skip.build"
                   apiKey="100dbe62-40a0-4d83-bdc8-7a69c55d352c"
+                  connectedAddresses={connectedAddresses}
+                  getCosmosSigner={address ? getCosmosSigner : undefined}
+                  onWalletConnected={(params) => {
+                    console.log('Skip widget wallet connected:', params);
+                  }}
+                  onWalletDisconnected={(params) => {
+                    console.log('Skip widget wallet disconnected:', params);
+                  }}
                   theme={{
                     brandColor: '#3366ff',
                     borderRadius: {
