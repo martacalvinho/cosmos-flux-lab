@@ -126,14 +126,14 @@ const StakingTab: React.FC<Props> = ({ searchTerm, showHidden = false }) => {
 
   const sortedValidators = [...filteredValidators].sort((a, b) => {
     if (sortBy === 'default') {
-      // Default sort: uptime desc, then voting power asc, then commission asc
+      // Default sort: uptime desc, then commission asc, then voting power asc
       const uptimeDiff = b.uptime - a.uptime;
       if (uptimeDiff !== 0) return uptimeDiff;
       
-      const votingPowerDiff = a.votingPower - b.votingPower;
-      if (votingPowerDiff !== 0) return votingPowerDiff;
+      const commissionDiff = a.commission - b.commission;
+      if (commissionDiff !== 0) return commissionDiff;
       
-      return a.commission - b.commission;
+      return a.votingPower - b.votingPower;
     }
     
     let comp = 0;
