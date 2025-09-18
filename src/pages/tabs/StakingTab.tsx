@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
@@ -6,19 +6,22 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CosmosHubService, HubValidator } from "@/services/cosmosHub";
+import { CosmosHubService, HubValidator, HubValidatorMetaMap } from "@/services/cosmosHub";
 
 const formatNumber = (n: number) => new Intl.NumberFormat("en-US").format(n);
 
 interface Props {
   searchTerm: string;
+  showHidden?: boolean;
 }
 
-const StakingTab: React.FC<Props> = ({ searchTerm }) => {
+const StakingTab: React.FC<Props> = ({ searchTerm, showHidden = false }) => {
   const [validators, setValidators] = useState<HubValidator[]>([]);
   const [loadingValidators, setLoadingValidators] = useState(false);
   const [logoMap, setLogoMap] = useState<Record<string, string | null>>({});
   const [loadingLogos, setLoadingLogos] = useState(false);
+  const [metadataMap, setMetadataMap] = useState<HubValidatorMetaMap>({});
+  const [loadingMetadata, setLoadingMetadata] = useState(false);
   const [sortBy, setSortBy] = useState<'default' | 'commission' | 'uptime' | 'votingPower'>('default');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
 
@@ -40,12 +43,19 @@ const StakingTab: React.FC<Props> = ({ searchTerm }) => {
   }, []);
 
   useEffect(() => {
-    if (!validators.length) { setLogoMap({}); return; }
+    if (!validators.length || Object.keys(metadataMap).length === 0) { 
+      setLogoMap({}); 
+      return; 
+    }
     let cancelled = false;
     (async () => {
       setLoadingLogos(true);
       try {
-        const logos = await CosmosHubService.fetchValidatorLogos(validators);
+        // Only fetch Keybase logos for validators that don't have pfp in metadata
+        const validatorsNeedingLogos = validators.filter(v => !metadataMap[v.operator_address]?.pfp);
+        const logos = validatorsNeedingLogos.length > 0 
+          ? await CosmosHubService.fetchValidatorLogos(validatorsNeedingLogos)
+          : {};
         if (!cancelled) setLogoMap(logos);
       } catch (e) {
         console.error('Failed to load validator logos', e);
@@ -55,22 +65,55 @@ const StakingTab: React.FC<Props> = ({ searchTerm }) => {
       }
     })();
     return () => { cancelled = true };
-  }, [validators]);
+  }, [validators, metadataMap]);
 
-  const filteredValidators = validators
-    .filter((v) => (v.description?.moniker || v.operator_address)
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-    )
-    .map((v) => ({
-      id: v.operator_address,
-      name: v.description?.moniker || v.operator_address,
-      logoUrl: logoMap[v.operator_address] ?? null,
-      commission: Number(v.commission?.commission_rates?.rate || '0') * 100,
-      uptime: 99,
-      status: "Active" as const,
-      votingPower: Math.round(Number(v.tokens || '0') / 1_000_000),
-    }));
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoadingMetadata(true);
+      try {
+        const metadata = await CosmosHubService.fetchValidatorMetadata('cosmoshub', 'active');
+        if (!cancelled) setMetadataMap(metadata);
+      } catch (e) {
+        console.error('Failed to load validator metadata', e);
+        if (!cancelled) setMetadataMap({});
+      } finally {
+        if (!cancelled) setLoadingMetadata(false);
+      }
+    })();
+    return () => { cancelled = true };
+  }, []);
+
+  const filteredValidators = useMemo(() => {
+    return validators
+      .filter((v) => {
+        // Filter by search term
+        const searchMatch = (v.description?.moniker || v.operator_address)
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+        
+        // Filter by hidden status
+        const metadata = metadataMap[v.operator_address];
+        const isHidden = metadata?.display === 'hidden';
+        const hiddenMatch = showHidden || !isHidden;
+        
+        return searchMatch && hiddenMatch;
+      })
+      .map((v) => {
+        const metadata = metadataMap[v.operator_address];
+        return {
+          id: v.operator_address,
+          name: v.description?.moniker || v.operator_address,
+          logoUrl: metadata?.pfp || logoMap[v.operator_address] || null,
+          commission: Number(v.commission?.commission_rates?.rate || '0') * 100,
+          uptime: 99,
+          status: "Active" as const,
+          votingPower: Math.round(Number(v.tokens || '0') / 1_000_000),
+          tags: metadata?.tags || [],
+          isHidden: metadata?.display === 'hidden',
+        };
+      });
+  }, [validators, searchTerm, showHidden, metadataMap, logoMap]);
 
   const handleSort = (key: 'commission' | 'uptime' | 'votingPower') => {
     if (sortBy === key) {
@@ -82,7 +125,17 @@ const StakingTab: React.FC<Props> = ({ searchTerm }) => {
   };
 
   const sortedValidators = [...filteredValidators].sort((a, b) => {
-    if (sortBy === 'default') return 0;
+    if (sortBy === 'default') {
+      // Default sort: uptime desc, then voting power asc, then commission asc
+      const uptimeDiff = b.uptime - a.uptime;
+      if (uptimeDiff !== 0) return uptimeDiff;
+      
+      const votingPowerDiff = a.votingPower - b.votingPower;
+      if (votingPowerDiff !== 0) return votingPowerDiff;
+      
+      return a.commission - b.commission;
+    }
+    
     let comp = 0;
     switch (sortBy) {
       case 'commission':
@@ -115,7 +168,7 @@ const StakingTab: React.FC<Props> = ({ searchTerm }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {loadingValidators ? (
+          {(loadingValidators || loadingMetadata) ? (
             <TableRow>
               <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">Loading…</TableCell>
             </TableRow>
@@ -134,9 +187,26 @@ const StakingTab: React.FC<Props> = ({ searchTerm }) => {
                       ) : null}
                       <AvatarFallback>{v.name.charAt(0)}</AvatarFallback>
                     </Avatar>
-                    <div>
-                      <div className="font-medium">{v.name}</div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <div className="font-medium">{v.name}</div>
+                        {v.isHidden && (
+                          <Badge variant="secondary" className="text-xs px-1 py-0">Hidden</Badge>
+                        )}
+                      </div>
                       <div className="text-xs text-muted-foreground">Cosmos Hub</div>
+                      {v.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {v.tags.slice(0, 3).map((tag, idx) => (
+                            <Badge key={idx} variant="outline" className="text-xs px-1 py-0">
+                              {tag}
+                            </Badge>
+                          ))}
+                          {v.tags.length > 3 && (
+                            <Badge variant="outline" className="text-xs px-1 py-0">+{v.tags.length - 3}</Badge>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </TableCell>

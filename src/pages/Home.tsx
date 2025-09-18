@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { Navigation } from "@/components/ui/layout/Navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
@@ -35,6 +37,7 @@ export const Home = () => {
   const [filterBy, setFilterBy] = useState<"all" | "active" | "paused">("all");
   const [sortBy, setSortBy] = useState("default");
   const [viewMode, setViewMode] = useState("card");
+  const [showHidden, setShowHidden] = useState(false);
   const { protocols: liquidityProtocols, isLoading: isLoadingPools, sortBy: liquiditySortBy, sortDir: liquiditySortDir, handleSort: handleLiquiditySort } = useLiquidityPools(activeTab);
   const { supplyApyPct: kavaSupplyApyPct } = useKavaLend();
 
@@ -166,6 +169,19 @@ export const Home = () => {
                           className="bg-surface border-border"
                         />
                       </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="show-hidden"
+                          checked={showHidden}
+                          onCheckedChange={setShowHidden}
+                        />
+                        <Label
+                          htmlFor="show-hidden"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          Show hidden
+                        </Label>
+                      </div>
                     </>
                   ) : (
                     <>
@@ -289,7 +305,7 @@ export const Home = () => {
             </div>
 
             {activeTab === "staking" ? (
-              <StakingTab searchTerm={searchTerm} />
+              <StakingTab searchTerm={searchTerm} showHidden={showHidden} />
             ) : activeTab === "liquid-staking" ? (
               <LiquidStakingTab 
                 protocols={filteredProtocols} 
