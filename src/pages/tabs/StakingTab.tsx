@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CosmosHubService, HubValidator, HubValidatorMetaMap } from "@/services/cosmosHub";
+import DelegationModal from "@/components/DelegationModal";
+import { useWallet } from "@/context/WalletContext";
 
 const formatNumber = (n: number) => new Intl.NumberFormat("en-US").format(n);
 
@@ -24,6 +26,9 @@ const StakingTab: React.FC<Props> = ({ searchTerm, showHidden = false }) => {
   const [loadingMetadata, setLoadingMetadata] = useState(false);
   const [sortBy, setSortBy] = useState<'default' | 'commission' | 'uptime' | 'votingPower'>('default');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
+  const [selectedValidator, setSelectedValidator] = useState<any>(null);
+  const [isDelegationModalOpen, setIsDelegationModalOpen] = useState(false);
+  const { address } = useWallet();
 
   useEffect(() => {
     let cancelled = false;
@@ -149,91 +154,113 @@ const StakingTab: React.FC<Props> = ({ searchTerm, showHidden = false }) => {
   });
 
   return (
-    <Card className="overflow-hidden">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Validator</TableHead>
-            <TableHead onClick={() => handleSort('commission')} className="cursor-pointer select-none">
-              Commission {sortBy === 'commission' ? (sortDir === 'desc' ? '▼' : '▲') : ''}
-            </TableHead>
-            <TableHead onClick={() => handleSort('uptime')} className="cursor-pointer select-none">
-              Uptime {sortBy === 'uptime' ? (sortDir === 'desc' ? '▼' : '▲') : ''}
-            </TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead onClick={() => handleSort('votingPower')} className="cursor-pointer select-none">
-              Voting Power {sortBy === 'votingPower' ? (sortDir === 'desc' ? '▼' : '▲') : ''}
-            </TableHead>
-            <TableHead>Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {(loadingValidators || loadingMetadata) ? (
+    <>
+      <Card className="overflow-hidden">
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">Loading…</TableCell>
+              <TableHead>Validator</TableHead>
+              <TableHead onClick={() => handleSort('commission')} className="cursor-pointer select-none">
+                Commission {sortBy === 'commission' ? (sortDir === 'desc' ? '▼' : '▲') : ''}
+              </TableHead>
+              <TableHead onClick={() => handleSort('uptime')} className="cursor-pointer select-none">
+                Uptime {sortBy === 'uptime' ? (sortDir === 'desc' ? '▼' : '▲') : ''}
+              </TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead onClick={() => handleSort('votingPower')} className="cursor-pointer select-none">
+                Voting Power {sortBy === 'votingPower' ? (sortDir === 'desc' ? '▼' : '▲') : ''}
+              </TableHead>
+              <TableHead>Action</TableHead>
             </TableRow>
-          ) : sortedValidators.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">No validators found</TableCell>
-            </TableRow>
-          ) : (
-            sortedValidators.map((v) => (
-              <TableRow key={v.id}>
-                <TableCell>
-                  <div className="flex items-center gap-3">
-                    <Avatar className="h-8 w-8">
-                      {v.logoUrl ? (
-                        <AvatarImage src={v.logoUrl} alt={v.name} />
-                      ) : null}
-                      <AvatarFallback>{v.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <div className="font-medium">{v.name}</div>
-                        {v.isHidden && (
-                          <Badge variant="secondary" className="text-xs px-1 py-0">Hidden</Badge>
-                        )}
-                      </div>
-                      <div className="text-xs text-muted-foreground">Cosmos Hub</div>
-                      {v.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-1">
-                          {v.tags.slice(0, 3).map((tag, idx) => (
-                            <Badge key={idx} variant="outline" className="text-xs px-1 py-0">
-                              {tag}
-                            </Badge>
-                          ))}
-                          {v.tags.length > 3 && (
-                            <Badge variant="outline" className="text-xs px-1 py-0">+{v.tags.length - 3}</Badge>
+          </TableHeader>
+          <TableBody>
+            {(loadingValidators || loadingMetadata) ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">Loading…</TableCell>
+              </TableRow>
+            ) : sortedValidators.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">No validators found</TableCell>
+              </TableRow>
+            ) : (
+              sortedValidators.map((v) => (
+                <TableRow key={v.id}>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <Avatar className="h-8 w-8">
+                        {v.logoUrl ? (
+                          <AvatarImage src={v.logoUrl} alt={v.name} />
+                        ) : null}
+                        <AvatarFallback>{v.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <div className="font-medium">{v.name}</div>
+                          {v.isHidden && (
+                            <Badge variant="secondary" className="text-xs px-1 py-0">Hidden</Badge>
                           )}
                         </div>
-                      )}
+                        <div className="text-xs text-muted-foreground">Cosmos Hub</div>
+                        {v.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {v.tags.slice(0, 3).map((tag, idx) => (
+                              <Badge key={idx} variant="outline" className="text-xs px-1 py-0">
+                                {tag}
+                              </Badge>
+                            ))}
+                            {v.tags.length > 3 && (
+                              <Badge variant="outline" className="text-xs px-1 py-0">+{v.tags.length - 3}</Badge>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </TableCell>
-                <TableCell>{v.commission.toFixed(2).replace(/\.00$/, '')}%</TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-2">
-                    <Progress value={v.uptime} className="h-2" />
-                    <span className="text-xs text-muted-foreground">{v.uptime}%</span>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Badge variant="outline" className={cn(
-                    'text-green-500 border-green-500/30 bg-green-500/10'
-                  )}>
-                    Active
-                  </Badge>
-                </TableCell>
-                <TableCell>{formatNumber(v.votingPower)} ATOM</TableCell>
-                <TableCell>
-                  <Button size="sm" variant="outline">Delegate</Button>
-                </TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
-    </Card>
+                  </TableCell>
+                  <TableCell>{v.commission.toFixed(2).replace(/\.00$/, '')}%</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Progress value={v.uptime} className="h-2" />
+                      <span className="text-xs text-muted-foreground">{v.uptime}%</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className={cn(
+                      'text-green-500 border-green-500/30 bg-green-500/10'
+                    )}>
+                      Active
+                    </Badge>
+                  </TableCell>
+                  <TableCell>{formatNumber(v.votingPower)} ATOM</TableCell>
+                  <TableCell>
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => {
+                        setSelectedValidator(v);
+                        setIsDelegationModalOpen(true);
+                      }}
+                      disabled={!address}
+                    >
+                      Delegate
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </Card>
+      
+      <DelegationModal
+        isOpen={isDelegationModalOpen}
+        onClose={() => {
+          setIsDelegationModalOpen(false);
+          setSelectedValidator(null);
+        }}
+        validator={selectedValidator}
+        availableBalance="1000000" // TODO: Fetch actual balance
+      />
+    </>
   );
 };
 
