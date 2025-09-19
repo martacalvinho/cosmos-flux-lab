@@ -50,7 +50,12 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent noTransformCenter overlayClassName="z-[60] bg-black/50" className="z-[70] max-w-xl bg-card border-border p-0 overflow-visible shadow-modal sm:rounded-lg">
+      <DialogContent 
+        noTransformCenter 
+        overlayClassName="z-[60] bg-black/50" 
+        className="z-[70] max-w-xl bg-card border-border p-0 overflow-visible shadow-modal sm:rounded-lg"
+        onPointerDownOutside={(e) => e.preventDefault()}
+      >
         <DialogHeader className="p-6 pb-4">
           <DialogTitle className="text-center text-xl font-semibold flex items-center justify-center gap-2">
             <ArrowLeftRight className="w-5 h-5 text-primary" />
