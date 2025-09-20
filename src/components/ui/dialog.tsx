@@ -30,12 +30,13 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 interface DialogContentProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
   overlayClassName?: string
   noTransformCenter?: boolean
+  hideClose?: boolean
 }
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogContentProps
->(({ className, children, overlayClassName, noTransformCenter, ...props }, ref) => {
+>(({ className, children, overlayClassName, noTransformCenter, hideClose, ...props }, ref) => {
   if (noTransformCenter) {
     return (
       <DialogPortal>
@@ -50,10 +51,12 @@ const DialogContent = React.forwardRef<
             className
           )}>
             {children}
-            <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-              <X className="h-4 w-4" />
-              <span className="sr-only">Close</span>
-            </DialogPrimitive.Close>
+            {!hideClose && (
+              <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close</span>
+              </DialogPrimitive.Close>
+            )}
           </div>
         </DialogPrimitive.Content>
       </DialogPortal>
@@ -72,10 +75,12 @@ const DialogContent = React.forwardRef<
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </DialogPrimitive.Close>
+        {!hideClose && (
+          <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </DialogPrimitive.Close>
+        )}
       </DialogPrimitive.Content>
     </DialogPortal>
   );

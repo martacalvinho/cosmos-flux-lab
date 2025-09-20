@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ArrowLeftRight } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -76,9 +76,10 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
       <DialogContent 
         overlayClassName="z-[60] bg-black/50" 
         className="z-[70] max-w-[95vw] sm:max-w-xl bg-card border-border p-0 overflow-visible shadow-modal sm:rounded-lg"
+        hideClose
         onPointerDownOutside={(e) => e.preventDefault()}
       >
-        <DialogHeader className="p-6 pb-4">
+        <DialogHeader className="p-6 pb-4 relative">
           <DialogTitle className="text-center text-xl font-semibold flex items-center justify-center gap-2">
             <ArrowLeftRight className="w-5 h-5 text-primary" />
             Cross-Chain Swap
@@ -86,6 +87,10 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
               Skip.go
             </Badge>
           </DialogTitle>
+          <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+            <span className="sr-only">Close</span>
+            ✕
+          </DialogClose>
         </DialogHeader>
         
         {/* Fee Notice */}

@@ -158,7 +158,7 @@ export const Home = () => {
                     <p className="text-sm text-muted-foreground">{categoryInfo.description}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 w-full md:w-auto">
+                <div className="w-full">
                   {activeTab === 'staking' ? (
                     <>
                       <div className="flex-1 max-w-md">
@@ -169,11 +169,11 @@ export const Home = () => {
                           className="bg-surface border-border"
                         />
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 mt-2 md:mt-0">
                         <Checkbox
                           id="show-hidden"
                           checked={showHidden}
-                          onCheckedChange={setShowHidden}
+                          onCheckedChange={(v) => setShowHidden(Boolean(v))}
                         />
                         <Label
                           htmlFor="show-hidden"
@@ -185,119 +185,121 @@ export const Home = () => {
                     </>
                   ) : (
                     <>
-                      <div className="flex-1 max-w-md">
+                      <div className="flex-1 max-w-full">
                         <Input
                           placeholder={`Search ${categoryInfo.title.toLowerCase()} protocols...`}
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
-                          className="bg-surface border-border"
+                          className="bg-surface border-border w-full"
                         />
                       </div>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="secondary" className="gap-2 bg-surface border-border">
-                            <Filter className="h-4 w-4" />
-                            Filter: {filterBy === "all" ? "All" : filterBy.charAt(0).toUpperCase() + filterBy.slice(1)}
-                            <ChevronDown className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="bg-background border-border">
-                          <DropdownMenuItem onClick={() => setFilterBy("all")}>
-                            All Protocols
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => setFilterBy("active")}>
-                            Active Only
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => setFilterBy("paused")}>
-                            Paused Only
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                      {activeTab === "liquidity" ? (
-                        <div className="flex items-center gap-2 bg-surface border border-border rounded-lg p-1">
-                          <Button
-                            variant={liquiditySortBy === 'apy' ? 'default' : 'ghost'}
-                            size="sm"
-                            className="gap-1 text-xs"
-                            onClick={() => handleLiquiditySort('apy')}
-                          >
-                            APY
-                            {liquiditySortBy === 'apy' && (
-                              <span className="text-xs">
-                                {liquiditySortDir === 'desc' ? '▼' : '▲'}
-                              </span>
-                            )}
-                          </Button>
-                          <Button
-                            variant={liquiditySortBy === 'pair' ? 'default' : 'ghost'}
-                            size="sm"
-                            className="gap-1 text-xs"
-                            onClick={() => handleLiquiditySort('pair')}
-                          >
-                            Pair
-                            {liquiditySortBy === 'pair' && (
-                              <span className="text-xs">
-                                {liquiditySortDir === 'desc' ? '▼' : '▲'}
-                              </span>
-                            )}
-                          </Button>
-                          <Button
-                            variant={liquiditySortBy === 'tvl' ? 'default' : 'ghost'}
-                            size="sm"
-                            className="gap-1 text-xs"
-                            onClick={() => handleLiquiditySort('tvl')}
-                          >
-                            TVL
-                            {liquiditySortBy === 'tvl' && (
-                              <span className="text-xs">
-                                {liquiditySortDir === 'desc' ? '▼' : '▲'}
-                              </span>
-                            )}
-                          </Button>
-                          <Button
-                            variant={liquiditySortBy === 'volume' ? 'default' : 'ghost'}
-                            size="sm"
-                            className="gap-1 text-xs"
-                            onClick={() => handleLiquiditySort('volume')}
-                          >
-                            Volume
-                            {liquiditySortBy === 'volume' && (
-                              <span className="text-xs">
-                                {liquiditySortDir === 'desc' ? '▼' : '▲'}
-                              </span>
-                            )}
-                          </Button>
-                        </div>
-                      ) : (
+                      <div className="mt-2 md:mt-0 flex items-center gap-2 overflow-x-auto no-scrollbar whitespace-nowrap -mx-2 px-2">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="secondary" className="gap-2 bg-surface border-border">
-                              <SortDesc className="h-4 w-4" />
-                              Sort: {sortBy === "default" ? "Default" : sortBy === "apr" ? "APR" : "TVL"}
+                            <Button variant="secondary" className="gap-2 bg-surface border-border shrink-0">
+                              <Filter className="h-4 w-4" />
+                              <span className="hidden sm:inline">Filter: </span>{filterBy === "all" ? "All" : filterBy.charAt(0).toUpperCase() + filterBy.slice(1)}
                               <ChevronDown className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent className="bg-background border-border">
-                            <DropdownMenuItem onClick={() => setSortBy("default")}>
-                              Default Order
+                            <DropdownMenuItem onClick={() => setFilterBy("all")}>
+                              All Protocols
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setSortBy("apr")}>
-                              Sort by APR/APY
+                            <DropdownMenuItem onClick={() => setFilterBy("active")}>
+                              Active Only
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setSortBy("tvl")}>
-                              Sort by TVL
+                            <DropdownMenuItem onClick={() => setFilterBy("paused")}>
+                              Paused Only
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
-                      )}
-                      <Button 
-                        variant={viewMode === "list" ? "default" : "outline"} 
-                        className="gap-2"
-                        onClick={() => setViewMode(viewMode === "card" ? "list" : "card")}
-                      >
-                        {viewMode === "card" ? <List className="h-4 w-4" /> : <Grid3X3 className="h-4 w-4" />}
-                        {viewMode === "card" ? "View as List" : "View as Cards"}
-                      </Button>
+                        {activeTab === "liquidity" ? (
+                          <div className="flex items-center gap-2 bg-surface border border-border rounded-lg p-1 shrink-0">
+                            <Button
+                              variant={liquiditySortBy === 'apy' ? 'default' : 'ghost'}
+                              size="sm"
+                              className="gap-1 text-xs"
+                              onClick={() => handleLiquiditySort('apy')}
+                            >
+                              APY
+                              {liquiditySortBy === 'apy' && (
+                                <span className="text-xs">
+                                  {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                                </span>
+                              )}
+                            </Button>
+                            <Button
+                              variant={liquiditySortBy === 'pair' ? 'default' : 'ghost'}
+                              size="sm"
+                              className="gap-1 text-xs"
+                              onClick={() => handleLiquiditySort('pair')}
+                            >
+                              Pair
+                              {liquiditySortBy === 'pair' && (
+                                <span className="text-xs">
+                                  {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                                </span>
+                              )}
+                            </Button>
+                            <Button
+                              variant={liquiditySortBy === 'tvl' ? 'default' : 'ghost'}
+                              size="sm"
+                              className="gap-1 text-xs"
+                              onClick={() => handleLiquiditySort('tvl')}
+                            >
+                              TVL
+                              {liquiditySortBy === 'tvl' && (
+                                <span className="text-xs">
+                                  {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                                </span>
+                              )}
+                            </Button>
+                            <Button
+                              variant={liquiditySortBy === 'volume' ? 'default' : 'ghost'}
+                              size="sm"
+                              className="gap-1 text-xs"
+                              onClick={() => handleLiquiditySort('volume')}
+                            >
+                              Volume
+                              {liquiditySortBy === 'volume' && (
+                                <span className="text-xs">
+                                  {liquiditySortDir === 'desc' ? '▼' : '▲'}
+                                </span>
+                              )}
+                            </Button>
+                          </div>
+                        ) : (
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="secondary" className="gap-2 bg-surface border-border shrink-0">
+                                <SortDesc className="h-4 w-4" />
+                                <span className="hidden sm:inline">Sort: </span>{sortBy === "default" ? "Default" : sortBy === "apr" ? "APR" : "TVL"}
+                                <ChevronDown className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="bg-background border-border">
+                              <DropdownMenuItem onClick={() => setSortBy("default")}>
+                                Default Order
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => setSortBy("apr")}>
+                                Sort by APR/APY
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => setSortBy("tvl")}>
+                                Sort by TVL
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        )}
+                        <Button 
+                          variant={viewMode === "list" ? "default" : "outline"} 
+                          className="gap-2 shrink-0"
+                          onClick={() => setViewMode(viewMode === "card" ? "list" : "card")}
+                        >
+                          {viewMode === "card" ? <List className="h-4 w-4" /> : <Grid3X3 className="h-4 w-4" />}
+                          <span className="hidden sm:inline">{viewMode === "card" ? "View as List" : "View as Cards"}</span>
+                        </Button>
+                      </div>
                     </>
                   )}
                 </div>

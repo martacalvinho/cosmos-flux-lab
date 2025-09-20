@@ -3,6 +3,8 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { NFTApiService, Collection, NFTToken } from '@/services/nftApi';
 import { ExternalLink, Filter } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 
 const NFTCollections: React.FC = () => {
   const [collections, setCollections] = useState<Collection[]>([]);
@@ -276,9 +278,9 @@ const NFTCollections: React.FC = () => {
 
 
   return (
-    <div className="flex gap-6 h-full">
-      {/* Left Sidebar - Collections Filter */}
-      <div className="w-80 min-w-0 flex-shrink-0">
+    <div className="flex flex-col md:flex-row gap-6 h-full">
+      {/* Left Sidebar - Collections Filter (hidden on mobile) */}
+      <div className="hidden md:block w-80 min-w-0 flex-shrink-0">
         <Card className="backdrop-blur-sm bg-card/80 border-border/30 shadow-table h-full">
           <div className="p-4 border-b border-border/20">
             <div className="flex items-center gap-2 mb-2">
@@ -463,25 +465,170 @@ const NFTCollections: React.FC = () => {
             <div>
               <h2 className="text-2xl font-bold text-foreground">NFT Marketplace</h2>
               <p className="text-muted-foreground">
-                {selectedCollections.length === 0 
+                {selectedCollections.length === 0
                   ? `Showing all ${filteredNfts.length} NFTs from ${displayCollections.length} collections`
                   : `Showing ${filteredNfts.length} NFTs from ${selectedCollections.length} selected collection${selectedCollections.length > 1 ? 's' : ''}`
                 }
               </p>
             </div>
-            {selectedCollections.length > 0 && (
-              <button
-                onClick={() => {
-                  setSelectedCollections([]);
-                  setFilteredNfts(allNfts);
-                }}
-                className="px-3 py-1 text-sm bg-muted/20 hover:bg-muted/30 rounded-lg transition-colors"
-              >
-                Clear Filters
-              </button>
-            )}
+            <div className="flex items-center gap-2">
+              {selectedCollections.length > 0 && (
+                <button
+                  onClick={() => {
+                    setSelectedCollections([]);
+                    setFilteredNfts(allNfts);
+                  }}
+                  className="px-3 py-1 text-sm bg-muted/20 hover:bg-muted/30 rounded-lg transition-colors"
+                >
+                  Clear Filters
+                </button>
+              )}
+              {/* Mobile Filters trigger */}
+              <div className="md:hidden">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" size="sm" className="gap-2">
+                      <Filter className="w-4 h-4" />
+                      Filters
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-lg w-[95vw] p-0">
+                    <DialogHeader className="p-4 pb-2 relative">
+                      <DialogTitle className="text-left text-base">Filter NFTs</DialogTitle>
+                      <DialogClose className="absolute right-4 top-4 opacity-70 hover:opacity-100">✕</DialogClose>
+                    </DialogHeader>
+                    <div className="px-4 pb-4 max-h-[70vh] overflow-y-auto space-y-3">
+                      {/* Search */}
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          value={searchText}
+                          onChange={(e) => setSearchText(e.target.value)}
+                          placeholder="Search collections..."
+                          className="w-full text-sm bg-transparent border border-border/30 rounded px-2 py-2 focus:outline-none"
+                        />
+                      </div>
+                      {/* Categories Dropdown */}
+                      <div className="relative">
+                        <button
+                          onClick={() => setShowCategoryDropdown((v) => !v)}
+                          className="text-sm px-3 py-2 rounded border bg-muted/10 border-border/30 hover:bg-muted/20 w-full text-left"
+                          aria-haspopup="listbox"
+                          aria-expanded={showCategoryDropdown}
+                        >
+                          {selectedCategories.length > 0 ? `Categories (${selectedCategories.length})` : 'Categories'}
+                        </button>
+                        {showCategoryDropdown && (
+                          <div className="absolute z-10 mt-2 w-full bg-background border border-border/30 rounded shadow-lg p-2">
+                            <div className="max-h-48 overflow-y-auto pr-1">
+                              {uniqueCategories.map((cat) => (
+                                <label key={cat} className="flex items-center gap-2 px-2 py-1 text-sm hover:bg-muted/10 rounded cursor-pointer">
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedCategories.includes(cat)}
+                                    onChange={() => setSelectedCategories((prev) => prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat])}
+                                  />
+                                  <span>{cat}</span>
+                                </label>
+                              ))}
+                            </div>
+                            <div className="flex items-center justify-between mt-2">
+                              <button onClick={() => setSelectedCategories([])} className="text-[11px] px-2 py-1 rounded border bg-muted/10 border-border/30 hover:bg-muted/20">Clear</button>
+                              <button onClick={() => setShowCategoryDropdown(false)} className="text-[11px] px-2 py-1 rounded border bg-muted/10 border-border/30 hover:bg-muted/20">Done</button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      {/* Volume timeframe / Sort / Top 12 */}
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <label className="block text-xs text-muted-foreground mb-1">Volume</label>
+                          <div className="relative">
+                            <select
+                              value={volumeTimeframe}
+                              onChange={(e) => setVolumeTimeframe(e.target.value as any)}
+                              className="w-full text-sm bg-card text-foreground border border-border/30 rounded px-2 py-2 pr-7 focus:outline-none appearance-none"
+                            >
+                              <option value="24h">24h</option>
+                              <option value="7d">7d</option>
+                              <option value="30d">30d</option>
+                            </select>
+                            <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground">▾</span>
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-xs text-muted-foreground mb-1">Sort</label>
+                          <div className="relative">
+                            <select
+                              value={collectionSort}
+                              onChange={(e) => setCollectionSort(e.target.value as any)}
+                              className="w-full text-sm bg-card text-foreground border border-border/30 rounded px-2 py-2 pr-7 focus:outline-none appearance-none"
+                            >
+                              <option value="alpha-asc">A → Z</option>
+                              <option value="alpha-desc">Z → A</option>
+                              <option value="floor-asc">Floor: Low → High</option>
+                              <option value="floor-desc">Floor: High → Low</option>
+                              <option value="volume-desc">Volume: High → Low</option>
+                              <option value="volume-asc">Volume: Low → High</option>
+                              <option value="owners-desc">Owners %: High → Low</option>
+                              <option value="owners-asc">Owners %: Low → High</option>
+                              <option value="listed-desc">Listed %: High → Low</option>
+                              <option value="listed-asc">Listed %: Low → High</option>
+                              <option value="top12">Top 12 by Volume</option>
+                            </select>
+                            <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground">▾</span>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => {
+                            setShowTop12InSidebar((v) => {
+                              const next = !v;
+                              if (next) {
+                                const top = [...collections]
+                                  .sort((a, b) => getVolume(b) - getVolume(a))
+                                  .slice(0, 12)
+                                  .map((c) => c.contract_address);
+                                setSelectedCollections(top);
+                              } else {
+                                setSelectedCollections([]);
+                              }
+                              return next;
+                            });
+                          }}
+                          className={`col-span-2 text-sm px-3 py-2 rounded border transition-colors ${showTop12InSidebar ? 'bg-primary/10 border-primary/30' : 'bg-muted/10 border-border/30 hover:bg-muted/20'}`}
+                          title="Toggle Top 12 by Volume"
+                        >
+                          Top 12
+                        </button>
+                      </div>
+                      {/* Collections list */}
+                      <div className="space-y-2 max-h-[40vh] overflow-y-auto">
+                        {displayCollections.map((collection) => (
+                          <div
+                            key={collection.contract_address}
+                            onClick={() => handleCollectionFilter(collection.contract_address)}
+                            className={`p-2 rounded-lg border cursor-pointer transition-colors ${selectedCollections.includes(collection.contract_address) ? 'bg-primary/10 border-primary/30' : 'bg-muted/5 border-border/20 hover:bg-muted/10'}`}
+                          >
+                            <div className="flex items-center justify-between gap-2">
+                              <div className="text-sm font-medium truncate">{collection.name}</div>
+                              <a href={`https://www.stargaze.zone/m/${collection.contract_address}`} target="_blank" rel="noopener noreferrer" className="text-primary">
+                                <ExternalLink className="w-3 h-3" />
+                              </a>
+                            </div>
+                            <div className="text-[11px] text-muted-foreground">
+                              Floor: {collection.floor_price.formatted} {collection.floor_price.symbol}
+                              <span className="mx-1">•</span>
+                              Vol {volumeTimeframe}: {getFormattedVolume(collection)}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
           </div>
-
           <Card className="backdrop-blur-sm bg-card/80 border-border/30 shadow-table">
             <div className="p-6">
               {nftsLoading ? (
