@@ -75,11 +75,11 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
       </DialogTrigger>
       <DialogContent 
         overlayClassName="z-[60] bg-black/50" 
-        className="z-[70] max-w-[95vw] sm:max-w-xl bg-card border-border p-0 overflow-visible shadow-modal sm:rounded-lg"
+        className="z-[70] max-w-[95vw] sm:max-w-xl bg-card border-border p-0 shadow-modal sm:rounded-lg max-h-[90vh] overflow-y-auto flex flex-col"
         hideClose
         onPointerDownOutside={(e) => e.preventDefault()}
       >
-        <DialogHeader className="p-6 pb-4 relative">
+        <DialogHeader className="sticky top-0 z-20 bg-card p-4 sm:p-6 pb-4 border-b border-border/20 relative">
           <DialogTitle className="text-center text-xl font-semibold flex items-center justify-center gap-2">
             <ArrowLeftRight className="w-5 h-5 text-primary" />
             Cross-Chain Swap
@@ -93,8 +93,8 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
           </DialogClose>
         </DialogHeader>
         
-        {/* Fee Notice */}
-        <div className="px-6">
+        {/* Scrollable body */}
+        <div className="px-4 sm:px-6">
           <Card className="p-3 mb-4 bg-primary/10 border-primary/20">
             <div className="text-sm text-foreground">
               <div className="font-medium mb-1">Service Fee: 0.75%</div>
@@ -114,7 +114,7 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
             className="w-full relative"
             style={{
               width: '100%',
-              height: `${Math.min(560, Math.max(420, Math.floor(viewportH * 0.8)))}px`,
+              height: `${Math.min(560, Math.max(400, Math.floor(viewportH * 0.75)))}px`,
               position: 'relative'
             }}
           >
@@ -278,7 +278,7 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
         </div>
 
         {/* Footer */}
-        <div className="px-6 pb-6 pt-2 border-t border-border/20">
+        <div className="sticky bottom-0 bg-card px-4 sm:px-6 pb-6 pt-2 border-t border-border/20">
           <div className="text-xs text-muted-foreground text-center">
             Powered by{' '}
             <a
