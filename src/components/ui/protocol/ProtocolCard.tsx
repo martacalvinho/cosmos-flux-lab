@@ -2,6 +2,7 @@ import { ExternalLink, Info } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useAtomBalanceCheck } from "@/hooks/useAtomBalanceCheck";
 
 export interface ProtocolCardProps {
   category: "staking" | "liquid-staking" | "liquidity" | "lending" | "perps";
@@ -26,6 +27,7 @@ export interface ProtocolCardProps {
 
 export const ProtocolCard = ({ 
   category,
+  chain,
   title, 
   assets,
   metrics,
@@ -34,6 +36,14 @@ export const ProtocolCard = ({
   dataSource,
   lastUpdated
 }: ProtocolCardProps) => {
+  const { ensureEnoughAtomThen, modal } = useAtomBalanceCheck();
+
+  const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement>, href?: string) => {
+    if (!href || href === '#') return;
+    if (category !== 'liquidity') return; // Only gate liquidity pool/app clicks
+    e.preventDefault();
+    ensureEnoughAtomThen(href, chain);
+  };
   // Helpers for header styling
   const pillClasses = (cat: ProtocolCardProps["category"]) => {
     switch (cat) {
@@ -68,6 +78,7 @@ export const ProtocolCard = ({
   };
 
   return (
+    <>
     <Card className="p-6 shadow-card border-border hover:shadow-elevated transition-all duration-200">
       {/* Header */}
       <div className="flex flex-wrap items-start gap-3 mb-4">
@@ -108,7 +119,13 @@ export const ProtocolCard = ({
         <div className="flex gap-1 flex-none ml-auto">
           {links.app && (
             <Button size="sm" variant="outline" asChild>
-              <a href={links.app} target="_blank" rel="noopener noreferrer" aria-label="Open App">
+              <a
+                href={links.app}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open App"
+                onClick={(e) => handleNavigate(e, links.app)}
+              >
                 <ExternalLink className="h-3 w-3" />
               </a>
             </Button>
@@ -141,7 +158,7 @@ export const ProtocolCard = ({
       </div>
 
       {/* Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
         {Object.entries(metrics)
           .filter(([key]) => key !== 'Chain')
           .map(([key, value]) => (
@@ -165,21 +182,33 @@ export const ProtocolCard = ({
 
       {/* Footer: only action buttons */}
       <div className="flex items-center justify-end pt-4 border-t border-border">
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {links.pool && (
             <Button size="sm" variant="outline" asChild>
-              <a href={links.pool} target="_blank" rel="noopener noreferrer">
+              <a
+                href={links.pool}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => handleNavigate(e, links.pool!)}
+              >
                 Direct Pool
               </a>
             </Button>
           )}
           <Button size="sm" variant={category} asChild>
-            <a href={links.app ?? '#'} target="_blank" rel="noopener noreferrer">
+            <a
+              href={links.app ?? '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => handleNavigate(e, links.app)}
+            >
               Open App
             </a>
           </Button>
         </div>
       </div>
     </Card>
+    {modal}
+    </>
   );
 };

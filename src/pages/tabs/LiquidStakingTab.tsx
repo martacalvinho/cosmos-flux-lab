@@ -35,7 +35,8 @@ const LiquidStakingTab: React.FC<LiquidStakingTabProps> = ({ protocols }) => {
 
   return (
     <Card className="overflow-hidden">
-      <Table>
+      <div className="overflow-x-auto no-scrollbar">
+      <Table className="min-w-[900px]">
         <TableHeader>
           <TableRow>
             <TableHead>Platform</TableHead>
@@ -104,6 +105,7 @@ const LiquidStakingTab: React.FC<LiquidStakingTabProps> = ({ protocols }) => {
           })}
         </TableBody>
       </Table>
+      </div>
     </Card>
   );
 };

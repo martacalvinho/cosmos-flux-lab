@@ -9,11 +9,23 @@ import { useWallet } from '@/context/WalletContext';
 
 interface SwapWidgetProps {
   children: React.ReactNode;
+  destChainId?: string; // e.g. 'osmosis-1', 'neutron-1', 'cosmoshub-4'
+  destAtomDenom?: string; // optional override of ATOM denom on dest chain
 }
 
-const SwapWidget = ({ children }: SwapWidgetProps) => {
+const ATOM_IBC_ON_OSMOSIS = 'ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2';
+const ATOM_IBC_ON_NEUTRON = 'ibc/C4CFF46FD6DE35CA4CF4CE031E643C8FDC9BA4B99AE598E9B0ED98FE3A2319F9';
+
+const ATOM_DENOM_BY_CHAIN: Record<string, string> = {
+  'cosmoshub-4': 'uatom',
+  'osmosis-1': ATOM_IBC_ON_OSMOSIS,
+  'neutron-1': ATOM_IBC_ON_NEUTRON,
+};
+
+const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [widgetKey, setWidgetKey] = useState(0);
+  const [viewportH, setViewportH] = useState<number>(typeof window !== 'undefined' ? window.innerHeight : 800);
   const { address, client, walletType, chainId } = useWallet();
 
   // Force widget re-render when dialog opens or wallet changes
@@ -23,8 +35,19 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
     }
   }, [isOpen, address, walletType, chainId]);
 
+  // Track viewport height for responsive widget sizing
+  useEffect(() => {
+    const onResize = () => setViewportH(window.innerHeight);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   // Prepare connected addresses for Skip widget
-  const connectedAddresses = address ? { [chainId]: address } : undefined;
+  const connectedAddresses = address && chainId ? { [chainId]: address } : undefined;
+
+  const defaultDestChainId = destChainId || 'osmosis-1';
+  const defaultDestDenom = destAtomDenom || ATOM_DENOM_BY_CHAIN[defaultDestChainId] || 'uatom';
+  const defaultSrcChainId = chainId || 'cosmoshub-4';
 
   // Cosmos signer function for Skip widget
   const getCosmosSigner = async () => {
@@ -52,7 +75,7 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
       </DialogTrigger>
       <DialogContent 
         overlayClassName="z-[60] bg-black/50" 
-        className="z-[70] max-w-xl bg-card border-border p-0 overflow-visible shadow-modal sm:rounded-lg"
+        className="z-[70] max-w-[95vw] sm:max-w-xl bg-card border-border p-0 overflow-visible shadow-modal sm:rounded-lg"
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <DialogHeader className="p-6 pb-4">
@@ -78,12 +101,15 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
         </div>
 
         {/* Widget Container */}
-        <div className="px-6 pb-6">
+        <div className="px-4 sm:px-6 pb-6">
+          {/**
+           * Container height is responsive to viewport: min 420px, max 560px, ideally ~80vh
+           */}
           <div
             className="w-full relative"
             style={{
               width: '100%',
-              height: '560px',
+              height: `${Math.min(560, Math.max(420, Math.floor(viewportH * 0.8)))}px`,
               position: 'relative'
             }}
           >
@@ -134,10 +160,10 @@ const SwapWidget = ({ children }: SwapWidgetProps) => {
                     error: { background: 'hsl(var(--error))', text: 'hsl(var(--background))' },
                   }}
                   defaultRoute={{
-                    srcChainId: 'cosmoshub-4',
+                    srcChainId: defaultSrcChainId,
                     srcAssetDenom: 'uatom',
-                    destChainId: 'osmosis-1', 
-                    destAssetDenom: 'ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2',
+                    destChainId: defaultDestChainId,
+                    destAssetDenom: defaultDestDenom,
                   }}
                   settings={{
                     slippage: 3,

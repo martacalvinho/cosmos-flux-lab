@@ -36,7 +36,8 @@ const LendingTab: React.FC<LendingTabProps> = ({ protocols }) => {
   };
   return (
     <Card className="overflow-hidden">
-      <Table>
+      <div className="overflow-x-auto no-scrollbar">
+      <Table className="min-w-[900px]">
         <TableHeader>
           <TableRow>
             <TableHead>Platform</TableHead>
@@ -210,6 +211,7 @@ const LendingTab: React.FC<LendingTabProps> = ({ protocols }) => {
           })}
         </TableBody>
       </Table>
+      </div>
     </Card>
   );
 };

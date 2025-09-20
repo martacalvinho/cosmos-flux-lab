@@ -156,7 +156,8 @@ const StakingTab: React.FC<Props> = ({ searchTerm, showHidden = false }) => {
   return (
     <>
       <Card className="overflow-hidden">
-        <Table>
+        <div className="overflow-x-auto no-scrollbar">
+        <Table className="min-w-[900px]">
           <TableHeader>
             <TableRow>
               <TableHead>Validator</TableHead>
@@ -249,6 +250,7 @@ const StakingTab: React.FC<Props> = ({ searchTerm, showHidden = false }) => {
             )}
           </TableBody>
         </Table>
+        </div>
       </Card>
       
       <DelegationModal

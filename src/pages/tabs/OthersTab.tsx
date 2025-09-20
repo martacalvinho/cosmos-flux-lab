@@ -12,7 +12,8 @@ const OthersTab: React.FC = () => {
           <h3 className="text-xl font-semibold mb-2 text-others">Others</h3>
           <p className="text-muted-foreground mb-4">Additional ATOM ecosystem utilities.</p>
         </div>
-        <Table>
+        <div className="overflow-x-auto no-scrollbar">
+        <Table className="min-w-[720px]">
           <TableHeader>
             <TableRow>
               <TableHead>Platform</TableHead>
@@ -49,6 +50,7 @@ const OthersTab: React.FC = () => {
             </TableRow>
           </TableBody>
         </Table>
+        </div>
       </Card>
     </section>
   );

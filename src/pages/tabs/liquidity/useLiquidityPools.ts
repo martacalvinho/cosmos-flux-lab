@@ -29,14 +29,25 @@ const convertPoolsToProtocols = (pools: LiquidityPool[]) => {
     const isAstroport = pool.platform === 'Astroport';
     const isAstrovault = pool.platform === 'Astrovault';
     
-    const poolId = isOsmosis ? pool.id.replace('osmosis-', '') : undefined;
+    // Robust Osmosis pool id extraction
+    let osmoId: string | undefined;
+    if (isOsmosis) {
+      const byUrl = pool.url?.match(/\/pool\/(\d+)/);
+      const byId = pool.id?.match(/(\d+)/);
+      if (byUrl && byUrl[1]) osmoId = byUrl[1];
+      else if (byId && byId[1]) osmoId = byId[1];
+      else osmoId = pool.id.replace('osmosis-', '');
+    }
+    const osmoPoolUrl = osmoId ? `https://app.osmosis.zone/pool/${osmoId}` : (pool.url || 'https://app.osmosis.zone');
+    const astroAppUrl = pool.url?.startsWith('http') ? pool.url : 'https://app.astroport.fi';
+    const avAppUrl = pool.url?.startsWith('http') ? pool.url : 'https://astrovault.io';
     const links = {
       app: isOsmosis 
-        ? 'https://app.osmosis.zone' 
+        ? osmoPoolUrl
         : isAstroport 
-        ? 'https://app.astroport.fi'
+        ? astroAppUrl
         : isAstrovault
-        ? 'https://astrovault.io'
+        ? avAppUrl
         : pool.url,
       docs: isOsmosis 
         ? 'https://docs.osmosis.zone' 
@@ -45,7 +56,7 @@ const convertPoolsToProtocols = (pools: LiquidityPool[]) => {
         : isAstrovault
         ? 'https://docs.astrovault.io'
         : undefined,
-      pool: isOsmosis && poolId ? `https://app.osmosis.zone/pool/${poolId}` : pool.url,
+      pool: isOsmosis ? osmoPoolUrl : (pool.url || undefined),
     } as const;
     
     const dataSource = `CosmosExpress API${

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ProtocolCard } from "@/components/ui/protocol/ProtocolCard";
 import { cn } from "@/lib/utils";
+import { useAtomBalanceCheck } from "@/hooks/useAtomBalanceCheck";
 
 interface LiquidityTabProps {
   protocols: any[];
@@ -14,6 +15,7 @@ interface LiquidityTabProps {
 }
 
 const LiquidityTab: React.FC<LiquidityTabProps> = ({ protocols, viewMode, categoryInfo, isLoading }) => {
+  const { ensureEnoughAtomThen, modal } = useAtomBalanceCheck();
   return (
     <>
       {isLoading && (
@@ -28,7 +30,8 @@ const LiquidityTab: React.FC<LiquidityTabProps> = ({ protocols, viewMode, catego
         </div>
       ) : (
         <Card className="overflow-hidden">
-          <Table>
+          <div className="overflow-x-auto no-scrollbar">
+          <Table className="min-w-[720px]">
             <TableHeader>
               <TableRow>
                 <TableHead>Assets</TableHead>
@@ -79,7 +82,17 @@ const LiquidityTab: React.FC<LiquidityTabProps> = ({ protocols, viewMode, catego
                   </TableCell>
                   <TableCell>
                     <Button size="sm" variant="outline" asChild>
-                      <a href={protocol.links.app || "#"} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={protocol.links.app || "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                          const href = protocol.links.app || "#";
+                          if (!href || href === '#') return;
+                          e.preventDefault();
+                          ensureEnoughAtomThen(href, protocol.chain);
+                        }}
+                      >
                         Open App
                       </a>
                     </Button>
@@ -88,8 +101,10 @@ const LiquidityTab: React.FC<LiquidityTabProps> = ({ protocols, viewMode, catego
               ))}
             </TableBody>
           </Table>
+          </div>
         </Card>
       )}
+      {modal}
     </>
   );
 };
