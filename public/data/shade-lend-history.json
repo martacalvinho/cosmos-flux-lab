@@ -712,5 +712,39 @@
       "totalBorrowedTxt": "$13,950.92",
       "utilizationTxt": "28.85%$34,542.90 borrowable"
     }
+  },
+  {
+    "timestamp": "2025-10-11T20:34:36.539Z",
+    "protocol": "Shade",
+    "page": "lend",
+    "asset": "ATOM",
+    "url": "https://app.shadeprotocol.io/lend",
+    "supplyAprPct": 3.21,
+    "totalSuppliedUsd": 33089.19,
+    "totalBorrowedUsd": 11730.22,
+    "utilizationPct": 35.58,
+    "raw": {
+      "supplyAprTxt": "3.21% +7.6%",
+      "totalSuppliedTxt": "$33,089.19",
+      "totalBorrowedTxt": "$11,730.22",
+      "utilizationTxt": "35.58%$21,358.96 borrowable"
+    }
+  },
+  {
+    "timestamp": "2025-10-11T20:35:02.897Z",
+    "protocol": "Shade",
+    "page": "lend",
+    "asset": "ATOM",
+    "url": "https://app.shadeprotocol.io/lend",
+    "supplyAprPct": 3.21,
+    "totalSuppliedUsd": 33089.19,
+    "totalBorrowedUsd": 11730.22,
+    "utilizationPct": 35.58,
+    "raw": {
+      "supplyAprTxt": "3.21% +7.6%",
+      "totalSuppliedTxt": "$33,089.19",
+      "totalBorrowedTxt": "$11,730.22",
+      "utilizationTxt": "35.58%$21,358.96 borrowable"
+    }
   }
 ]

@@ -15,5 +15,22 @@
       "borrowApyTxt": "2.81%",
       "totalBorrowedTxt": "16.4K$76.26K"
     }
+  },
+  {
+    "timestamp": "2025-10-11T20:36:39.604Z",
+    "protocol": "Neptune",
+    "asset": "ATOM",
+    "url": "https://app.nept.finance/",
+    "supplyApyPct": 1.11,
+    "borrowApyPct": 2.89,
+    "totalSupplyUsd": 73850,
+    "totalBorrowUsd": 46680,
+    "utilizationPct": 63.20920785375762,
+    "raw": {
+      "lendApyTxt": "1.11%",
+      "totalLentTxt": "23.8K$73.85K",
+      "borrowApyTxt": "2.89%",
+      "totalBorrowedTxt": "15.0K$46.68K"
+    }
   }
 ]
