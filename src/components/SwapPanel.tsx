@@ -73,9 +73,10 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent 
-        overlayClassName="z-[60] bg-black/50" 
-        className="z-[70] max-w-[95vw] sm:max-w-xl bg-card border-border p-0 shadow-modal sm:rounded-lg max-h-[90vh] overflow-y-auto flex flex-col"
+      <DialogContent
+        noTransformCenter
+        overlayClassName="z-0 bg-black/60"
+        className="max-w-[95vw] sm:max-w-xl bg-card border-border p-0 shadow-modal sm:rounded-lg max-h-[90vh] overflow-y-auto flex flex-col"
         hideClose
         onPointerDownOutside={(e) => e.preventDefault()}
       >
