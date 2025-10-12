@@ -1,9 +1,10 @@
-import { Search, ArrowLeftRight, CalendarDays } from "lucide-react";
+import { Search, ArrowLeftRight, CalendarDays, BarChart2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { WalletConnect } from "./WalletConnect";
 import SwapWidget from "@/components/SwapPanel";
 import AgendaModal from "@/components/AgendaModal";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   return (
@@ -23,7 +24,18 @@ export const Header = () => {
         {/* Right Actions */}
         <div className="flex items-center gap-2 sm:gap-4">
           <div className="flex items-center gap-2">
-            
+            <Button asChild variant="secondary" size="sm" className="hidden sm:inline-flex items-center gap-2 bg-surface border-border hover:bg-surface/80">
+              <Link to="/stats">
+                <BarChart2 className="h-4 w-4" />
+                Stats
+              </Link>
+            </Button>
+            <Button asChild variant="ghost" size="icon" className="sm:hidden h-9 w-9 text-muted-foreground">
+              <Link to="/stats" aria-label="Open Cosmos stats">
+                <BarChart2 className="h-5 w-5" />
+              </Link>
+            </Button>
+
             {/* Agenda */}
             <AgendaModal>
               <Button variant="ghost" size="sm" aria-label="Open Cosmos Agenda">

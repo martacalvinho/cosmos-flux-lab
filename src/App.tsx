@@ -8,6 +8,7 @@ import { WalletProvider } from "@/context/WalletContext";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import ConnectWalletPrompt from "@/components/ConnectWalletPrompt";
+import Stats from "./pages/Stats";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => {
               <ConnectWalletPrompt />
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/stats" element={<Stats />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

@@ -44,6 +44,10 @@
     --card: 220 20% 10%;
     --card-foreground: 220 15% 92%;
     --card-border: 220 15% 18%;
+
+    /* Popover (dropdown, menus) */
+    --popover: var(--card);
+    --popover-foreground: var(--card-foreground);
     
     /* Interactive Elements */
     --accent: 220 25% 14%;
