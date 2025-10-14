@@ -169,9 +169,9 @@ export const Home = () => {
                           onChange={(e) => setSearchTerm(e.target.value)}
                           className="bg-surface border-border"
                         />
-                        <Button asChild variant="secondary" className="shrink-0 bg-surface border-border hover:bg-surface/80">
+                        {/* <Button asChild variant="secondary" className="shrink-0 bg-surface border-border hover:bg-surface/80">
                           <Link to="/stats">View stats</Link>
-                        </Button>
+                        </Button> */}
                       </div>
                       <div className="flex items-center space-x-2 mt-2 md:mt-0">
                         <Checkbox
@@ -196,9 +196,9 @@ export const Home = () => {
                           onChange={(e) => setSearchTerm(e.target.value)}
                           className="bg-surface border-border w-full"
                         />
-                        <Button asChild variant="secondary" className="shrink-0 bg-surface border-border hover:bg-surface/80">
+                        {/* <Button asChild variant="secondary" className="shrink-0 bg-surface border-border hover:bg-surface/80">
                           <Link to="/stats">View stats</Link>
-                        </Button>
+                        </Button> */}
                       </div>
                       <div className="mt-2 md:mt-0 flex items-center gap-2 overflow-x-auto no-scrollbar whitespace-nowrap -mx-2 px-2">
                         <DropdownMenu>
