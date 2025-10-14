@@ -64,19 +64,7 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
     try {
       // Enable the chain if not already enabled
       await wallet.enable(chainIdToSign);
-      
-      // Use getOfflineSignerAuto which returns the appropriate signer type
-      // This is required for Skip widget to retrieve account information
-      if (wallet.getOfflineSignerAuto) {
-        return await wallet.getOfflineSignerAuto(chainIdToSign);
-      }
-      
-      // Fallback to Amino signer if getOfflineSignerAuto is not available
-      if (wallet.getOfflineSignerOnlyAmino) {
-        return await wallet.getOfflineSignerOnlyAmino(chainIdToSign);
-      }
-      
-      // Last resort: use regular offline signer
+      // Return the offline signer for the specific chain
       return await wallet.getOfflineSigner(chainIdToSign);
     } catch (error) {
       console.error(`Failed to get signer for chain ${chainIdToSign}:`, error);
