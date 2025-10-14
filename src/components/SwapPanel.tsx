@@ -50,8 +50,9 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
   const defaultSrcChainId = chainId || 'cosmoshub-4';
 
   // Cosmos signer function for Skip widget
-  const getCosmosSigner = async () => {
-    if (!walletType || !chainId) {
+  // This function must accept a chainId parameter to support multi-chain swaps
+  const getCosmosSigner = async (chainIdToSign: string) => {
+    if (!walletType) {
       throw new Error('No wallet connected');
     }
 
@@ -60,7 +61,27 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
       throw new Error(`${walletType} wallet not found`);
     }
 
-    return await wallet.getOfflineSigner(chainId);
+    try {
+      // Enable the chain if not already enabled
+      await wallet.enable(chainIdToSign);
+      
+      // Use getOfflineSignerAuto which returns the appropriate signer type
+      // This is required for Skip widget to retrieve account information
+      if (wallet.getOfflineSignerAuto) {
+        return await wallet.getOfflineSignerAuto(chainIdToSign);
+      }
+      
+      // Fallback to Amino signer if getOfflineSignerAuto is not available
+      if (wallet.getOfflineSignerOnlyAmino) {
+        return await wallet.getOfflineSignerOnlyAmino(chainIdToSign);
+      }
+      
+      // Last resort: use regular offline signer
+      return await wallet.getOfflineSigner(chainIdToSign);
+    } catch (error) {
+      console.error(`Failed to get signer for chain ${chainIdToSign}:`, error);
+      throw new Error(`Failed to get signer for chain ${chainIdToSign}`);
+    }
   };
 
   // Conditionally include Skip API credentials from env for testing
@@ -136,6 +157,7 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
                   onWalletDisconnected={(params) => {
                     console.log('Skip widget wallet disconnected:', params);
                   }}
+                  persistSwapsBetweenSessions={false}
                   theme={{
                     brandColor: '#3366ff',
                     borderRadius: {
@@ -175,74 +197,6 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
                     slippage: 3,
                   }}
                   cumulative_affiliate_fee_bps="75"
-                  chainIdsToAffiliates={{
-                    'cosmoshub-4': {
-                      affiliates: [{
-                        address: 'cosmos1s5830rdds5fpwjh9ewwqjduax3ucg8nv4kqd7g',
-                        basisPointsFee: '75',
-                      }]
-                    },
-                    'osmosis-1': {
-                      affiliates: [{
-                        address: 'osmo13lkew03teg5sukpgy5lj6z27x9nqylcx6e49d2',
-                        basisPointsFee: '75',
-                      }]
-                    },
-                    'noble-1': {
-                      affiliates: [{
-                        address: 'noble1s5830rdds5fpwjh9ewwqjduax3ucg8nva449xx',
-                        basisPointsFee: '75',
-                      }]
-                    },
-                    'neutron-1': {
-                      affiliates: [{
-                        address: 'neutron13lkew03teg5sukpgy5lj6z27x9nqylcxka0hpl',
-                        basisPointsFee: '75',
-                      }]
-                    },
-                    'stargaze-1': {
-                      affiliates: [{
-                        address: 'stars1s5830rdds5fpwjh9ewwqjduax3ucg8nvp2hs4e',
-                        basisPointsFee: '75',
-                      }]
-                    },
-                    'juno-1': {
-                      affiliates: [{
-                        address: 'juno1s5830rdds5fpwjh9ewwqjduax3ucg8nvryrke5',
-                        basisPointsFee: '75',
-                      }]
-                    },
-                    'akashnet-2': {
-                      affiliates: [{
-                        address: 'akash1s5830rdds5fpwjh9ewwqjduax3ucg8nvcdd28j',
-                        basisPointsFee: '75',
-                      }]
-                    },
-                    'pryzm-1': {
-                      affiliates: [{
-                        address: 'pryzm13lkew03teg5sukpgy5lj6z27x9nqylcx2j3j9t',
-                        basisPointsFee: '75',
-                      }]
-                    },
-                    'phoenix-1': {
-                      affiliates: [{
-                        address: 'terra1h0vzxqkdyyxjd7np37ns9ltrdqpmd6xdth78vm',
-                        basisPointsFee: '75',
-                      }]
-                    },
-                    'elys-1': {
-                      affiliates: [{
-                        address: 'elys13lkew03teg5sukpgy5lj6z27x9nqylcxjzljk6',
-                        basisPointsFee: '75',
-                      }]
-                    },
-                    'secret-4': {
-                      affiliates: [{
-                        address: 'secret1s5830rdds5fpwjh9ewwqjduax3ucg8nvhn5yr5',
-                        basisPointsFee: '75',
-                      }]
-                    }
-                  }}
                   onTransactionComplete={(txInfo) => {
                     console.log('=== SKIP TRANSACTION COMPLETED ===');
                     console.log('Full transaction info:', JSON.stringify(txInfo, null, 2));
