@@ -30,8 +30,8 @@ export default defineConfig(({ mode }) => ({
   },
   define: {
     global: 'globalThis',
-    Buffer: 'globalThis.Buffer',
-    'process.env': {},
+    'globalThis.process': JSON.stringify({ env: {} }),
+    'process.env': JSON.stringify({}),
   },
   optimizeDeps: {
     include: ['declarative-shadow-dom-polyfill', 'buffer'],

@@ -1,15 +1,22 @@
-import { Buffer } from 'buffer';
 import 'declarative-shadow-dom-polyfill';
+
+// Ensure process is globally available FIRST (required by Buffer.alloc in Ledger adapter)
+if (typeof window !== 'undefined') {
+  if (!(window as any).process) {
+    (window as any).process = { env: {} };
+  }
+  if (!(window as any).global) {
+    (window as any).global = window;
+  }
+}
+
+// Now import Buffer after process is set up
+import { Buffer } from 'buffer';
 
 // Ensure Buffer is globally available for dependencies that expect Node.js Buffer
 if (!globalThis.Buffer) (globalThis as any).Buffer = Buffer;
 if (typeof window !== 'undefined' && !(window as any).Buffer) {
   (window as any).Buffer = Buffer;
-}
-
-// Ensure process is globally available for Ledger wallet support
-if (typeof window !== 'undefined' && !(window as any).process) {
-  (window as any).process = { env: {} };
 }
 
 // Suppress 404 errors from Skip widget trying to load wallet icons
