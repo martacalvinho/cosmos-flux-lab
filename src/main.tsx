@@ -7,6 +7,11 @@ if (typeof window !== 'undefined' && !(window as any).Buffer) {
   (window as any).Buffer = Buffer;
 }
 
+// Ensure process is globally available for Ledger wallet support
+if (typeof window !== 'undefined' && !(window as any).process) {
+  (window as any).process = { env: {} };
+}
+
 // Suppress 404 errors from Skip widget trying to load wallet icons
 const originalError = console.error;
 console.error = (...args: any[]) => {
