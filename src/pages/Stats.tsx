@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import {
@@ -6,6 +6,7 @@ import {
   ArrowLeft,
   ArrowUpRight,
   BarChart3,
+  Coins,
   Flame,
   Home,
   Layers,
@@ -301,6 +302,7 @@ const SectionHeading = ({
 const Stats = () => {
   const { data, isLoading, isError } = useCosmosStats();
   const stats: CosmosStatsData = data ?? CosmosStatsService.getSample();
+  const [showAllAssets, setShowAllAssets] = useState(false);
 
   const stakingChartConfig = useMemo<ChartConfig>(
     () => ({
@@ -786,6 +788,104 @@ const Stats = () => {
           </div>
         </section>
 
+        <section className="space-y-6">
+          <SectionHeading
+            title="Community Pool"
+            description="Treasury funds available for governance proposals and ecosystem development."
+          />
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+            <MetricTile
+              title="Total Pool Value"
+              value={stats.communityPool.totalUsdValue > 0 ? `$${numberFormat(stats.communityPool.totalUsdValue, { maximumFractionDigits: 0 })}` : 'Loading...'}
+              subtext={`${numberFormat(stats.communityPool.assets.length)} different assets`}
+              icon={<Coins className="h-4 w-4 text-primary" />}
+              loading={isLoading}
+              tone="success"
+            />
+            <MetricTile
+              title="Total ATOM in Pool"
+              value={atom(stats.communityPool.totalAtom, 0)}
+              subtext={`${percent((stats.communityPool.totalAtom / stats.overview.mintedSupply) * 100, 2)} of supply`}
+              icon={<BarChart3 className="h-4 w-4 text-emerald-300" />}
+              loading={isLoading}
+            />
+            <MetricTile
+              title="Largest by Value"
+              value={stats.communityPool.assets.sort((a, b) => (b.usdValue || 0) - (a.usdValue || 0))[0]?.displayDenom || 'N/A'}
+              subtext={stats.communityPool.assets[0]?.usdValue ? `$${numberFormat(stats.communityPool.assets.sort((a, b) => (b.usdValue || 0) - (a.usdValue || 0))[0].usdValue || 0, { maximumFractionDigits: 0 })}` : 'Loading...'}
+              icon={<Sparkles className="h-4 w-4 text-amber-300" />}
+              loading={isLoading}
+            />
+            <MetricTile
+              title="Community Pool Tax"
+              value={`${stats.communityPool.communityTax.toFixed(1)}%`}
+              subtext="Of staking rewards to pool"
+              icon={<Activity className="h-4 w-4 text-sky-300" />}
+              loading={isLoading}
+            />
+          </div>
+
+          <Card className="border border-border/60 bg-surface/60 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Top Assets in Community Pool</h3>
+              <Coins className="h-5 w-5 text-primary" />
+            </div>
+            <div className="space-y-3 max-h-96 overflow-y-auto">
+              {stats.communityPool.assets.slice(0, showAllAssets ? stats.communityPool.assets.length : 10).map((asset, idx) => (
+                <div
+                  key={asset.denom}
+                  className="flex items-center justify-between p-3 rounded-lg bg-background/60 border border-border/40 hover:border-primary/40 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary text-sm font-semibold">
+                      {idx + 1}
+                    </span>
+                    <div>
+                      <p className="font-medium text-sm">{asset.displayDenom}</p>
+                      <p className="text-xs text-muted-foreground truncate max-w-[200px] sm:max-w-none">
+                        {asset.denom}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold text-sm">
+                      {numberFormat(asset.amount, { maximumFractionDigits: 2 })}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {asset.usdValue ? `$${numberFormat(asset.usdValue, { maximumFractionDigits: 0 })}` : asset.displayDenom}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {stats.communityPool.assets.length > 10 && (
+              <div className="mt-4 text-center">
+                <button
+                  onClick={() => setShowAllAssets(!showAllAssets)}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors rounded-lg hover:bg-primary/10"
+                >
+                  {showAllAssets ? (
+                    <>
+                      <ArrowUpRight className="h-4 w-4 rotate-180" />
+                      Show Less
+                    </>
+                  ) : (
+                    <>
+                      <ArrowUpRight className="h-4 w-4" />
+                      Show All {stats.communityPool.assets.length} Assets
+                    </>
+                  )}
+                </button>
+                <p className="text-xs text-muted-foreground mt-2">
+                  {showAllAssets 
+                    ? `Showing all ${stats.communityPool.assets.length} assets` 
+                    : `Showing top 10 of ${stats.communityPool.assets.length} assets`
+                  }
+                </p>
+              </div>
+            )}
+          </Card>
+        </section>
 
         {isError ? (
           <div className="flex items-start gap-3 rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">

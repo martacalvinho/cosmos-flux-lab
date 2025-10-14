@@ -23,11 +23,25 @@ export interface CosmosStatsBundle {
     real: number;
     floor: number;
     ceiling: number;
+    goalBonded: number;
   };
   block: {
     timeSeconds: number;
     emissionPerBlock: number;
     annualProvision: number;
+    blocksPerYear: number;
+  };
+  communityPool: {
+    assets: Array<{
+      denom: string;
+      displayDenom: string;
+      amount: number;
+      rawAmount: string;
+      usdValue?: number;
+    }>;
+    totalAtom: number;
+    totalUsdValue: number;
+    communityTax: number;
   };
   charts: {
     stakingDynamics: Array<{ date: string; bonded: number; notBonded: number }>;
@@ -58,15 +72,31 @@ const SAMPLE_BUNDLE: CosmosStatsBundle = {
     rewardShareInflation: 98,
   },
   inflation: {
-    coded: 10,
-    real: 12.22,
-    floor: 7,
-    ceiling: 10,
+    coded: 14.01,
+    real: 10.89,
+    floor: 7.0,
+    ceiling: 20.0,
+    goalBonded: 67.0,
   },
   block: {
-    timeSeconds: 5.92,
-    emissionPerBlock: 10.84,
-    annualProvision: 47_263_997,
+    timeSeconds: 6.86,
+    emissionPerBlock: 1.33,
+    annualProvision: 61_323_456,
+    blocksPerYear: 4_360_000,
+  },
+  communityPool: {
+    assets: [
+      {
+        denom: 'uatom',
+        displayDenom: 'ATOM',
+        amount: 10_298_960,
+        rawAmount: '10298960623847.678619414853694393',
+        usdValue: 10_298_960 * 6.5, // Approximate
+      },
+    ],
+    totalAtom: 10_298_960,
+    totalUsdValue: 10_298_960 * 6.5,
+    communityTax: 2.0,
   },
   charts: {
     stakingDynamics: Array.from({ length: 14 }).map((_, idx) => {
@@ -371,6 +401,10 @@ function normaliseBundle(raw: any): CosmosStatsBundle | null {
       real: toNumber(inflationReal, SAMPLE_BUNDLE.inflation.real),
       floor: toNumber(inflationFloor, SAMPLE_BUNDLE.inflation.floor),
       ceiling: toNumber(inflationCeiling, SAMPLE_BUNDLE.inflation.ceiling),
+      goalBonded: toNumber(
+        (getPath(raw, ['inflation', 'goalBonded']) ?? getPath(raw, ['inflation', 'goal_bonded'])) as NumberLike,
+        SAMPLE_BUNDLE.inflation.goalBonded
+      ),
     },
     block: {
       timeSeconds: toNumber(blockTime, SAMPLE_BUNDLE.block.timeSeconds),
@@ -382,6 +416,14 @@ function normaliseBundle(raw: any): CosmosStatsBundle | null {
         annualProvision,
         SAMPLE_BUNDLE.block.annualProvision
       ),
+      blocksPerYear: toNumber(
+        (getPath(raw, ['block', 'blocksPerYear']) ?? getPath(raw, ['block', 'blocks_per_year'])) as NumberLike,
+        SAMPLE_BUNDLE.block.blocksPerYear
+      ),
+    },
+    communityPool: {
+      ...SAMPLE_BUNDLE.communityPool,
+      communityTax: 2.0,
     },
     charts: {
       stakingDynamics: Array.isArray(stakingDynamics)
@@ -546,14 +588,17 @@ export const CosmosStatsService = {
         inflation: {
           coded: 10, // Cosmos Hub target
           real: lcdData.inflation.rate,
-          floor: 7,
-          ceiling: 20,
+          floor: lcdData.inflation.min,
+          ceiling: lcdData.inflation.max,
+          goalBonded: lcdData.inflation.goalBonded,
         },
         block: {
-          timeSeconds: 6.5, // approximate
-          emissionPerBlock: lcdData.inflation.annualProvisions / (365 * 24 * 60 * 60 / 6.5),
+          timeSeconds: lcdData.block.timeSeconds,
+          emissionPerBlock: lcdData.inflation.annualProvisions / lcdData.block.blocksPerYear,
           annualProvision: lcdData.inflation.annualProvisions,
+          blocksPerYear: lcdData.block.blocksPerYear,
         },
+        communityPool: lcdData.communityPool,
         charts: {
           // NO HISTORICAL DATA AVAILABLE - these endpoints don't exist
           stakingDynamics: [],
