@@ -26,6 +26,7 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
   const [isOpen, setIsOpen] = useState(false);
   const [widgetKey, setWidgetKey] = useState(0);
   const [viewportH, setViewportH] = useState<number>(typeof window !== 'undefined' ? window.innerHeight : 800);
+  const [connectedAddresses, setConnectedAddresses] = useState<Record<string, string> | undefined>(undefined);
   const { address, client, walletType, chainId } = useWallet();
 
   // Force widget re-render when dialog opens or wallet changes
@@ -33,7 +34,7 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
     if (isOpen) {
       setWidgetKey(prev => prev + 1);
     }
-  }, [isOpen, address, walletType, chainId]);
+  }, [isOpen, address, walletType, chainId, connectedAddresses]);
 
   // Track viewport height for responsive widget sizing
   useEffect(() => {
@@ -42,8 +43,44 @@ const SwapWidget = ({ children, destChainId, destAtomDenom }: SwapWidgetProps) =
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // Prepare connected addresses for Skip widget
-  const connectedAddresses = address && chainId ? { [chainId]: address } : undefined;
+  // Get addresses for all supported chains when wallet connects
+  useEffect(() => {
+    const getChainAddresses = async () => {
+      if (!walletType || !address) {
+        setConnectedAddresses(undefined);
+        return;
+      }
+
+      const wallet = walletType === 'keplr' ? window.keplr : window.leap;
+      if (!wallet) {
+        setConnectedAddresses(undefined);
+        return;
+      }
+
+      try {
+        const chains = ['cosmoshub-4', 'osmosis-1', 'neutron-1', 'noble-1', 'stargaze-1', 'juno-1', 'akashnet-2', 'secret-4'];
+        const addresses: Record<string, string> = {};
+
+        for (const chain of chains) {
+          try {
+            const key = await wallet.getKey(chain);
+            addresses[chain] = key.bech32Address;
+          } catch (err) {
+            console.warn(`Failed to get address for ${chain}:`, err);
+            // Skip chains that aren't available
+          }
+        }
+
+        setConnectedAddresses(addresses);
+        console.log('Skip widget connected addresses:', addresses);
+      } catch (err) {
+        console.error('Failed to get chain addresses:', err);
+        setConnectedAddresses(undefined);
+      }
+    };
+
+    getChainAddresses();
+  }, [walletType, address]);
 
   const defaultDestChainId = destChainId || 'osmosis-1';
   const defaultDestDenom = destAtomDenom || ATOM_DENOM_BY_CHAIN[defaultDestChainId] || 'uatom';
