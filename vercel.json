@@ -9,7 +9,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "frame-ancestors 'none'; default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://rest.cosmos.directory https://apis.mintscan.io https://*.flipsidecrypto.xyz https://api.coingecko.com wss://rpc.cosmos.directory; frame-src 'none';"
+          "value": "frame-ancestors 'none'; default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://rest.cosmos.directory https://rpc.cosmos.directory https://*.cosmos.directory https://apis.mintscan.io https://*.flipsidecrypto.xyz https://api.coingecko.com https://*.polkachu.com https://*.blockapsis.com https://*.quickapi.com https://*.publicnode.com https://*.kjnodes.com https://*.whispernode.com https://api.skip.build wss://rpc.cosmos.directory wss://*.cosmos.directory; frame-src 'none';"
         },
         {
           "key": "X-Content-Type-Options",
