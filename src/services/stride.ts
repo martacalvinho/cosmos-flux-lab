@@ -11,7 +11,7 @@ export type StrideHostZone = {
 import { fetchCoinGeckoPrice } from './coingecko';
 
 const STRIDE_HOST_ZONE_URL =
-  'https://stride-api.polkachu.com/Stride-Labs/stride/stakeibc/host_zone/cosmoshub-4';
+  'https://rest.cosmos.directory/stride/Stride-Labs/stride/stakeibc/host_zone/cosmoshub-4';
 
 export async function fetchStrideHostZone(): Promise<StrideHostZone> {
   const res = await fetch(STRIDE_HOST_ZONE_URL);

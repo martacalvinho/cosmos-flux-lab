@@ -42,8 +42,8 @@ const CHAIN_CONFIGS = {
   'cosmoshub-4': {
     chainId: 'cosmoshub-4',
     chainName: 'Cosmos Hub',
-    rpc: 'https://cosmos-rpc.polkachu.com',
-    rest: 'https://cosmos-api.polkachu.com',
+    rpc: 'https://rpc.cosmos.directory/cosmoshub',
+    rest: 'https://rest.cosmos.directory/cosmoshub',
     bip44: { coinType: 118 },
     bech32Config: {
       bech32PrefixAccAddr: 'cosmos',
@@ -78,8 +78,8 @@ const CHAIN_CONFIGS = {
   'osmosis-1': {
     chainId: 'osmosis-1',
     chainName: 'Osmosis',
-    rpc: 'https://osmosis-rpc.polkachu.com',
-    rest: 'https://osmosis-api.polkachu.com',
+    rpc: 'https://rpc.cosmos.directory/osmosis',
+    rest: 'https://rest.cosmos.directory/osmosis',
     bip44: { coinType: 118 },
     bech32Config: {
       bech32PrefixAccAddr: 'osmo',
@@ -113,17 +113,23 @@ const CHAIN_CONFIGS = {
   }
 };
 
-// RPC endpoints with fallbacks
+// RPC endpoints with fallbacks - using endpoints with better CORS support
 const RPC_ENDPOINTS = {
   'cosmoshub-4': [
     'https://cosmos-rpc.polkachu.com',
+    'https://rpc.cosmos.directory/cosmoshub',
+    'https://cosmos-rpc.publicnode.com',
     'https://rpc-cosmoshub.blockapsis.com',
-    'https://cosmos-rpc.quickapi.com',
+    'https://cosmos.rpc.kjnodes.com',
+    'https://rpc-cosmoshub.whispernode.com',
   ],
   'osmosis-1': [
     'https://osmosis-rpc.polkachu.com',
+    'https://rpc.cosmos.directory/osmosis',
+    'https://osmosis-rpc.publicnode.com',
     'https://rpc-osmosis.blockapsis.com',
-    'https://osmosis-rpc.quickapi.com',
+    'https://osmosis.rpc.kjnodes.com',
+    'https://rpc-osmosis.whispernode.com',
   ]
 };
 
@@ -195,23 +201,45 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
       let client = null;
       let retryCount = 0;
       const maxRetries = endpoints.length;
+      const errors: string[] = [];
 
       while (retryCount < maxRetries) {
         try {
-          client = await SigningStargateClient.connectWithSigner(
+          console.log(`Attempting to connect to RPC endpoint ${retryCount + 1}/${maxRetries}: ${currentEndpoint}`);
+          
+          // Add timeout to prevent hanging
+          const connectPromise = SigningStargateClient.connectWithSigner(
             currentEndpoint,
             offlineSigner
           );
-          // Test the connection by getting balance
-          await client.getBalance(accounts[0].address, chainConfig.currencies[0].coinMinimalDenom);
+          
+          const timeoutPromise = new Promise<never>((_, reject) => 
+            setTimeout(() => reject(new Error('Connection timeout')), 10000)
+          );
+          
+          client = await Promise.race([connectPromise, timeoutPromise]);
+          
+          // Test the connection by getting balance with timeout
+          const balancePromise = client.getBalance(accounts[0].address, chainConfig.currencies[0].coinMinimalDenom);
+          const balanceTimeoutPromise = new Promise<never>((_, reject) => 
+            setTimeout(() => reject(new Error('Balance check timeout')), 5000)
+          );
+          
+          await Promise.race([balancePromise, balanceTimeoutPromise]);
+          
+          console.log(`Successfully connected to ${currentEndpoint}`);
           break;
         } catch (err) {
-          console.warn(`Failed to connect to RPC endpoint ${currentEndpoint}:`, err);
-          currentEndpoint = getNextRPCEndpoint(currentEndpoint, chainId);
+          const errorMsg = err instanceof Error ? err.message : 'Unknown error';
+          console.warn(`Failed to connect to RPC endpoint ${currentEndpoint}:`, errorMsg);
+          errors.push(`${currentEndpoint}: ${errorMsg}`);
+          
           retryCount++;
           if (retryCount === maxRetries) {
-            throw new Error('Failed to connect to any RPC endpoint');
+            console.error('All RPC endpoints failed:', errors);
+            throw new Error(`Failed to connect to any RPC endpoint. Tried ${maxRetries} endpoints. Last error: ${errorMsg}`);
           }
+          currentEndpoint = getNextRPCEndpoint(currentEndpoint, chainId);
         }
       }
 

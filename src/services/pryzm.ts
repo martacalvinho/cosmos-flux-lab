@@ -10,7 +10,7 @@ export type PryzmRealtime = {
   exchangeRate?: number; // cATOM -> ATOM rate (i.e., how much ATOM backs 1 cATOM)
 };
 
-export const PRYZM_LCD = 'https://pryzm-api.polkachu.com';
+export const PRYZM_LCD = 'https://rest.cosmos.directory/pryzm';
 export const CATOM_DENOM = 'c:uatom';
 
 // Fetch total supply for a denom from Pryzm LCD

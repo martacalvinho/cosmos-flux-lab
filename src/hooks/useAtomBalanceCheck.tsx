@@ -59,11 +59,11 @@ export function useAtomBalanceCheck() {
   };
 
   const RPC_BY_CHAIN: Record<string, string> = {
-    'cosmoshub-4': 'https://cosmos-rpc.polkachu.com',
-    'osmosis-1': 'https://osmosis-rpc.polkachu.com',
-    'neutron-1': 'https://neutron-rpc.polkachu.com',
+    'cosmoshub-4': 'https://rpc.cosmos.directory/cosmoshub',
+    'osmosis-1': 'https://rpc.cosmos.directory/osmosis',
+    'neutron-1': 'https://rpc.cosmos.directory/neutron',
     'phoenix-1': 'https://terra-rpc.publicnode.com',
-    'archway-1': 'https://archway-rpc.polkachu.com',
+    'archway-1': 'https://rpc.cosmos.directory/archway',
   };
 
   const normalizeChainId = (input?: string | null): string | null => {

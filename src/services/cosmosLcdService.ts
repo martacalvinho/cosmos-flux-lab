@@ -8,7 +8,7 @@
 
 import { fetchCoinGeckoPrice } from './coingecko';
 
-const LCD_BASE = 'https://cosmos-api.polkachu.com';
+const LCD_BASE = 'https://rest.cosmos.directory/cosmoshub';
 
 interface PoolResponse {
   pool: {
