@@ -1,8 +1,8 @@
 import React from "react";
 import {
   Area,
-  AreaChart,
   CartesianGrid,
+  ComposedChart,
   Line,
   XAxis,
   YAxis,
@@ -111,7 +111,7 @@ export const IssuanceOutlookChart: React.FC<IssuanceOutlookChartProps> = ({
 
   return (
     <ChartContainer config={config} className="h-full">
-      <AreaChart data={combinedData}>
+      <ComposedChart data={combinedData}>
         <defs>
           <linearGradient id="inflationArea" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor={inflationColor} stopOpacity={0.4} />
@@ -155,7 +155,7 @@ export const IssuanceOutlookChart: React.FC<IssuanceOutlookChartProps> = ({
           dot={false}
           isAnimationActive={false}
         />
-      </AreaChart>
+      </ComposedChart>
     </ChartContainer>
   );
 };
