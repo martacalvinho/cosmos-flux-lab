@@ -1,4 +1,4 @@
-import { Search, ArrowLeftRight, CalendarDays } from "lucide-react";
+import { Search, ArrowLeftRight, CalendarDays, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { WalletConnect } from "./WalletConnect";
@@ -24,6 +24,13 @@ export const Header = () => {
         {/* Right Actions */}
         <div className="flex items-center gap-2 sm:gap-4">
           <div className="flex items-center gap-2">
+            {/* Stats */}
+            <Button asChild variant="ghost" size="sm" aria-label="View Stats">
+              <Link to="/stats">
+                <BarChart3 className="h-4 w-4" />
+              </Link>
+            </Button>
+
             {/* Agenda */}
             <AgendaModal>
               <Button variant="ghost" size="sm" aria-label="Open Cosmos Agenda">
