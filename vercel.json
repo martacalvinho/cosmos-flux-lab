@@ -1,15 +1,12 @@
 {
-  "version": 3,
-  "rewrites": [
+  "version": 2,
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html",
-      "missing": [
-        {
-          "type": "filesystem",
-          "src": "/(.*)"
-        }
-      ]
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ],
   "headers": [
