@@ -1,4 +1,5 @@
 import { CosmosLcdService, type CosmosLcdData } from './cosmosLcdService';
+import { HistoricalDataService } from './historicalDataService';
 
 const COSMOS_STATS_BASE = "https://cosmos.api.arcturian.tech";
 
@@ -559,8 +560,23 @@ export const CosmosStatsService = {
     
     if (lcdData) {
       console.log('[CosmosStats] Using REAL data from Cosmos LCD');
-      // Build bundle from real LCD data
-      // Note: Charts are empty arrays since no historical API exists
+
+      // Load historical data for charts
+      const [
+        stakingDynamicsHistory,
+        unbondingHistory,
+        aprHistory,
+        inflationHistory,
+        emissionHistory,
+      ] = await Promise.all([
+        HistoricalDataService.getStakingDynamics(),
+        HistoricalDataService.getUnbondingHistory(),
+        HistoricalDataService.getAprHistory(),
+        HistoricalDataService.getInflationHistory(),
+        HistoricalDataService.getEmissionHistory(),
+      ]);
+
+      // Build bundle from real LCD data with historical charts
       return {
         overview: {
           mintedSupply: lcdData.supply.totalSupply,
@@ -600,12 +616,29 @@ export const CosmosStatsService = {
         },
         communityPool: lcdData.communityPool,
         charts: {
-          // NO HISTORICAL DATA AVAILABLE - these endpoints don't exist
-          stakingDynamics: [],
-          unbondingMap: [],
-          apr: [],
-          inflation: [],
-          emission: [],
+          stakingDynamics: stakingDynamicsHistory.length > 0 ? stakingDynamicsHistory.map(point => ({
+            date: point.date,
+            bonded: toNumber(point.bonded ?? point.value ?? 0),
+            notBonded: toNumber(point.notBonded ?? 0)
+          })) : [],
+          unbondingMap: unbondingHistory.length > 0 ? unbondingHistory.map(point => ({
+            date: point.date,
+            amount: point.value
+          })) : [],
+          apr: aprHistory.length > 0 ? aprHistory.map(point => ({
+            date: point.date,
+            apr: point.value
+          })) : [],
+          inflation: inflationHistory.length > 0 ? inflationHistory.map(point => ({
+            date: point.date,
+            inflation: point.value,
+            floor: SAMPLE_BUNDLE.inflation.floor,
+            ceiling: SAMPLE_BUNDLE.inflation.ceiling
+          })) : [],
+          emission: emissionHistory.length > 0 ? emissionHistory.map(point => ({
+            date: point.date,
+            emission: point.value
+          })) : [],
         },
         copy: {
           mintedSupplyHref: "https://www.mintscan.io/cosmos/proposals",

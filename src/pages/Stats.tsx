@@ -22,19 +22,12 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-import {
-  Area,
-  AreaChart,
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Line,
-  LineChart,
-  XAxis,
-  YAxis,
-} from "recharts";
 import { cn } from "@/lib/utils";
 import { CosmosStatsService, type CosmosStatsData } from "@/services/cosmosStats";
+import { ValidatorParticipationChart } from "@/components/charts/ValidatorParticipationChart";
+import { AprOutlookChart } from "@/components/charts/AprOutlookChart";
+import { UnbondingCalendarChart } from "@/components/charts/UnbondingCalendarChart";
+import { IssuanceOutlookChart } from "@/components/charts/IssuanceOutlookChart";
 
 const percent = (value: number, fractionDigits = 2) =>
   `${value.toLocaleString("en-US", {
@@ -65,7 +58,13 @@ const parseDateValue = (value: string | number | Date | null | undefined): Date 
   if (!stringValue) return null;
 
   if (/^\d+$/.test(stringValue)) {
-    return parseDateValue(Number(stringValue));
+    const numValue = Number(stringValue);
+    if (Number.isFinite(numValue)) {
+      const milliseconds = numValue > 1_000_000_000_000 ? numValue : numValue * 1000;
+      const parsed = new Date(milliseconds);
+      return Number.isNaN(parsed.getTime()) ? null : parsed;
+    }
+    return null;
   }
 
   if (/^\d{4}-\d{2}-\d{2}$/.test(stringValue)) {
@@ -78,23 +77,6 @@ const parseDateValue = (value: string | number | Date | null | undefined): Date 
 
   const fallback = new Date(stringValue);
   return Number.isNaN(fallback.getTime()) ? null : fallback;
-};
-
-const formatDate = (
-  value: string | number | Date,
-  options: Intl.DateTimeFormatOptions
-): string => {
-  const parsed = parseDateValue(value);
-  if (!parsed) return typeof value === "string" ? value : "";
-  return parsed.toLocaleDateString("en-US", options);
-};
-
-const safeDateLabel = (value: string | number) =>
-  formatDate(value, { month: "short", day: "numeric" });
-
-const safeMonthLabel = (value: string | number) => {
-  const formatted = formatDate(value, { month: "short", year: "2-digit" });
-  return formatted.replace(/ (\d{2})$/, " '$1");
 };
 
 const useCosmosStats = () => {
@@ -193,9 +175,7 @@ const ChartPanel = ({
           <Skeleton className="h-48 w-full rounded-xl" />
         </div>
       ) : (
-        <ChartContainer config={config} className="h-full">
-          {children}
-        </ChartContainer>
+        children
       )}
     </div>
   </Card>
@@ -306,30 +286,30 @@ const Stats = () => {
 
   const stakingChartConfig = useMemo<ChartConfig>(
     () => ({
-      bonded: { label: "Bonded", color: "hsl(142, 76%, 36%)" },
-      notBonded: { label: "Not bonded", color: "hsl(38, 92%, 50%)" },
+      bonded: { label: "Bonded", color: "#4ade80" },
+      notBonded: { label: "Liquid / not bonded", color: "#f97316" },
     }),
     []
   );
 
   const unbondingChartConfig = useMemo<ChartConfig>(
     () => ({
-      amount: { label: "Unbonding", color: "hsl(var(--destructive))" },
+      amount: { label: "Scheduled exit", color: "#fb7185" },
     }),
     []
   );
 
   const aprChartConfig = useMemo<ChartConfig>(
     () => ({
-      apr: { label: "Staking APR", color: "hsl(var(--primary))" },
+      apr: { label: "Staking APR", color: "#60a5fa" },
     }),
     []
   );
 
   const issuanceChartConfig = useMemo<ChartConfig>(
     () => ({
-      inflation: { label: "Inflation", color: "hsl(var(--primary))" },
-      emission: { label: "New ATOM / block", color: "hsl(var(--warning))" },
+      inflation: { label: "Inflation", color: "#c084fc" },
+      emission: { label: "New ATOM / block", color: "#fcd34d" },
     }),
     []
   );
@@ -345,7 +325,7 @@ const Stats = () => {
           return null;
         }
         return {
-          date: parsedDate.toISOString(),
+          date: parsedDate.toISOString().split('T')[0], // Only date part, no time
           bonded,
           notBonded,
         };
@@ -356,6 +336,100 @@ const Stats = () => {
       )
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   }, [stats?.charts?.stakingDynamics]);
+
+  const unbondingSeries = useMemo(() => {
+    const rawPoints = stats?.charts?.unbondingMap ?? [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const allPoints = rawPoints
+      .map((point) => {
+        const parsedDate = parseDateValue(point.date);
+        const amount = Number(point.amount);
+        if (!parsedDate || !Number.isFinite(amount)) {
+          return null;
+        }
+        const pointDate = new Date(parsedDate);
+        pointDate.setHours(0, 0, 0, 0);
+        const isToday = pointDate.getTime() === today.getTime();
+        
+        return {
+          date: parsedDate.toISOString().split('T')[0], // Only date part, no time
+          amount,
+          isToday,
+        };
+      })
+      .filter((entry): entry is { date: string; amount: number; isToday: boolean } => entry !== null)
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    
+    // Filter to show a rolling window: 5 days before today to 14 days after today
+    const todayTime = today.getTime();
+    const fiveDaysBefore = todayTime - (5 * 24 * 60 * 60 * 1000);
+    const fourteenDaysAfter = todayTime + (14 * 24 * 60 * 60 * 1000);
+    
+    return allPoints.filter((point) => {
+      const pointTime = new Date(point.date).getTime();
+      return pointTime >= fiveDaysBefore && pointTime <= fourteenDaysAfter;
+    });
+  }, [stats?.charts?.unbondingMap]);
+
+  const aprSeries = useMemo(() => {
+    const rawPoints = stats?.charts?.apr ?? [];
+    return rawPoints
+      .map((point) => {
+        const parsedDate = parseDateValue(point.date);
+        const apr = Number(point.apr);
+        if (!parsedDate || !Number.isFinite(apr)) {
+          return null;
+        }
+        return {
+          date: parsedDate.toISOString().split('T')[0], // Only date part, no time
+          apr,
+        };
+      })
+      .filter((entry): entry is { date: string; apr: number } => entry !== null)
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }, [stats?.charts?.apr]);
+
+  const inflationSeries = useMemo(() => {
+    const rawPoints = stats?.charts?.inflation ?? [];
+    return rawPoints
+      .map((point) => {
+        const parsedDate = parseDateValue(point.date);
+        const inflation = Number(point.inflation);
+        const floor = Number(point.floor);
+        const ceiling = Number(point.ceiling);
+        if (!parsedDate || !Number.isFinite(inflation)) {
+          return null;
+        }
+        return {
+          date: parsedDate.toISOString().split('T')[0], // Only date part, no time
+          inflation,
+          floor: Number.isFinite(floor) ? floor : CosmosStatsService.getSample().inflation.floor,
+          ceiling: Number.isFinite(ceiling) ? ceiling : CosmosStatsService.getSample().inflation.ceiling,
+        };
+      })
+      .filter((entry): entry is { date: string; inflation: number; floor: number; ceiling: number } => entry !== null)
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }, [stats?.charts?.inflation]);
+
+  const emissionSeries = useMemo(() => {
+    const rawPoints = stats?.charts?.emission ?? [];
+    return rawPoints
+      .map((point) => {
+        const parsedDate = parseDateValue(point.date);
+        const emission = Number(point.emission);
+        if (!parsedDate || !Number.isFinite(emission)) {
+          return null;
+        }
+        return {
+          date: parsedDate.toISOString().split('T')[0], // Only date part, no time
+          emission,
+        };
+      })
+      .filter((entry): entry is { date: string; emission: number } => entry !== null)
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }, [stats?.charts?.emission]);
 
   const bondedDomain = useMemo<[number, number]>(() => {
     if (!stakingSeries.length) return [0, 1];
@@ -549,49 +623,8 @@ const Stats = () => {
               loading={isLoading}
               config={stakingChartConfig}
             >
-              {stats.charts.stakingDynamics.length > 0 ? (
-              <AreaChart data={stats.charts.stakingDynamics}>
-                <defs>
-                  <linearGradient id="bondedArea" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="hsl(142, 76%, 36%)" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="hsl(142, 76%, 36%)" stopOpacity={0.1} />
-                  </linearGradient>
-                  <linearGradient id="notBondedArea" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="hsl(38, 92%, 50%)" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="hsl(38, 92%, 50%)" stopOpacity={0.1} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
-                <XAxis
-                  dataKey="date"
-                  tickFormatter={safeMonthLabel}
-                  stroke="hsl(var(--muted-foreground))"
-                  tickLine={false}
-                />
-                <YAxis
-                  stroke="hsl(var(--muted-foreground))"
-                  tickFormatter={(value) => `${(value / 1_000_000).toLocaleString("en-US", { maximumFractionDigits: 0 })}`}
-                  domain={[0, 'auto']}
-                  width={80}
-                />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Area
-                  type="monotone"
-                  dataKey="bonded"
-                  stackId="1"
-                  stroke="hsl(142, 76%, 36%)"
-                  fill="url(#bondedArea)"
-                  strokeWidth={2}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="notBonded"
-                  stackId="1"
-                  stroke="hsl(38, 92%, 50%)"
-                  fill="url(#notBondedArea)"
-                  strokeWidth={2}
-                />
-              </AreaChart>
+              {stakingSeries.length > 0 ? (
+                <ValidatorParticipationChart data={stakingSeries} config={stakingChartConfig} />
               ) : (
                 <div className="flex items-center justify-center h-full px-4">
                   <div className="text-center space-y-2">
@@ -608,29 +641,8 @@ const Stats = () => {
               loading={isLoading}
               config={aprChartConfig}
             >
-              {stats.charts.apr.length > 0 ? (
-              <LineChart data={stats.charts.apr}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis
-                  dataKey="date"
-                  tickFormatter={safeDateLabel}
-                  stroke="hsl(var(--muted-foreground))"
-                  tickLine={false}
-                />
-                <YAxis
-                  stroke="hsl(var(--muted-foreground))"
-                  tickFormatter={(value) => `${value.toFixed(1)}%`}
-                  width={60}
-                />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Line
-                  type="monotone"
-                  dataKey="apr"
-                  stroke="var(--color-apr)"
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
+              {aprSeries.length > 0 ? (
+                <AprOutlookChart data={aprSeries} config={aprChartConfig} />
               ) : (
                 <div className="flex items-center justify-center h-full px-4">
                   <div className="text-center space-y-2">
@@ -648,23 +660,8 @@ const Stats = () => {
             loading={isLoading}
             config={unbondingChartConfig}
           >
-            {stats.charts.unbondingMap.length > 0 ? (
-            <BarChart data={stats.charts.unbondingMap}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-              <XAxis
-                dataKey="date"
-                tickFormatter={safeDateLabel}
-                stroke="hsl(var(--muted-foreground))"
-                tickLine={false}
-              />
-              <YAxis
-                stroke="hsl(var(--muted-foreground))"
-                tickFormatter={(value) => `${(value / 1_000_000).toLocaleString("en-US")}M`}
-                width={70}
-              />
-              <ChartTooltip content={<ChartTooltipContent />} />
-              <Bar dataKey="amount" radius={[4, 4, 0, 0]} fill="var(--color-amount)" />
-            </BarChart>
+            {unbondingSeries.length > 0 ? (
+              <UnbondingCalendarChart data={unbondingSeries} config={unbondingChartConfig} />
             ) : (
               <div className="flex items-center justify-center h-full px-4">
                 <div className="text-center space-y-2">
@@ -739,43 +736,13 @@ const Stats = () => {
               loading={isLoading}
               config={issuanceChartConfig}
             >
-              {stats.charts.emission.length > 0 ? (
-              <LineChart
-                data={stats.charts.emission.map((point, idx) => ({
-                  date: point.date,
-                  emission: point.emission,
-                  inflation: stats.charts.inflation[idx]?.inflation ?? stats.inflation.coded,
-                }))}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis
-                  dataKey="date"
-                  tickFormatter={safeDateLabel}
-                  stroke="hsl(var(--muted-foreground))"
-                  tickLine={false}
+              {emissionSeries.length > 0 ? (
+                <IssuanceOutlookChart
+                  emissionData={emissionSeries}
+                  inflationData={inflationSeries}
+                  currentInflation={stats.inflation.coded}
+                  config={issuanceChartConfig}
                 />
-                <YAxis
-                  stroke="hsl(var(--muted-foreground))"
-                  tickFormatter={(value) => value.toFixed(2)}
-                  width={60}
-                />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Line
-                  type="monotone"
-                  dataKey="inflation"
-                  stroke="var(--color-inflation)"
-                  strokeWidth={2}
-                  dot={false}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="emission"
-                  stroke="var(--color-emission)"
-                  strokeWidth={2}
-                  strokeDasharray="6 4"
-                  dot={false}
-                />
-              </LineChart>
               ) : (
                 <div className="flex items-center justify-center h-full px-4">
                   <div className="text-center space-y-2">

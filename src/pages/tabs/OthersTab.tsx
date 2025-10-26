@@ -37,14 +37,40 @@ const OthersTab: React.FC = () => {
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">
-                <Badge variant="outline" className="text-others bg-others/10 border-others/20">DCA</Badge>
+                <Badge variant="outline" className="text-others bg-others/10 border-others/20">Hydro</Badge>
               </TableCell>
               <TableCell>
-                App.calculated.fi lets you DCA with ATOM by choosing a specific strategy to follow. Create your own strategy or use a predefined one.
+                Advanced DeFi trading platform for Cosmos ecosystem assets with deep liquidity and professional trading tools.
               </TableCell>
               <TableCell>
                 <Button size="sm" variant="outline" asChild>
-                  <a href="https://app.calculated.fi" target="_blank" rel="noopener noreferrer">Visit</a>
+                  <a href="https://hydro.markets" target="_blank" rel="noopener noreferrer">Visit</a>
+                </Button>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">
+                <Badge variant="outline" className="text-others bg-others/10 border-others/20">Restake</Badge>
+              </TableCell>
+              <TableCell>
+                Liquid restaking protocol that allows users to earn additional rewards by restaking their ATOM tokens across multiple networks.
+              </TableCell>
+              <TableCell>
+                <Button size="sm" variant="outline" asChild>
+                  <a href="https://restake.app" target="_blank" rel="noopener noreferrer">Visit</a>
+                </Button>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">
+                <Badge variant="outline" className="text-others bg-others/10 border-others/20">Polli</Badge>
+              </TableCell>
+              <TableCell>
+                Decentralized polling and governance platform for the Cosmos ecosystem, enabling community decision-making through blockchain voting.
+              </TableCell>
+              <TableCell>
+                <Button size="sm" variant="outline" asChild>
+                  <a href="https://polli.co" target="_blank" rel="noopener noreferrer">Visit</a>
                 </Button>
               </TableCell>
             </TableRow>

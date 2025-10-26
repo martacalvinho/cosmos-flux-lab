@@ -50,13 +50,20 @@ const ChartContainer = React.forwardRef<
         data-chart={chartId}
         ref={ref}
         className={cn(
-          "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+          "relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl border border-white/5 bg-[#040714] p-3 text-[0.78rem] shadow-[0_30px_80px_rgba(2,6,23,0.55)]",
+          "before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.18),_transparent_58%)] before:opacity-90 before:content-['']",
+          "after:pointer-events-none after:absolute after:inset-[1px] after:rounded-[1.15rem] after:border after:border-white/5 after:opacity-40 after:content-['']",
+          "[&_.recharts-layer]:outline-none [&_.recharts-surface]:outline-none [&_.recharts-text]:fill-[#9FB5D4]",
+          "[&_.recharts-cartesian-grid line]:stroke-white/6 [&_.recharts-cartesian-grid line]:stroke-dasharray-[3_6]",
+          "[&_.recharts-cartesian-axis-tick_line]:stroke-transparent [&_.recharts-cartesian-axis-line]:stroke-white/10",
+          "[&_.recharts-cartesian-axis-tick_text]:fill-[#9FB5D4]/90 [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-white/5",
+          "[&_.recharts-curve.recharts-tooltip-cursor]:stroke-white/15 [&_.recharts-dot[stroke='#fff']]:stroke-transparent",
           className
         )}
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
-        <RechartsPrimitive.ResponsiveContainer>
+        <RechartsPrimitive.ResponsiveContainer className="relative z-10">
           {children}
         </RechartsPrimitive.ResponsiveContainer>
       </div>
@@ -156,7 +163,7 @@ const ChartTooltipContent = React.forwardRef<
         return null
       }
 
-      return <div className={cn("font-medium", labelClassName)}>{value}</div>
+      return <div className={cn("relative z-10 font-medium", labelClassName)}>{value}</div>
     }, [
       label,
       labelFormatter,
@@ -177,16 +184,19 @@ const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl",
+          "relative grid min-w-[9rem] items-start gap-1.5 rounded-xl border border-white/10 bg-[#03060d]/95 px-3 py-2 text-[0.78rem] text-white shadow-[0_15px_45px_rgba(2,6,23,0.75)] backdrop-blur-md",
+          "before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:bg-[radial-gradient(circle_at_top,_rgba(32,212,132,0.3),_transparent_70%)] before:opacity-80 before:content-['']",
+          "overflow-hidden",
           className
         )}
       >
         {!nestLabel ? tooltipLabel : null}
-        <div className="grid gap-1.5">
+        <div className="relative z-10 grid gap-1.5">
           {payload.map((item, index) => {
             const key = `${nameKey || item.name || item.dataKey || "value"}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
             const indicatorColor = color || item.payload.fill || item.color
+            const resolvedColor = indicatorColor || `var(--color-${key})`
 
             return (
               <div
@@ -196,6 +206,17 @@ const ChartTooltipContent = React.forwardRef<
                   indicator === "dot" && "items-center"
                 )}
               >
+                {!hideIndicator ? (
+                  <span className="flex h-3 w-3 items-center justify-center rounded-full bg-white/10 p-[1px]">
+                    <span
+                      className="h-full w-full rounded-full"
+                      style={{
+                        background: resolvedColor as string,
+                        boxShadow: `0 0 12px ${indicatorColor || "rgba(255,255,255,0.3)"}`,
+                      }}
+                    />
+                  </span>
+                ) : null}
                 {formatter && item?.value !== undefined && item.name ? (
                   formatter(item.value, item.name, item, index, item.payload)
                 ) : (

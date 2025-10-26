@@ -1,0 +1,19 @@
+{
+  "source": "https://staking-explorer.com/explorer/cosmoshub",
+  "scrapedAt": "2025-10-24T23:05:19.644Z",
+  "charts": [
+    "emission_chart",
+    "pool_chart",
+    "unbonding_chart",
+    "apr_chart"
+  ],
+  "files": {
+    "stakingDynamics": "/Users/mcalvi/CascadeProjects/AtomHub/cosmos-flux-lab/public/data/historical/staking-dynamics.json",
+    "inflation": "/Users/mcalvi/CascadeProjects/AtomHub/cosmos-flux-lab/public/data/historical/inflation.json",
+    "emission": "/Users/mcalvi/CascadeProjects/AtomHub/cosmos-flux-lab/public/data/historical/emission.json",
+    "apr": "/Users/mcalvi/CascadeProjects/AtomHub/cosmos-flux-lab/public/data/historical/apr.json",
+    "unbonding": "/Users/mcalvi/CascadeProjects/AtomHub/cosmos-flux-lab/public/data/historical/unbonding.json",
+    "poolChart": "/Users/mcalvi/CascadeProjects/AtomHub/cosmos-flux-lab/public/data/historical/pool-chart.json"
+  },
+  "totalDataPoints": 27976
+}
