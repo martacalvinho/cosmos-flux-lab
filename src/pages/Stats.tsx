@@ -342,6 +342,9 @@ const Stats = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
+    const FUTURE_WINDOW_DAYS = 45; // keep the view aligned with the sync horizon
+    const PAST_WINDOW_DAYS = 5;
+
     const allPoints = rawPoints
       .map((point) => {
         const parsedDate = parseDateValue(point.date);
@@ -362,14 +365,14 @@ const Stats = () => {
       .filter((entry): entry is { date: string; amount: number; isToday: boolean } => entry !== null)
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     
-    // Filter to show a rolling window: 5 days before today to 14 days after today
+    // Filter to show a rolling window: 5 days before today and 45 days ahead
     const todayTime = today.getTime();
-    const fiveDaysBefore = todayTime - (5 * 24 * 60 * 60 * 1000);
-    const fourteenDaysAfter = todayTime + (14 * 24 * 60 * 60 * 1000);
+    const fiveDaysBefore = todayTime - (PAST_WINDOW_DAYS * 24 * 60 * 60 * 1000);
+    const horizon = todayTime + (FUTURE_WINDOW_DAYS * 24 * 60 * 60 * 1000);
     
     return allPoints.filter((point) => {
       const pointTime = new Date(point.date).getTime();
-      return pointTime >= fiveDaysBefore && pointTime <= fourteenDaysAfter;
+      return pointTime >= fiveDaysBefore && pointTime <= horizon;
     });
   }, [stats?.charts?.unbondingMap]);
 

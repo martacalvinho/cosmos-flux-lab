@@ -30,7 +30,9 @@ export class HistoricalDataService {
     }
 
     try {
-      const response = await fetch(`/data/historical/${filename}`);
+      const response = await fetch(`/data/historical/${filename}`, {
+        cache: "no-store",
+      });
       if (!response.ok) {
         console.warn(`[HistoricalDataService] Could not load historical data: ${filename}`);
         return [];

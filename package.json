@@ -19,7 +19,8 @@
     "snapshot:dropmoney": "node scripts/snapshotDropMoney.js",
     "snapshot:dropmoney:append": "node scripts/snapshotDropMoney.js --append",
     "snapshot:pryzm": "node scripts/snapshotPryzm.js",
-    "snapshot:pryzm:append": "node scripts/snapshotPryzm.js --append"
+    "snapshot:pryzm:append": "node scripts/snapshotPryzm.js --append",
+    "sync:charts": "node scripts/updateMintscanCharts.js"
   },
   "dependencies": {
     "@apollo/client": "^4.0.2",
@@ -63,6 +64,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
     "declarative-shadow-dom-polyfill": "^0.4.0",
     "embla-carousel-react": "^8.6.0",
     "graphql": "^16.11.0",
