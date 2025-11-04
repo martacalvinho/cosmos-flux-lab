@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-11-03T05:36:24.578Z",
+  "scrapedAt": "2025-11-04T05:35:35.604Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2025-11-03",
-      "timestamp": 1762128000000,
-      "value": 541430,
-      "amount": 541430
-    },
-    {
       "date": "2025-11-04",
       "timestamp": 1762214400000,
-      "value": 681608,
-      "amount": 681608
+      "value": 515732,
+      "amount": 515732
     },
     {
       "date": "2025-11-05",
@@ -79,8 +73,8 @@
     {
       "date": "2025-11-15",
       "timestamp": 1763164800000,
-      "value": 246911,
-      "amount": 246911
+      "value": 246809,
+      "amount": 246809
     },
     {
       "date": "2025-11-16",
@@ -97,14 +91,14 @@
     {
       "date": "2025-11-18",
       "timestamp": 1763424000000,
-      "value": 939437,
-      "amount": 939437
+      "value": 939004,
+      "amount": 939004
     },
     {
       "date": "2025-11-19",
       "timestamp": 1763510400000,
-      "value": 3354585,
-      "amount": 3354585
+      "value": 3354385,
+      "amount": 3354385
     },
     {
       "date": "2025-11-20",
@@ -121,27 +115,33 @@
     {
       "date": "2025-11-22",
       "timestamp": 1763769600000,
-      "value": 336736,
-      "amount": 336736
+      "value": 336111,
+      "amount": 336111
     },
     {
       "date": "2025-11-23",
       "timestamp": 1763856000000,
-      "value": 531769,
-      "amount": 531769
+      "value": 531602,
+      "amount": 531602
     },
     {
       "date": "2025-11-24",
       "timestamp": 1763942400000,
-      "value": 125303,
-      "amount": 125303
+      "value": 922136,
+      "amount": 922136
+    },
+    {
+      "date": "2025-11-25",
+      "timestamp": 1764028800000,
+      "value": 48415,
+      "amount": 48415
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 595,
-      "totalUnbondingEntries": 18900,
-      "totalUnbondingAtom": 15228850.78,
+      "totalUnbondingEntries": 18953,
+      "totalUnbondingAtom": 15365263.96,
       "errors": [],
       "windowDays": 45
     }
