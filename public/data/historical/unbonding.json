@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-11-08T05:33:52.489Z",
+  "scrapedAt": "2025-11-09T05:34:05.932Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2025-11-08",
-      "timestamp": 1762560000000,
-      "value": 237757,
-      "amount": 237757
-    },
-    {
       "date": "2025-11-09",
       "timestamp": 1762646400000,
-      "value": 200071,
-      "amount": 200071
+      "value": 119630,
+      "amount": 119630
     },
     {
       "date": "2025-11-10",
@@ -133,16 +127,24 @@
     {
       "date": "2025-11-29",
       "timestamp": 1764374400000,
-      "value": 257316,
-      "amount": 257316
+      "value": 600347,
+      "amount": 600347
+    },
+    {
+      "date": "2025-11-30",
+      "timestamp": 1764460800000,
+      "value": 117782,
+      "amount": 117782
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 596,
-      "totalUnbondingEntries": 16136,
-      "totalUnbondingAtom": 15607151.55,
-      "errors": [],
+      "totalUnbondingEntries": 16154,
+      "totalUnbondingAtom": 15749765.51,
+      "errors": [
+        "cosmosvaloper19ggkjc5slg5gphf92yrvusr3jc702h4tfz6nvn: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper19ggkjc5slg5gphf92yrvusr3jc702h4tfz6nvn/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper19ggkjc5slg5gphf92yrvusr3jc702h4tfz6nvn/unbonding_delegations: Internal Server Error"
+      ],
       "windowDays": 45
     }
   }
