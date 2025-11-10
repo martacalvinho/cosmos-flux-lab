@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-11-09T05:34:05.932Z",
+  "scrapedAt": "2025-11-10T05:36:04.565Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2025-11-09",
-      "timestamp": 1762646400000,
-      "value": 119630,
-      "amount": 119630
-    },
-    {
       "date": "2025-11-10",
       "timestamp": 1762732800000,
-      "value": 499845,
-      "amount": 499845
+      "value": 441779,
+      "amount": 441779
     },
     {
       "date": "2025-11-11",
@@ -97,8 +91,8 @@
     {
       "date": "2025-11-24",
       "timestamp": 1763942400000,
-      "value": 920674,
-      "amount": 920674
+      "value": 920471,
+      "amount": 920471
     },
     {
       "date": "2025-11-25",
@@ -121,8 +115,8 @@
     {
       "date": "2025-11-28",
       "timestamp": 1764288000000,
-      "value": 450294,
-      "amount": 450294
+      "value": 450243,
+      "amount": 450243
     },
     {
       "date": "2025-11-29",
@@ -133,18 +127,22 @@
     {
       "date": "2025-11-30",
       "timestamp": 1764460800000,
-      "value": 117782,
-      "amount": 117782
+      "value": 341245,
+      "amount": 341245
+    },
+    {
+      "date": "2025-12-01",
+      "timestamp": 1764547200000,
+      "value": 42074,
+      "amount": 42074
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 596,
-      "totalUnbondingEntries": 16154,
-      "totalUnbondingAtom": 15749765.51,
-      "errors": [
-        "cosmosvaloper19ggkjc5slg5gphf92yrvusr3jc702h4tfz6nvn: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper19ggkjc5slg5gphf92yrvusr3jc702h4tfz6nvn/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper19ggkjc5slg5gphf92yrvusr3jc702h4tfz6nvn/unbonding_delegations: Internal Server Error"
-      ],
+      "totalUnbondingEntries": 15746,
+      "totalUnbondingAtom": 15837351.6,
+      "errors": [],
       "windowDays": 45
     }
   }
