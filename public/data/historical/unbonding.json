@@ -1,110 +1,104 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-11-12T05:36:45.095Z",
+  "scrapedAt": "2025-11-13T05:36:59.442Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2025-11-12",
-      "timestamp": 1762905600000,
-      "value": 186629,
-      "amount": 186629
-    },
-    {
       "date": "2025-11-13",
       "timestamp": 1762992000000,
-      "value": 313836,
-      "amount": 313836
+      "value": 279101,
+      "amount": 279101
     },
     {
       "date": "2025-11-14",
       "timestamp": 1763078400000,
-      "value": 583526,
-      "amount": 583526
+      "value": 583618,
+      "amount": 583618
     },
     {
       "date": "2025-11-15",
       "timestamp": 1763164800000,
-      "value": 244814,
-      "amount": 244814
+      "value": 246207,
+      "amount": 246207
     },
     {
       "date": "2025-11-16",
       "timestamp": 1763251200000,
-      "value": 252321,
-      "amount": 252321
+      "value": 252377,
+      "amount": 252377
     },
     {
       "date": "2025-11-17",
       "timestamp": 1763337600000,
-      "value": 406976,
-      "amount": 406976
+      "value": 407334,
+      "amount": 407334
     },
     {
       "date": "2025-11-18",
       "timestamp": 1763424000000,
-      "value": 938910,
-      "amount": 938910
+      "value": 939004,
+      "amount": 939004
     },
     {
       "date": "2025-11-19",
       "timestamp": 1763510400000,
-      "value": 3350606,
-      "amount": 3350606
+      "value": 3353733,
+      "amount": 3353733
     },
     {
       "date": "2025-11-20",
       "timestamp": 1763596800000,
-      "value": 2816863,
-      "amount": 2816863
+      "value": 2818096,
+      "amount": 2818096
     },
     {
       "date": "2025-11-21",
       "timestamp": 1763683200000,
-      "value": 488970,
-      "amount": 488970
+      "value": 489045,
+      "amount": 489045
     },
     {
       "date": "2025-11-22",
       "timestamp": 1763769600000,
-      "value": 335980,
-      "amount": 335980
+      "value": 336008,
+      "amount": 336008
     },
     {
       "date": "2025-11-23",
       "timestamp": 1763856000000,
-      "value": 516412,
-      "amount": 516412
+      "value": 528783,
+      "amount": 528783
     },
     {
       "date": "2025-11-24",
       "timestamp": 1763942400000,
-      "value": 903439,
-      "amount": 903439
+      "value": 920471,
+      "amount": 920471
     },
     {
       "date": "2025-11-25",
       "timestamp": 1764028800000,
-      "value": 768129,
-      "amount": 768129
+      "value": 781680,
+      "amount": 781680
     },
     {
       "date": "2025-11-26",
       "timestamp": 1764115200000,
-      "value": 467814,
-      "amount": 467814
+      "value": 467830,
+      "amount": 467830
     },
     {
       "date": "2025-11-27",
       "timestamp": 1764201600000,
-      "value": 742486,
-      "amount": 742486
+      "value": 747832,
+      "amount": 747832
     },
     {
       "date": "2025-11-28",
       "timestamp": 1764288000000,
-      "value": 450185,
-      "amount": 450185
+      "value": 450188,
+      "amount": 450188
     },
     {
       "date": "2025-11-29",
@@ -115,39 +109,40 @@
     {
       "date": "2025-11-30",
       "timestamp": 1764460800000,
-      "value": 300786,
-      "amount": 300786
+      "value": 300871,
+      "amount": 300871
     },
     {
       "date": "2025-12-01",
       "timestamp": 1764547200000,
-      "value": 366582,
-      "amount": 366582
+      "value": 381072,
+      "amount": 381072
     },
     {
       "date": "2025-12-02",
       "timestamp": 1764633600000,
-      "value": 305583,
-      "amount": 305583
+      "value": 305708,
+      "amount": 305708
     },
     {
       "date": "2025-12-03",
       "timestamp": 1764720000000,
-      "value": 215248,
-      "amount": 215248
+      "value": 548624,
+      "amount": 548624
+    },
+    {
+      "date": "2025-12-04",
+      "timestamp": 1764806400000,
+      "value": 33959,
+      "amount": 33959
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 596,
-      "totalUnbondingEntries": 13926,
-      "totalUnbondingAtom": 15556442.89,
-      "errors": [
-        "cosmosvaloper1e4vye322gkjx8n85jgcclnc7nvdvu82axnr5ll: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1e4vye322gkjx8n85jgcclnc7nvdvu82axnr5ll/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1e4vye322gkjx8n85jgcclnc7nvdvu82axnr5ll/unbonding_delegations: ",
-        "cosmosvaloper16s96n9k9zztdgjy8q4qcxp4hn7ww98qkrka4zk: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper16s96n9k9zztdgjy8q4qcxp4hn7ww98qkrka4zk/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper16s96n9k9zztdgjy8q4qcxp4hn7ww98qkrka4zk/unbonding_delegations: ",
-        "cosmosvaloper1eh5mwu044gd5ntkkc2xgfg8247mgc56fz4sdg3: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1eh5mwu044gd5ntkkc2xgfg8247mgc56fz4sdg3/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1eh5mwu044gd5ntkkc2xgfg8247mgc56fz4sdg3/unbonding_delegations: ",
-        "cosmosvaloper1u3czw59ysyu94lgr2cmhm06vc9ttz64wqm2fru: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1u3czw59ysyu94lgr2cmhm06vc9ttz64wqm2fru/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1u3czw59ysyu94lgr2cmhm06vc9ttz64wqm2fru/unbonding_delegations: "
-      ],
+      "totalUnbondingEntries": 14570,
+      "totalUnbondingAtom": 15771887.28,
+      "errors": [],
       "windowDays": 45
     }
   }
