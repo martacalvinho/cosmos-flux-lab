@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-11-16T05:34:44.825Z",
+  "scrapedAt": "2025-11-17T05:37:14.398Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2025-11-16",
-      "timestamp": 1763251200000,
-      "value": 226770,
-      "amount": 226770
-    },
-    {
       "date": "2025-11-17",
       "timestamp": 1763337600000,
-      "value": 407334,
-      "amount": 407334
+      "value": 268335,
+      "amount": 268335
     },
     {
       "date": "2025-11-18",
@@ -55,14 +49,14 @@
     {
       "date": "2025-11-24",
       "timestamp": 1763942400000,
-      "value": 920438,
-      "amount": 920438
+      "value": 920002,
+      "amount": 920002
     },
     {
       "date": "2025-11-25",
       "timestamp": 1764028800000,
-      "value": 781573,
-      "amount": 781573
+      "value": 780136,
+      "amount": 780136
     },
     {
       "date": "2025-11-26",
@@ -85,8 +79,8 @@
     {
       "date": "2025-11-29",
       "timestamp": 1764374400000,
-      "value": 600347,
-      "amount": 600347
+      "value": 599947,
+      "amount": 599947
     },
     {
       "date": "2025-11-30",
@@ -115,36 +109,40 @@
     {
       "date": "2025-12-04",
       "timestamp": 1764806400000,
-      "value": 1408350,
-      "amount": 1408350
+      "value": 1403350,
+      "amount": 1403350
     },
     {
       "date": "2025-12-05",
       "timestamp": 1764892800000,
-      "value": 537927,
-      "amount": 537927
+      "value": 537890,
+      "amount": 537890
     },
     {
       "date": "2025-12-06",
       "timestamp": 1764979200000,
-      "value": 324579,
-      "amount": 324579
+      "value": 302949,
+      "amount": 302949
     },
     {
       "date": "2025-12-07",
       "timestamp": 1765065600000,
-      "value": 40831,
-      "amount": 40831
+      "value": 171842,
+      "amount": 171842
+    },
+    {
+      "date": "2025-12-08",
+      "timestamp": 1765152000000,
+      "value": 550774,
+      "amount": 550774
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 596,
-      "totalUnbondingEntries": 14029,
-      "totalUnbondingAtom": 16912039.59,
-      "errors": [
-        "cosmosvaloper1fghgwhgtxtcshj4a9alp7u2qv6n2wffqhpxcnk: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1fghgwhgtxtcshj4a9alp7u2qv6n2wffqhpxcnk/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1fghgwhgtxtcshj4a9alp7u2qv6n2wffqhpxcnk/unbonding_delegations: "
-      ],
+      "totalUnbondingEntries": 14235,
+      "totalUnbondingAtom": 17199116.17,
+      "errors": [],
       "windowDays": 45
     }
   }
