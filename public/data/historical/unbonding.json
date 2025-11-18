@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-11-17T05:37:14.398Z",
+  "scrapedAt": "2025-11-18T05:36:06.621Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2025-11-17",
-      "timestamp": 1763337600000,
-      "value": 268335,
-      "amount": 268335
-    },
-    {
       "date": "2025-11-18",
       "timestamp": 1763424000000,
-      "value": 939004,
-      "amount": 939004
+      "value": 771200,
+      "amount": 771200
     },
     {
       "date": "2025-11-19",
@@ -25,14 +19,14 @@
     {
       "date": "2025-11-20",
       "timestamp": 1763596800000,
-      "value": 2818096,
-      "amount": 2818096
+      "value": 2818069,
+      "amount": 2818069
     },
     {
       "date": "2025-11-21",
       "timestamp": 1763683200000,
-      "value": 489045,
-      "amount": 489045
+      "value": 488980,
+      "amount": 488980
     },
     {
       "date": "2025-11-22",
@@ -91,14 +85,14 @@
     {
       "date": "2025-12-01",
       "timestamp": 1764547200000,
-      "value": 381072,
-      "amount": 381072
+      "value": 380772,
+      "amount": 380772
     },
     {
       "date": "2025-12-02",
       "timestamp": 1764633600000,
-      "value": 305708,
-      "amount": 305708
+      "value": 305707,
+      "amount": 305707
     },
     {
       "date": "2025-12-03",
@@ -115,8 +109,8 @@
     {
       "date": "2025-12-05",
       "timestamp": 1764892800000,
-      "value": 537890,
-      "amount": 537890
+      "value": 537021,
+      "amount": 537021
     },
     {
       "date": "2025-12-06",
@@ -133,16 +127,25 @@
     {
       "date": "2025-12-08",
       "timestamp": 1765152000000,
-      "value": 550774,
-      "amount": 550774
+      "value": 693779,
+      "amount": 693779
+    },
+    {
+      "date": "2025-12-09",
+      "timestamp": 1765238400000,
+      "value": 46753,
+      "amount": 46753
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 596,
-      "totalUnbondingEntries": 14235,
-      "totalUnbondingAtom": 17199116.17,
-      "errors": [],
+      "totalUnbondingEntries": 15074,
+      "totalUnbondingAtom": 16951473.54,
+      "errors": [
+        "cosmosvaloper18s3k8dt73e28rraqk70u9xwtv9wlav83n5mqjx: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper18s3k8dt73e28rraqk70u9xwtv9wlav83n5mqjx/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper18s3k8dt73e28rraqk70u9xwtv9wlav83n5mqjx/unbonding_delegations: ",
+        "cosmosvaloper16ydjycnc98hsrkdx0s2vz8x7mtawqm37c96ls9: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper16ydjycnc98hsrkdx0s2vz8x7mtawqm37c96ls9/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper16ydjycnc98hsrkdx0s2vz8x7mtawqm37c96ls9/unbonding_delegations: Internal Server Error"
+      ],
       "windowDays": 45
     }
   }
