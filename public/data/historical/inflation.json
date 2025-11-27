@@ -1,6 +1,6 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-11-25T05:37:37.542Z",
+  "scrapedAt": "2025-11-27T05:38:22.902Z",
   "chartId": "inflation_chart",
   "title": "Cosmoshub inflation",
   "data": [
@@ -203,6 +203,13 @@
     {
       "date": "2025-11-25",
       "timestamp": 1764049057542,
+      "value": 10,
+      "floor": 7.000000000000001,
+      "ceiling": 10
+    },
+    {
+      "date": "2025-11-27",
+      "timestamp": 1764221902902,
       "value": 10,
       "floor": 7.000000000000001,
       "ceiling": 10
