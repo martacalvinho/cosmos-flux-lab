@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-12-01T05:45:46.955Z",
+  "scrapedAt": "2025-12-02T05:37:48.703Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2025-12-01",
-      "timestamp": 1764547200000,
-      "value": 338451,
-      "amount": 338451
-    },
-    {
       "date": "2025-12-02",
       "timestamp": 1764633600000,
-      "value": 305706,
-      "amount": 305706
+      "value": 228684,
+      "amount": 228684
     },
     {
       "date": "2025-12-03",
@@ -43,8 +37,8 @@
     {
       "date": "2025-12-07",
       "timestamp": 1765065600000,
-      "value": 171668,
-      "amount": 171668
+      "value": 171451,
+      "amount": 171451
     },
     {
       "date": "2025-12-08",
@@ -97,8 +91,8 @@
     {
       "date": "2025-12-16",
       "timestamp": 1765843200000,
-      "value": 2725737,
-      "amount": 2725737
+      "value": 2725526,
+      "amount": 2725526
     },
     {
       "date": "2025-12-17",
@@ -115,14 +109,14 @@
     {
       "date": "2025-12-19",
       "timestamp": 1766102400000,
-      "value": 181351,
-      "amount": 181351
+      "value": 181237,
+      "amount": 181237
     },
     {
       "date": "2025-12-20",
       "timestamp": 1766188800000,
-      "value": 209913,
-      "amount": 209913
+      "value": 209213,
+      "amount": 209213
     },
     {
       "date": "2025-12-21",
@@ -133,15 +127,21 @@
     {
       "date": "2025-12-22",
       "timestamp": 1766361600000,
-      "value": 63089,
-      "amount": 63089
+      "value": 884769,
+      "amount": 884769
+    },
+    {
+      "date": "2025-12-23",
+      "timestamp": 1766448000000,
+      "value": 19040,
+      "amount": 19040
     }
   ],
   "rawData": {
     "summary": {
-      "validatorCount": 596,
-      "totalUnbondingEntries": 10961,
-      "totalUnbondingAtom": 10747183.2,
+      "validatorCount": 597,
+      "totalUnbondingEntries": 10782,
+      "totalUnbondingAtom": 11171187.22,
       "errors": [],
       "windowDays": 45
     }
