@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-12-08T05:41:21.243Z",
+  "scrapedAt": "2025-12-09T05:38:32.855Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2025-12-08",
-      "timestamp": 1765152000000,
-      "value": 142882,
-      "amount": 142882
-    },
-    {
       "date": "2025-12-09",
       "timestamp": 1765238400000,
-      "value": 441346,
-      "amount": 441346
+      "value": 394156,
+      "amount": 394156
     },
     {
       "date": "2025-12-10",
@@ -103,8 +97,8 @@
     {
       "date": "2025-12-24",
       "timestamp": 1766534400000,
-      "value": 668206,
-      "amount": 668206
+      "value": 668053,
+      "amount": 668053
     },
     {
       "date": "2025-12-25",
@@ -121,8 +115,8 @@
     {
       "date": "2025-12-27",
       "timestamp": 1766793600000,
-      "value": 107420,
-      "amount": 107420
+      "value": 107419,
+      "amount": 107419
     },
     {
       "date": "2025-12-28",
@@ -133,16 +127,24 @@
     {
       "date": "2025-12-29",
       "timestamp": 1766966400000,
-      "value": 18355,
-      "amount": 18355
+      "value": 221065,
+      "amount": 221065
+    },
+    {
+      "date": "2025-12-30",
+      "timestamp": 1767052800000,
+      "value": 450418,
+      "amount": 450418
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 597,
-      "totalUnbondingEntries": 10400,
-      "totalUnbondingAtom": 9165068.56,
-      "errors": [],
+      "totalUnbondingEntries": 9331,
+      "totalUnbondingAtom": 9627970.76,
+      "errors": [
+        "cosmosvaloper1kzzxf55puvdncekx8ln2jfzrklm72qn46uez7l: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1kzzxf55puvdncekx8ln2jfzrklm72qn46uez7l/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1kzzxf55puvdncekx8ln2jfzrklm72qn46uez7l/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.26.2</center>\r\n</body>\r\n</html>\r\n"
+      ],
       "windowDays": 45
     }
   }
