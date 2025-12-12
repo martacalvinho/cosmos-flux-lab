@@ -1,149 +1,151 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-12-11T05:42:14.765Z",
+  "scrapedAt": "2025-12-12T05:40:48.899Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2025-12-11",
-      "timestamp": 1765411200000,
-      "value": 339821,
-      "amount": 339821
-    },
-    {
       "date": "2025-12-12",
       "timestamp": 1765497600000,
-      "value": 332380,
-      "amount": 332380
+      "value": 302968,
+      "amount": 302968
     },
     {
       "date": "2025-12-13",
       "timestamp": 1765584000000,
-      "value": 253058,
-      "amount": 253058
+      "value": 253593,
+      "amount": 253593
     },
     {
       "date": "2025-12-14",
       "timestamp": 1765670400000,
-      "value": 284195,
-      "amount": 284195
+      "value": 284702,
+      "amount": 284702
     },
     {
       "date": "2025-12-15",
       "timestamp": 1765756800000,
-      "value": 367710,
-      "amount": 367710
+      "value": 367206,
+      "amount": 367206
     },
     {
       "date": "2025-12-16",
       "timestamp": 1765843200000,
-      "value": 2609746,
-      "amount": 2609746
+      "value": 2722845,
+      "amount": 2722845
     },
     {
       "date": "2025-12-17",
       "timestamp": 1765929600000,
-      "value": 228929,
-      "amount": 228929
+      "value": 231602,
+      "amount": 231602
     },
     {
       "date": "2025-12-18",
       "timestamp": 1766016000000,
-      "value": 302411,
-      "amount": 302411
+      "value": 301294,
+      "amount": 301294
     },
     {
       "date": "2025-12-19",
       "timestamp": 1766102400000,
-      "value": 181127,
-      "amount": 181127
+      "value": 181213,
+      "amount": 181213
     },
     {
       "date": "2025-12-20",
       "timestamp": 1766188800000,
-      "value": 208151,
-      "amount": 208151
+      "value": 209121,
+      "amount": 209121
     },
     {
       "date": "2025-12-21",
       "timestamp": 1766275200000,
-      "value": 223838,
-      "amount": 223838
+      "value": 224100,
+      "amount": 224100
     },
     {
       "date": "2025-12-22",
       "timestamp": 1766361600000,
-      "value": 884769,
-      "amount": 884769
+      "value": 880927,
+      "amount": 880927
     },
     {
       "date": "2025-12-23",
       "timestamp": 1766448000000,
-      "value": 410526,
-      "amount": 410526
+      "value": 411711,
+      "amount": 411711
     },
     {
       "date": "2025-12-24",
       "timestamp": 1766534400000,
-      "value": 667488,
-      "amount": 667488
+      "value": 667981,
+      "amount": 667981
     },
     {
       "date": "2025-12-25",
       "timestamp": 1766620800000,
-      "value": 125901,
-      "amount": 125901
+      "value": 136561,
+      "amount": 136561
     },
     {
       "date": "2025-12-26",
       "timestamp": 1766707200000,
-      "value": 267445,
-      "amount": 267445
+      "value": 267721,
+      "amount": 267721
     },
     {
       "date": "2025-12-27",
       "timestamp": 1766793600000,
-      "value": 107315,
-      "amount": 107315
+      "value": 107419,
+      "amount": 107419
     },
     {
       "date": "2025-12-28",
       "timestamp": 1766880000000,
-      "value": 157417,
-      "amount": 157417
+      "value": 157365,
+      "amount": 157365
     },
     {
       "date": "2025-12-29",
       "timestamp": 1766966400000,
-      "value": 219027,
-      "amount": 219027
+      "value": 218862,
+      "amount": 218862
     },
     {
       "date": "2025-12-30",
       "timestamp": 1767052800000,
-      "value": 530671,
-      "amount": 530671
+      "value": 531260,
+      "amount": 531260
     },
     {
       "date": "2025-12-31",
       "timestamp": 1767139200000,
-      "value": 89547,
-      "amount": 89547
+      "value": 89597,
+      "amount": 89597
     },
     {
       "date": "2026-01-01",
       "timestamp": 1767225600000,
-      "value": 11972,
-      "amount": 11972
+      "value": 316475,
+      "amount": 316475
+    },
+    {
+      "date": "2026-01-02",
+      "timestamp": 1767312000000,
+      "value": 65860,
+      "amount": 65860
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 598,
-      "totalUnbondingEntries": 8595,
-      "totalUnbondingAtom": 8803441.71,
+      "totalUnbondingEntries": 8338,
+      "totalUnbondingAtom": 8930383.4,
       "errors": [
-        "cosmosvaloper18sqvyf4ss84qree7gndph5chmm82fglsqfylwn: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper18sqvyf4ss84qree7gndph5chmm82fglsqfylwn/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper18sqvyf4ss84qree7gndph5chmm82fglsqfylwn/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.26.2</center>\r\n</body>\r\n</html>\r\n"
+        "cosmosvaloper1zk49r55txl9a7nttjcsqjrg5lus8hckkhgzez7: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1zk49r55txl9a7nttjcsqjrg5lus8hckkhgzez7/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1zk49r55txl9a7nttjcsqjrg5lus8hckkhgzez7/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.26.2</center>\r\n</body>\r\n</html>\r\n",
+        "cosmosvaloper1te8nxpc2myjfrhaty0dnzdhs5ahdh5agzuym9v: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1te8nxpc2myjfrhaty0dnzdhs5ahdh5agzuym9v/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1te8nxpc2myjfrhaty0dnzdhs5ahdh5agzuym9v/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.26.2</center>\r\n</body>\r\n</html>\r\n",
+        "cosmosvaloper1v2srqzaqku25pdndegz3flhez6umfehpaxjyzf: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1v2srqzaqku25pdndegz3flhez6umfehpaxjyzf/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1v2srqzaqku25pdndegz3flhez6umfehpaxjyzf/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.26.2</center>\r\n</body>\r\n</html>\r\n"
       ],
       "windowDays": 45
     }
