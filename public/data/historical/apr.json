@@ -1,6 +1,6 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-12-17T05:42:04.479Z",
+  "scrapedAt": "2025-12-18T05:42:26.349Z",
   "chartId": "apr_chart",
   "title": "Cosmoshub APR chart",
   "data": [
@@ -94403,13 +94403,18 @@
       "date": "2025-12-17",
       "timestamp": 1765950124479,
       "value": 17.09
+    },
+    {
+      "date": "2025-12-18",
+      "timestamp": 1766036546349,
+      "value": 17.09
     }
   ],
   "rawData": {
     "pool": {
       "pool": {
-        "not_bonded_tokens": "9068293903046",
-        "bonded_tokens": "282804116951404"
+        "not_bonded_tokens": "9245225067369",
+        "bonded_tokens": "282883038327715"
       }
     },
     "mintParams": {
@@ -94426,12 +94431,12 @@
       "inflation": "0.100000000000000000"
     },
     "annualResp": {
-      "annual_provisions": "48334590605986.800000000000000000"
+      "annual_provisions": "48351176870891.100000000000000000"
     },
     "supplyResp": {
       "amount": {
         "denom": "uatom",
-        "amount": "483345917145783"
+        "amount": "483511779798630"
       }
     }
   }
