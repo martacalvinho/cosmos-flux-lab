@@ -1,152 +1,148 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-12-23T05:43:18.220Z",
+  "scrapedAt": "2025-12-24T05:43:18.013Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2025-12-23",
-      "timestamp": 1766448000000,
-      "value": 392152,
-      "amount": 392152
-    },
-    {
       "date": "2025-12-24",
       "timestamp": 1766534400000,
-      "value": 666674,
-      "amount": 666674
+      "value": 597411,
+      "amount": 597411
     },
     {
       "date": "2025-12-25",
       "timestamp": 1766620800000,
-      "value": 136702,
-      "amount": 136702
+      "value": 138420,
+      "amount": 138420
     },
     {
       "date": "2025-12-26",
       "timestamp": 1766707200000,
-      "value": 265993,
-      "amount": 265993
+      "value": 267637,
+      "amount": 267637
     },
     {
       "date": "2025-12-27",
       "timestamp": 1766793600000,
-      "value": 106715,
-      "amount": 106715
+      "value": 107419,
+      "amount": 107419
     },
     {
       "date": "2025-12-28",
       "timestamp": 1766880000000,
-      "value": 155146,
-      "amount": 155146
+      "value": 157177,
+      "amount": 157177
     },
     {
       "date": "2025-12-29",
       "timestamp": 1766966400000,
-      "value": 218864,
-      "amount": 218864
+      "value": 219704,
+      "amount": 219704
     },
     {
       "date": "2025-12-30",
       "timestamp": 1767052800000,
-      "value": 530451,
-      "amount": 530451
+      "value": 531260,
+      "amount": 531260
     },
     {
       "date": "2025-12-31",
       "timestamp": 1767139200000,
-      "value": 89392,
-      "amount": 89392
+      "value": 89097,
+      "amount": 89097
     },
     {
       "date": "2026-01-01",
       "timestamp": 1767225600000,
-      "value": 315709,
-      "amount": 315709
+      "value": 316617,
+      "amount": 316617
     },
     {
       "date": "2026-01-02",
       "timestamp": 1767312000000,
-      "value": 143064,
-      "amount": 143064
+      "value": 143075,
+      "amount": 143075
     },
     {
       "date": "2026-01-03",
       "timestamp": 1767398400000,
-      "value": 70060,
-      "amount": 70060
+      "value": 70813,
+      "amount": 70813
     },
     {
       "date": "2026-01-04",
       "timestamp": 1767484800000,
-      "value": 130261,
-      "amount": 130261
+      "value": 130352,
+      "amount": 130352
     },
     {
       "date": "2026-01-05",
       "timestamp": 1767571200000,
-      "value": 177252,
-      "amount": 177252
+      "value": 177825,
+      "amount": 177825
     },
     {
       "date": "2026-01-06",
       "timestamp": 1767657600000,
-      "value": 1181704,
-      "amount": 1181704
+      "value": 1182615,
+      "amount": 1182615
     },
     {
       "date": "2026-01-07",
       "timestamp": 1767744000000,
-      "value": 273906,
-      "amount": 273906
+      "value": 279572,
+      "amount": 279572
     },
     {
       "date": "2026-01-08",
       "timestamp": 1767830400000,
-      "value": 449031,
-      "amount": 449031
+      "value": 370308,
+      "amount": 370308
     },
     {
       "date": "2026-01-09",
       "timestamp": 1767916800000,
-      "value": 242459,
-      "amount": 242459
+      "value": 243352,
+      "amount": 243352
     },
     {
       "date": "2026-01-10",
       "timestamp": 1768003200000,
-      "value": 458315,
-      "amount": 458315
+      "value": 460940,
+      "amount": 460940
     },
     {
       "date": "2026-01-11",
       "timestamp": 1768089600000,
-      "value": 111932,
-      "amount": 111932
+      "value": 112281,
+      "amount": 112281
     },
     {
       "date": "2026-01-12",
       "timestamp": 1768176000000,
-      "value": 364703,
-      "amount": 364703
+      "value": 365130,
+      "amount": 365130
     },
     {
       "date": "2026-01-13",
       "timestamp": 1768262400000,
-      "value": 27793,
-      "amount": 27793
+      "value": 201954,
+      "amount": 201954
+    },
+    {
+      "date": "2026-01-14",
+      "timestamp": 1768348800000,
+      "value": 13494,
+      "amount": 13494
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 600,
-      "totalUnbondingEntries": 7551,
-      "totalUnbondingAtom": 6508278.33,
-      "errors": [
-        "cosmosvaloper1v2srqzaqku25pdndegz3flhez6umfehpaxjyzf: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1v2srqzaqku25pdndegz3flhez6umfehpaxjyzf/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1v2srqzaqku25pdndegz3flhez6umfehpaxjyzf/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx/1.26.2</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1vvwtk805lxehwle9l4yudmq6mn0g32px9xtkhc: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1vvwtk805lxehwle9l4yudmq6mn0g32px9xtkhc/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1vvwtk805lxehwle9l4yudmq6mn0g32px9xtkhc/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx/1.26.2</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1vcplycfpud0dkppqtamhnf6theqe8x2urqr2jn: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1vcplycfpud0dkppqtamhnf6theqe8x2urqr2jn/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1vcplycfpud0dkppqtamhnf6theqe8x2urqr2jn/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx/1.26.2</center>\r\n</body>\r\n</html>\r\n"
-      ],
+      "totalUnbondingEntries": 7718,
+      "totalUnbondingAtom": 6176453.25,
+      "errors": [],
       "windowDays": 45
     }
   }
