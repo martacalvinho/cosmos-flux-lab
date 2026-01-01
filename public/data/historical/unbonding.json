@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2025-12-31T05:44:17.804Z",
+  "scrapedAt": "2026-01-01T05:45:37.969Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2025-12-31",
-      "timestamp": 1767139200000,
-      "value": 72389,
-      "amount": 72389
-    },
-    {
       "date": "2026-01-01",
       "timestamp": 1767225600000,
-      "value": 315136,
-      "amount": 315136
+      "value": 303164,
+      "amount": 303164
     },
     {
       "date": "2026-01-02",
@@ -97,8 +91,8 @@
     {
       "date": "2026-01-15",
       "timestamp": 1768435200000,
-      "value": 137608,
-      "amount": 137608
+      "value": 137508,
+      "amount": 137508
     },
     {
       "date": "2026-01-16",
@@ -109,8 +103,8 @@
     {
       "date": "2026-01-17",
       "timestamp": 1768608000000,
-      "value": 207186,
-      "amount": 207186
+      "value": 206986,
+      "amount": 206986
     },
     {
       "date": "2026-01-18",
@@ -127,24 +121,28 @@
     {
       "date": "2026-01-20",
       "timestamp": 1768867200000,
-      "value": 297639,
-      "amount": 297639
+      "value": 297400,
+      "amount": 297400
     },
     {
       "date": "2026-01-21",
       "timestamp": 1768953600000,
-      "value": 370122,
-      "amount": 370122
+      "value": 529238,
+      "amount": 529238
+    },
+    {
+      "date": "2026-01-22",
+      "timestamp": 1769040000000,
+      "value": 40134,
+      "amount": 40134
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 599,
-      "totalUnbondingEntries": 7223,
-      "totalUnbondingAtom": 6777432.07,
-      "errors": [
-        "cosmosvaloper1wmdp7z3wr98wxn54u8x7tjk4fk2cp9rwle4rlc: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1wmdp7z3wr98wxn54u8x7tjk4fk2cp9rwle4rlc/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1wmdp7z3wr98wxn54u8x7tjk4fk2cp9rwle4rlc/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx/1.26.2</center>\r\n</body>\r\n</html>\r\n"
-      ],
+      "totalUnbondingEntries": 7261,
+      "totalUnbondingAtom": 6891782.82,
+      "errors": [],
       "windowDays": 45
     }
   }
