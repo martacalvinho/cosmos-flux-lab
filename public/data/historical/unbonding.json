@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-02-01T06:10:01.003Z",
+  "scrapedAt": "2026-02-02T06:16:32.505Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-02-01",
-      "timestamp": 1769904000000,
-      "value": 105504,
-      "amount": 105504
-    },
-    {
       "date": "2026-02-02",
       "timestamp": 1769990400000,
-      "value": 368400,
-      "amount": 368400
+      "value": 146771,
+      "amount": 146771
     },
     {
       "date": "2026-02-03",
@@ -25,8 +19,8 @@
     {
       "date": "2026-02-04",
       "timestamp": 1770163200000,
-      "value": 386414,
-      "amount": 386414
+      "value": 386394,
+      "amount": 386394
     },
     {
       "date": "2026-02-05",
@@ -49,8 +43,8 @@
     {
       "date": "2026-02-08",
       "timestamp": 1770508800000,
-      "value": 128555,
-      "amount": 128555
+      "value": 128537,
+      "amount": 128537
     },
     {
       "date": "2026-02-09",
@@ -109,8 +103,8 @@
     {
       "date": "2026-02-18",
       "timestamp": 1771372800000,
-      "value": 235326,
-      "amount": 235326
+      "value": 235076,
+      "amount": 235076
     },
     {
       "date": "2026-02-19",
@@ -127,21 +121,27 @@
     {
       "date": "2026-02-21",
       "timestamp": 1771632000000,
-      "value": 242537,
-      "amount": 242537
+      "value": 242187,
+      "amount": 242187
     },
     {
       "date": "2026-02-22",
       "timestamp": 1771718400000,
-      "value": 37009,
-      "amount": 37009
+      "value": 152578,
+      "amount": 152578
+    },
+    {
+      "date": "2026-02-23",
+      "timestamp": 1771804800000,
+      "value": 80040,
+      "amount": 80040
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 603,
-      "totalUnbondingEntries": 8839,
-      "totalUnbondingAtom": 5526434.82,
+      "totalUnbondingEntries": 8439,
+      "totalUnbondingAtom": 5394272.03,
       "errors": [],
       "windowDays": 45
     }
