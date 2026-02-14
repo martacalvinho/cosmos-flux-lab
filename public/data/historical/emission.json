@@ -1,6 +1,6 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-02-13T06:15:47.875Z",
+  "scrapedAt": "2026-02-14T06:01:49.917Z",
   "chartId": "emission_chart",
   "title": "Cosmoshub emission chart",
   "data": [
@@ -2363,11 +2363,16 @@
       "date": "2026-02-13",
       "timestamp": 1770963347875,
       "value": 11.3082
+    },
+    {
+      "date": "2026-02-14",
+      "timestamp": 1771048909917,
+      "value": 11.312
     }
   ],
   "rawData": {
     "annualProvisions": {
-      "annual_provisions": "49303542333721.700000000000000000"
+      "annual_provisions": "49320113821289.600000000000000000"
     },
     "mintParams": {
       "params": {
