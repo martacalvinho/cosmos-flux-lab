@@ -1,6 +1,6 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-03-27T06:41:10.144Z",
+  "scrapedAt": "2026-03-28T06:13:21.031Z",
   "chartId": "pool_chart",
   "title": "Cosmoshub staking dynamics",
   "data": [
@@ -62366,12 +62366,19 @@
       "bonded": 296637017,
       "notBonded": 7826579,
       "value": 296637017
+    },
+    {
+      "date": "2026-03-28",
+      "timestamp": 1774678401031,
+      "bonded": 296968023,
+      "notBonded": 7700022,
+      "value": 296968023
     }
   ],
   "rawData": {
     "pool": {
-      "not_bonded_tokens": "7826579235449",
-      "bonded_tokens": "296637017439685"
+      "not_bonded_tokens": "7700021944547",
+      "bonded_tokens": "296968023248475"
     }
   }
 }
