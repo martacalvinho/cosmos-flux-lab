@@ -1,6 +1,6 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-05-04T08:05:02.192Z",
+  "scrapedAt": "2026-05-05T07:28:45.953Z",
   "chartId": "apr_chart",
   "title": "Cosmoshub APR chart",
   "data": [
@@ -95078,13 +95078,18 @@
       "date": "2026-05-04",
       "timestamp": 1777881902192,
       "value": 16.2
+    },
+    {
+      "date": "2026-05-05",
+      "timestamp": 1777966125953,
+      "value": 16.26
     }
   ],
   "rawData": {
     "pool": {
       "pool": {
-        "not_bonded_tokens": "7822565761290",
-        "bonded_tokens": "312868618812648"
+        "not_bonded_tokens": "9241280148434",
+        "bonded_tokens": "311687572927963"
       }
     },
     "mintParams": {
@@ -95101,12 +95106,12 @@
       "inflation": "0.100000000000000000"
     },
     "annualResp": {
-      "annual_provisions": "50675842815222.100000000000000000"
+      "annual_provisions": "50692878283044.000000000000000000"
     },
     "supplyResp": {
       "amount": {
         "denom": "uatom",
-        "amount": "506758439775120"
+        "amount": "506928794457246"
       }
     }
   }
