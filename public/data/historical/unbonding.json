@@ -1,148 +1,202 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-05-14T08:05:11.932Z",
+  "scrapedAt": "2026-05-15T08:18:33.506Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-05-14",
-      "timestamp": 1778716800000,
-      "value": 412360,
-      "amount": 412360
-    },
-    {
       "date": "2026-05-15",
       "timestamp": 1778803200000,
-      "value": 123897,
-      "amount": 123897
+      "value": 95059,
+      "amount": 95059
     },
     {
       "date": "2026-05-16",
       "timestamp": 1778889600000,
-      "value": 356009,
-      "amount": 356009
+      "value": 354309,
+      "amount": 354309
     },
     {
       "date": "2026-05-17",
       "timestamp": 1778976000000,
-      "value": 145123,
-      "amount": 145123
+      "value": 144468,
+      "amount": 144468
     },
     {
       "date": "2026-05-18",
       "timestamp": 1779062400000,
-      "value": 171052,
-      "amount": 171052
+      "value": 165464,
+      "amount": 165464
     },
     {
       "date": "2026-05-19",
       "timestamp": 1779148800000,
-      "value": 662763,
-      "amount": 662763
+      "value": 646644,
+      "amount": 646644
     },
     {
       "date": "2026-05-20",
       "timestamp": 1779235200000,
-      "value": 226878,
-      "amount": 226878
+      "value": 203689,
+      "amount": 203689
     },
     {
       "date": "2026-05-21",
       "timestamp": 1779321600000,
-      "value": 110849,
-      "amount": 110849
+      "value": 110174,
+      "amount": 110174
     },
     {
       "date": "2026-05-22",
       "timestamp": 1779408000000,
-      "value": 204869,
-      "amount": 204869
+      "value": 195210,
+      "amount": 195210
     },
     {
       "date": "2026-05-23",
       "timestamp": 1779494400000,
-      "value": 125602,
-      "amount": 125602
+      "value": 124249,
+      "amount": 124249
     },
     {
       "date": "2026-05-24",
       "timestamp": 1779580800000,
-      "value": 81760,
-      "amount": 81760
+      "value": 74766,
+      "amount": 74766
     },
     {
       "date": "2026-05-25",
       "timestamp": 1779667200000,
-      "value": 326202,
-      "amount": 326202
+      "value": 325484,
+      "amount": 325484
     },
     {
       "date": "2026-05-26",
       "timestamp": 1779753600000,
-      "value": 333687,
-      "amount": 333687
+      "value": 332445,
+      "amount": 332445
     },
     {
       "date": "2026-05-27",
       "timestamp": 1779840000000,
-      "value": 188442,
-      "amount": 188442
+      "value": 181326,
+      "amount": 181326
     },
     {
       "date": "2026-05-28",
       "timestamp": 1779926400000,
-      "value": 295175,
-      "amount": 295175
+      "value": 292827,
+      "amount": 292827
     },
     {
       "date": "2026-05-29",
       "timestamp": 1780012800000,
-      "value": 151793,
-      "amount": 151793
+      "value": 150028,
+      "amount": 150028
     },
     {
       "date": "2026-05-30",
       "timestamp": 1780099200000,
-      "value": 943967,
-      "amount": 943967
+      "value": 942295,
+      "amount": 942295
     },
     {
       "date": "2026-05-31",
       "timestamp": 1780185600000,
-      "value": 234447,
-      "amount": 234447
+      "value": 231813,
+      "amount": 231813
     },
     {
       "date": "2026-06-01",
       "timestamp": 1780272000000,
-      "value": 176748,
-      "amount": 176748
+      "value": 171783,
+      "amount": 171783
     },
     {
       "date": "2026-06-02",
       "timestamp": 1780358400000,
-      "value": 378224,
-      "amount": 378224
+      "value": 371800,
+      "amount": 371800
     },
     {
       "date": "2026-06-03",
       "timestamp": 1780444800000,
-      "value": 697906,
-      "amount": 697906
+      "value": 691855,
+      "amount": 691855
     },
     {
       "date": "2026-06-04",
       "timestamp": 1780531200000,
-      "value": 45860,
-      "amount": 45860
+      "value": 154601,
+      "amount": 154601
+    },
+    {
+      "date": "2026-06-05",
+      "timestamp": 1780617600000,
+      "value": 52634,
+      "amount": 52634
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 612,
-      "totalUnbondingEntries": 12301,
-      "totalUnbondingAtom": 6393612.42,
-      "errors": [],
+      "totalUnbondingEntries": 12576,
+      "totalUnbondingAtom": 6012923.14,
+      "errors": [
+        "cosmosvaloper1q9p73lx07tjqc34vs8jrsu5pg3q4ha534uqv4w: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1q9p73lx07tjqc34vs8jrsu5pg3q4ha534uqv4w/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1q9p73lx07tjqc34vs8jrsu5pg3q4ha534uqv4w/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1qgju44qz5e2y2v9azkqfs8n7d97lg97008qgjz: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1qgju44qz5e2y2v9azkqfs8n7d97lg97008qgjz/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1qgju44qz5e2y2v9azkqfs8n7d97lg97008qgjz/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1pp82zzdgf4cvgwkkutkwnfu9vzcm6rpryn2wcc: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1pp82zzdgf4cvgwkkutkwnfu9vzcm6rpryn2wcc/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1pp82zzdgf4cvgwkkutkwnfu9vzcm6rpryn2wcc/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1ptz7xq0fanh4kfvp6fdhevkx90axaq7drwcwjl: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1ptz7xq0fanh4kfvp6fdhevkx90axaq7drwcwjl/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1ptz7xq0fanh4kfvp6fdhevkx90axaq7drwcwjl/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1zc0z44e42qhzltqc8qpj5qrzn836d3lftnqmgw: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1zc0z44e42qhzltqc8qpj5qrzn836d3lftnqmgw/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1zc0z44e42qhzltqc8qpj5qrzn836d3lftnqmgw/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1z66j0z75a9flwnez7sa8jxx46cqu4rfhd9q82w: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1z66j0z75a9flwnez7sa8jxx46cqu4rfhd9q82w/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1z66j0z75a9flwnez7sa8jxx46cqu4rfhd9q82w/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1rmtq3p4pvsxfk0vr3agslkwf6pt5u2a3dgq9ga: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1rmtq3p4pvsxfk0vr3agslkwf6pt5u2a3dgq9ga/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1rmtq3p4pvsxfk0vr3agslkwf6pt5u2a3dgq9ga/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1r6cwek6596vqzky4fezhy29qcdlv06d2laa2pk: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1r6cwek6596vqzky4fezhy29qcdlv06d2laa2pk/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1r6cwek6596vqzky4fezhy29qcdlv06d2laa2pk/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1ycxpsysrmulwza5eqv5t2a6l3nvxesahrlmqhx: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1ycxpsysrmulwza5eqv5t2a6l3nvxesahrlmqhx/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1ycxpsysrmulwza5eqv5t2a6l3nvxesahrlmqhx/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper19p9qjaeq7uae6gf4cwyycm0hkteur9gyg3ln8z: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper19p9qjaeq7uae6gf4cwyycm0hkteur9gyg3ln8z/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper19p9qjaeq7uae6gf4cwyycm0hkteur9gyg3ln8z/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper19v9ej55ataqrfl39v83pf4e0dm69u89rngf928: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper19v9ej55ataqrfl39v83pf4e0dm69u89rngf928/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper19v9ej55ataqrfl39v83pf4e0dm69u89rngf928/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1x8rr4hcf54nz6hfckyy2n05sxss54h8wz9puzg: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1x8rr4hcf54nz6hfckyy2n05sxss54h8wz9puzg/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1x8rr4hcf54nz6hfckyy2n05sxss54h8wz9puzg/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper188z55862zckmn7kuwg94sl3nw9ta9pqt3xectq: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper188z55862zckmn7kuwg94sl3nw9ta9pqt3xectq/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper188z55862zckmn7kuwg94sl3nw9ta9pqt3xectq/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper18n80khkgu2z093cqtdatnx3gn0f7fjuvl2s72d: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper18n80khkgu2z093cqtdatnx3gn0f7fjuvl2s72d/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper18n80khkgu2z093cqtdatnx3gn0f7fjuvl2s72d/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1gtpvyenddt7uq7nccndn3pz9smurt3xt6pmx8u: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1gtpvyenddt7uq7nccndn3pz9smurt3xt6pmx8u/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1gtpvyenddt7uq7nccndn3pz9smurt3xt6pmx8u/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1fypv7c7z3auv7w48qn76538w55jdk66xt5a3lk: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1fypv7c7z3auv7w48qn76538w55jdk66xt5a3lk/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1fypv7c7z3auv7w48qn76538w55jdk66xt5a3lk/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1f63lrmnn4upu722kxdhw04taxa6w50lnar88dx: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1f63lrmnn4upu722kxdhw04taxa6w50lnar88dx/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1f63lrmnn4upu722kxdhw04taxa6w50lnar88dx/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper12w2qkvxp7udd29t2wrz5uhffuuns4ds6c6p2aj: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper12w2qkvxp7udd29t2wrz5uhffuuns4ds6c6p2aj/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper12w2qkvxp7udd29t2wrz5uhffuuns4ds6c6p2aj/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper125umsz3fws7gepn5ccsh0sv4gre9r6a3tccz4r: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper125umsz3fws7gepn5ccsh0sv4gre9r6a3tccz4r/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper125umsz3fws7gepn5ccsh0sv4gre9r6a3tccz4r/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1t3x2vutaan59q0jf55yyc24fmae9gljlalrldg: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1t3x2vutaan59q0jf55yyc24fmae9gljlalrldg/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1t3x2vutaan59q0jf55yyc24fmae9gljlalrldg/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1vz0clw0mqw5cjvmk38hg6nakkmvwugxrrhjhkg: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1vz0clw0mqw5cjvmk38hg6nakkmvwugxrrhjhkg/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1vz0clw0mqw5cjvmk38hg6nakkmvwugxrrhjhkg/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1vrg6ruw00lhszl4sjgwt5ldvl8z0f7pfp5va85: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1vrg6ruw00lhszl4sjgwt5ldvl8z0f7pfp5va85/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1vrg6ruw00lhszl4sjgwt5ldvl8z0f7pfp5va85/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1vyg0fjqxkgwz70vnkzz9y6z3t64grxr3jd69tl: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1vyg0fjqxkgwz70vnkzz9y6z3t64grxr3jd69tl/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1vyg0fjqxkgwz70vnkzz9y6z3t64grxr3jd69tl/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1dt93l3qgmhhlp97srjyqyendrgu9nx0suxtwe8: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1dt93l3qgmhhlp97srjyqyendrgu9nx0suxtwe8/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1dt93l3qgmhhlp97srjyqyendrgu9nx0suxtwe8/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1dcf60vccyvqewnnm7sq5prrrrd98fzwruj2ntp: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1dcf60vccyvqewnnm7sq5prrrrd98fzwruj2ntp/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1dcf60vccyvqewnnm7sq5prrrrd98fzwruj2ntp/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1wd8vquxza6svsvvnh489tdvg9vdjjfpepcfvf9: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1wd8vquxza6svsvvnh489tdvg9vdjjfpepcfvf9/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1wd8vquxza6svsvvnh489tdvg9vdjjfpepcfvf9/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1wmdp7z3wr98wxn54u8x7tjk4fk2cp9rwle4rlc: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1wmdp7z3wr98wxn54u8x7tjk4fk2cp9rwle4rlc/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1wmdp7z3wr98wxn54u8x7tjk4fk2cp9rwle4rlc/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper102zp2v3ysn8nhuk5q7lvxzsthg8usmw2c0s405: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper102zp2v3ysn8nhuk5q7lvxzsthg8usmw2c0s405/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper102zp2v3ysn8nhuk5q7lvxzsthg8usmw2c0s405/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper106yp7zw35wftheyyv9f9pe69t8rteumjrx52jg: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper106yp7zw35wftheyyv9f9pe69t8rteumjrx52jg/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper106yp7zw35wftheyyv9f9pe69t8rteumjrx52jg/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1sdz4rc95vnzh2f54sacec50vjxnmwdakfym4vh: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1sdz4rc95vnzh2f54sacec50vjxnmwdakfym4vh/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1sdz4rc95vnzh2f54sacec50vjxnmwdakfym4vh/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1sjllsnramtg3ewxqwwrwjxfgc4n4ef9u2lcnj0: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1sjllsnramtg3ewxqwwrwjxfgc4n4ef9u2lcnj0/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1sjllsnramtg3ewxqwwrwjxfgc4n4ef9u2lcnj0/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper139nknw98s8wqmzfqt9fs3jvv9sz2perqndmfat: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper139nknw98s8wqmzfqt9fs3jvv9sz2perqndmfat/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper139nknw98s8wqmzfqt9fs3jvv9sz2perqndmfat/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper134935fp2av3d9h09rxq2j3ct8qzf4vzpw90gtw: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper134935fp2av3d9h09rxq2j3ct8qzf4vzpw90gtw/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper134935fp2av3d9h09rxq2j3ct8qzf4vzpw90gtw/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper15jqwqsdfm4nrw0jl56yw0xhuaxxd49hhdzkplp: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper15jqwqsdfm4nrw0jl56yw0xhuaxxd49hhdzkplp/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper15jqwqsdfm4nrw0jl56yw0xhuaxxd49hhdzkplp/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper14qazscc80zgzx3m0m0aa30ths0p9hg8vdglqrc: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper14qazscc80zgzx3m0m0aa30ths0p9hg8vdglqrc/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper14qazscc80zgzx3m0m0aa30ths0p9hg8vdglqrc/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper140kq2fts8ed9m73a6dch7sgdap6hnp2p95f92k: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper140kq2fts8ed9m73a6dch7sgdap6hnp2p95f92k/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper140kq2fts8ed9m73a6dch7sgdap6hnp2p95f92k/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1kmvhdc3p57q4pwsn2txaluvuxfugeg39zqj783: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1kmvhdc3p57q4pwsn2txaluvuxfugeg39zqj783/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1kmvhdc3p57q4pwsn2txaluvuxfugeg39zqj783/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1hw236j2f6ny4kc5r0dsy53avvxj25hpfaw2pl8: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1hw236j2f6ny4kc5r0dsy53avvxj25hpfaw2pl8/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1hw236j2f6ny4kc5r0dsy53avvxj25hpfaw2pl8/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1cjhz8st5409k2nzfcpcnexehjxh7k2fgn8kf3w: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1cjhz8st5409k2nzfcpcnexehjxh7k2fgn8kf3w/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1cjhz8st5409k2nzfcpcnexehjxh7k2fgn8kf3w/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1cv6hnl6sq4srccnzveqe8ggc2tepvvx45vwcwz: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1cv6hnl6sq4srccnzveqe8ggc2tepvvx45vwcwz/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1cv6hnl6sq4srccnzveqe8ggc2tepvvx45vwcwz/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper16gdxm24ht2mxtpz9cma6tr6a6d47x63h65p52c: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper16gdxm24ht2mxtpz9cma6tr6a6d47x63h65p52c/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper16gdxm24ht2mxtpz9cma6tr6a6d47x63h65p52c/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper16ddmnhsxkjh6xt4n2xk36d56pndvjxcn6gffpm: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper16ddmnhsxkjh6xt4n2xk36d56pndvjxcn6gffpm/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper16ddmnhsxkjh6xt4n2xk36d56pndvjxcn6gffpm/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper16s96n9k9zztdgjy8q4qcxp4hn7ww98qkrka4zk: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper16s96n9k9zztdgjy8q4qcxp4hn7ww98qkrka4zk/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper16s96n9k9zztdgjy8q4qcxp4hn7ww98qkrka4zk/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper16n2587cgz46nn5d0c5mcqlsnx8pvg566gt2a2p: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper16n2587cgz46nn5d0c5mcqlsnx8pvg566gt2a2p/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper16n2587cgz46nn5d0c5mcqlsnx8pvg566gt2a2p/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1mt6mf0ny6cstytjz00kz3h7cyyrh9m5s6tduks: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1mt6mf0ny6cstytjz00kz3h7cyyrh9m5s6tduks/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1mt6mf0ny6cstytjz00kz3h7cyyrh9m5s6tduks/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1ma02nlc7lchu7caufyrrqt4r6v2mpsj90y9wzd: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1ma02nlc7lchu7caufyrrqt4r6v2mpsj90y9wzd/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1ma02nlc7lchu7caufyrrqt4r6v2mpsj90y9wzd/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1uutuwrwt3z2a5z8z3uasml3rftlpmu25aga5c6: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1uutuwrwt3z2a5z8z3uasml3rftlpmu25aga5c6/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1uutuwrwt3z2a5z8z3uasml3rftlpmu25aga5c6/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1a37ze3yrr2y9nn98l6frhjskmufvd40cpyd0gq: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1a37ze3yrr2y9nn98l6frhjskmufvd40cpyd0gq/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1a37ze3yrr2y9nn98l6frhjskmufvd40cpyd0gq/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1aj76wlhlf7rsru38crq9qn7ygyy00f9c7lxz49: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1aj76wlhlf7rsru38crq9qn7ygyy00f9c7lxz49/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1aj76wlhlf7rsru38crq9qn7ygyy00f9c7lxz49/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper17dwgf5384udeuaypmyvveyvesu5y4yxu5xmu38: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper17dwgf5384udeuaypmyvveyvesu5y4yxu5xmu38/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper17dwgf5384udeuaypmyvveyvesu5y4yxu5xmu38/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1l034wm5h2hktkdq75fd6p099kwzhljn7q7sqnr: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1l034wm5h2hktkdq75fd6p099kwzhljn7q7sqnr/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1l034wm5h2hktkdq75fd6p099kwzhljn7q7sqnr/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1lktjhnzkpkz3ehrg8psvmwhafg56kfss3q3t8m: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1lktjhnzkpkz3ehrg8psvmwhafg56kfss3q3t8m/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1lktjhnzkpkz3ehrg8psvmwhafg56kfss3q3t8m/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}",
+        "cosmosvaloper1l634uf3kmyrtg6pl2dpfar9fdkjgtcmqjscd86: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1l634uf3kmyrtg6pl2dpfar9fdkjgtcmqjscd86/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1l634uf3kmyrtg6pl2dpfar9fdkjgtcmqjscd86/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: no valid endpoints available for service: service cosmoshub\",\"data\":{\"error\":\"no valid endpoints available for service: service cosmoshub\",\"retryable\":\"true\"}}}"
+      ],
       "windowDays": 45
     }
   }
