@@ -1,171 +1,150 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-05-23T07:45:36.822Z",
+  "scrapedAt": "2026-05-24T08:02:13.697Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-05-23",
-      "timestamp": 1779494400000,
-      "value": 82381,
-      "amount": 82381
-    },
-    {
       "date": "2026-05-24",
       "timestamp": 1779580800000,
-      "value": 66513,
-      "amount": 66513
+      "value": 73753,
+      "amount": 73753
     },
     {
       "date": "2026-05-25",
       "timestamp": 1779667200000,
-      "value": 283934,
-      "amount": 283934
+      "value": 326202,
+      "amount": 326202
     },
     {
       "date": "2026-05-26",
       "timestamp": 1779753600000,
-      "value": 304492,
-      "amount": 304492
+      "value": 333687,
+      "amount": 333687
     },
     {
       "date": "2026-05-27",
       "timestamp": 1779840000000,
-      "value": 179042,
-      "amount": 179042
+      "value": 188442,
+      "amount": 188442
     },
     {
       "date": "2026-05-28",
       "timestamp": 1779926400000,
-      "value": 291085,
-      "amount": 291085
+      "value": 295175,
+      "amount": 295175
     },
     {
       "date": "2026-05-29",
       "timestamp": 1780012800000,
-      "value": 145623,
-      "amount": 145623
+      "value": 150120,
+      "amount": 150120
     },
     {
       "date": "2026-05-30",
       "timestamp": 1780099200000,
-      "value": 927937,
-      "amount": 927937
+      "value": 943948,
+      "amount": 943948
     },
     {
       "date": "2026-05-31",
       "timestamp": 1780185600000,
-      "value": 229978,
-      "amount": 229978
+      "value": 233287,
+      "amount": 233287
     },
     {
       "date": "2026-06-01",
       "timestamp": 1780272000000,
-      "value": 162550,
-      "amount": 162550
+      "value": 173744,
+      "amount": 173744
     },
     {
       "date": "2026-06-02",
       "timestamp": 1780358400000,
-      "value": 353105,
-      "amount": 353105
+      "value": 372970,
+      "amount": 372970
     },
     {
       "date": "2026-06-03",
       "timestamp": 1780444800000,
-      "value": 692495,
-      "amount": 692495
+      "value": 696419,
+      "amount": 696419
     },
     {
       "date": "2026-06-04",
       "timestamp": 1780531200000,
-      "value": 154018,
-      "amount": 154018
+      "value": 155531,
+      "amount": 155531
     },
     {
       "date": "2026-06-05",
       "timestamp": 1780617600000,
-      "value": 191040,
-      "amount": 191040
+      "value": 192582,
+      "amount": 192582
     },
     {
       "date": "2026-06-06",
       "timestamp": 1780704000000,
-      "value": 194276,
-      "amount": 194276
+      "value": 194651,
+      "amount": 194651
     },
     {
       "date": "2026-06-07",
       "timestamp": 1780790400000,
-      "value": 143926,
-      "amount": 143926
+      "value": 149066,
+      "amount": 149066
     },
     {
       "date": "2026-06-08",
       "timestamp": 1780876800000,
-      "value": 101263,
-      "amount": 101263
+      "value": 105101,
+      "amount": 105101
     },
     {
       "date": "2026-06-09",
       "timestamp": 1780963200000,
-      "value": 248127,
-      "amount": 248127
+      "value": 253907,
+      "amount": 253907
     },
     {
       "date": "2026-06-10",
       "timestamp": 1781049600000,
-      "value": 90671,
-      "amount": 90671
+      "value": 98666,
+      "amount": 98666
     },
     {
       "date": "2026-06-11",
       "timestamp": 1781136000000,
-      "value": 311246,
-      "amount": 311246
+      "value": 318903,
+      "amount": 318903
     },
     {
       "date": "2026-06-12",
       "timestamp": 1781222400000,
-      "value": 229640,
-      "amount": 229640
+      "value": 236612,
+      "amount": 236612
     },
     {
       "date": "2026-06-13",
       "timestamp": 1781308800000,
-      "value": 27655,
-      "amount": 27655
+      "value": 109694,
+      "amount": 109694
+    },
+    {
+      "date": "2026-06-14",
+      "timestamp": 1781395200000,
+      "value": 9347,
+      "amount": 9347
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 614,
-      "totalUnbondingEntries": 13546,
-      "totalUnbondingAtom": 5410996.1,
+      "totalUnbondingEntries": 14037,
+      "totalUnbondingAtom": 5611805.73,
       "errors": [
-        "cosmosvaloper1dm6n0u6l7vwn7nyy87gzmfjryg5jsg9kzn6kng: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1dm6n0u6l7vwn7nyy87gzmfjryg5jsg9kzn6kng/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1dm6n0u6l7vwn7nyy87gzmfjryg5jsg9kzn6kng/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt16ayut47gugmcgf6g0l2gnt4x345swf083vvzgf-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt16ayut47gugmcgf6g0l2gnt4x345swf083vvzgf-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt16ayut47gugmcgf6g0l2gnt4x345swf083vvzgf-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt16ayut47gugmcgf6g0l2gnt4x345swf083vvzgf-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1j7fgj7v9nqjg6wfda9paldcxezd8yv4qmhftye: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1j7fgj7v9nqjg6wfda9paldcxezd8yv4qmhftye/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1j7fgj7v9nqjg6wfda9paldcxezd8yv4qmhftye/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1wn0zhpexj4xpyuqq8mnz0tntlykyqxscyl3m89-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1wn0zhpexj4xpyuqq8mnz0tntlykyqxscyl3m89-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1wn0zhpexj4xpyuqq8mnz0tntlykyqxscyl3m89-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1wn0zhpexj4xpyuqq8mnz0tntlykyqxscyl3m89-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper150g2n4ypex05nla65j6akz38n9tu4quu8nna3h: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper150g2n4ypex05nla65j6akz38n9tu4quu8nna3h/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper150g2n4ypex05nla65j6akz38n9tu4quu8nna3h/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1uxeg0asu06287khs9ctccw7kj8nk94e32t2n3v-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1uxeg0asu06287khs9ctccw7kj8nk94e32t2n3v-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1uxeg0asu06287khs9ctccw7kj8nk94e32t2n3v-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1uxeg0asu06287khs9ctccw7kj8nk94e32t2n3v-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper143g8ag20zg42z7h2j3dszw52ac6alyv876p2q8: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper143g8ag20zg42z7h2j3dszw52ac6alyv876p2q8/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper143g8ag20zg42z7h2j3dszw52ac6alyv876p2q8/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt19xgfz0vh5q2mwrfhggqyzawejyqtmk6e0p7yy3-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt19xgfz0vh5q2mwrfhggqyzawejyqtmk6e0p7yy3-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt19xgfz0vh5q2mwrfhggqyzawejyqtmk6e0p7yy3-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt19xgfz0vh5q2mwrfhggqyzawejyqtmk6e0p7yy3-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper146kwpzhmleafmhtaxulfptyhnvwxzlvm87hwnm: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper146kwpzhmleafmhtaxulfptyhnvwxzlvm87hwnm/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper146kwpzhmleafmhtaxulfptyhnvwxzlvm87hwnm/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1wvvch84mw5gn7c3pm59q8ahmgz6m8vqcsftstu-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1wvvch84mw5gn7c3pm59q8ahmgz6m8vqcsftstu-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1wvvch84mw5gn7c3pm59q8ahmgz6m8vqcsftstu-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1wvvch84mw5gn7c3pm59q8ahmgz6m8vqcsftstu-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1k9aw4y6ff0tncmmuxp86dk0fxy5s57a3f8frky: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1k9aw4y6ff0tncmmuxp86dk0fxy5s57a3f8frky/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1k9aw4y6ff0tncmmuxp86dk0fxy5s57a3f8frky/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1xuy2qqltamhsg7k7d3r0vpv43sep3qtce344hc-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1xuy2qqltamhsg7k7d3r0vpv43sep3qtce344hc-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1xuy2qqltamhsg7k7d3r0vpv43sep3qtce344hc-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1xuy2qqltamhsg7k7d3r0vpv43sep3qtce344hc-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1k447djp2qrfk8pl44vd02qdlld2asjeepjxsep: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1k447djp2qrfk8pl44vd02qdlld2asjeepjxsep/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1k447djp2qrfk8pl44vd02qdlld2asjeepjxsep/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1ry93lrzxs6al2kmzqg8ewhyy7c29v0f4qc5ex0-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1ry93lrzxs6al2kmzqg8ewhyy7c29v0f4qc5ex0-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1ry93lrzxs6al2kmzqg8ewhyy7c29v0f4qc5ex0-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1ry93lrzxs6al2kmzqg8ewhyy7c29v0f4qc5ex0-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1hwu4wp5y47d2ntm3std5xeygqnqua3ekcpzp0v: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1hwu4wp5y47d2ntm3std5xeygqnqua3ekcpzp0v/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1hwu4wp5y47d2ntm3std5xeygqnqua3ekcpzp0v/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt13fade23vdn07nqhajmqd2u7d066auczncjhey0-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt13fade23vdn07nqhajmqd2u7d066auczncjhey0-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt13fade23vdn07nqhajmqd2u7d066auczncjhey0-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt13fade23vdn07nqhajmqd2u7d066auczncjhey0-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1c5n3z6ju8e07pqmmxcn4hkqn69d8kmvq5nxnxa: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1c5n3z6ju8e07pqmmxcn4hkqn69d8kmvq5nxnxa/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1c5n3z6ju8e07pqmmxcn4hkqn69d8kmvq5nxnxa/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1xp5dep9sdckcljc2w3s20xz2a0rkyjqx80ayq7-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1xp5dep9sdckcljc2w3s20xz2a0rkyjqx80ayq7-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1xp5dep9sdckcljc2w3s20xz2a0rkyjqx80ayq7-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1xp5dep9sdckcljc2w3s20xz2a0rkyjqx80ayq7-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1c4k24jzduc365kywrsvf5ujz4ya6mwympnc4en: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1c4k24jzduc365kywrsvf5ujz4ya6mwympnc4en/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1c4k24jzduc365kywrsvf5ujz4ya6mwympnc4en/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1fgvcsnr7ypxyygctul9e7qdyhzuldjms63ryej-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1fgvcsnr7ypxyygctul9e7qdyhzuldjms63ryej-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1fgvcsnr7ypxyygctul9e7qdyhzuldjms63ryej-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1fgvcsnr7ypxyygctul9e7qdyhzuldjms63ryej-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1clpqr4nrk4khgkxj78fcwwh6dl3uw4epsluffn: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1clpqr4nrk4khgkxj78fcwwh6dl3uw4epsluffn/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1clpqr4nrk4khgkxj78fcwwh6dl3uw4epsluffn/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1dvu8dksgv7u2ma35h09pjuc8f8qn4dau8u9mh2-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1dvu8dksgv7u2ma35h09pjuc8f8qn4dau8u9mh2-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1dvu8dksgv7u2ma35h09pjuc8f8qn4dau8u9mh2-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1dvu8dksgv7u2ma35h09pjuc8f8qn4dau8u9mh2-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1e859xaue4k2jzqw20cv6l7p3tmc378pc3k8g2u: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1e859xaue4k2jzqw20cv6l7p3tmc378pc3k8g2u/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1e859xaue4k2jzqw20cv6l7p3tmc378pc3k8g2u/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1wvvch84mw5gn7c3pm59q8ahmgz6m8vqcsftstu-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1wvvch84mw5gn7c3pm59q8ahmgz6m8vqcsftstu-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1wvvch84mw5gn7c3pm59q8ahmgz6m8vqcsftstu-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1wvvch84mw5gn7c3pm59q8ahmgz6m8vqcsftstu-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1e0plfg475phrsvrlzw8gwppeva0zk5yg9fgg8c: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1e0plfg475phrsvrlzw8gwppeva0zk5yg9fgg8c/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1e0plfg475phrsvrlzw8gwppeva0zk5yg9fgg8c/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1020ggha7jyashshxxpuxc53y8293wjlenmwefk-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1020ggha7jyashshxxpuxc53y8293wjlenmwefk-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1020ggha7jyashshxxpuxc53y8293wjlenmwefk-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1020ggha7jyashshxxpuxc53y8293wjlenmwefk-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1emaa7mwgpnpmc7yptm728ytp9quamsvu837nc0: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1emaa7mwgpnpmc7yptm728ytp9quamsvu837nc0/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1emaa7mwgpnpmc7yptm728ytp9quamsvu837nc0/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1wvvch84mw5gn7c3pm59q8ahmgz6m8vqcsftstu-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1wvvch84mw5gn7c3pm59q8ahmgz6m8vqcsftstu-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1wvvch84mw5gn7c3pm59q8ahmgz6m8vqcsftstu-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1wvvch84mw5gn7c3pm59q8ahmgz6m8vqcsftstu-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper16v3f95amtvpewuajjcdsvaekuuy4yyzups85ec: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper16v3f95amtvpewuajjcdsvaekuuy4yyzups85ec/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper16v3f95amtvpewuajjcdsvaekuuy4yyzups85ec/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1pw9gav6cr0pvdwutz3l939adhlrp7lsgxpyjet-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1pw9gav6cr0pvdwutz3l939adhlrp7lsgxpyjet-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1pw9gav6cr0pvdwutz3l939adhlrp7lsgxpyjet-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1pw9gav6cr0pvdwutz3l939adhlrp7lsgxpyjet-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1w0494h0l4mneaq7ajkrcjvn73m2n04l87j2nst: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1w0494h0l4mneaq7ajkrcjvn73m2n04l87j2nst/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1w0494h0l4mneaq7ajkrcjvn73m2n04l87j2nst/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1ugvmncj3mftxdzsz8j66nrfzxlpy6vccvvlkkk-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1ugvmncj3mftxdzsz8j66nrfzxlpy6vccvvlkkk-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 502\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1ugvmncj3mftxdzsz8j66nrfzxlpy6vccvvlkkk-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1ugvmncj3mftxdzsz8j66nrfzxlpy6vccvvlkkk-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 502\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1wwcp3ath738qcy3panwqxtva3w28kvqdjw5hee: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1wwcp3ath738qcy3panwqxtva3w28kvqdjw5hee/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1wwcp3ath738qcy3panwqxtva3w28kvqdjw5hee/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt16ayut47gugmcgf6g0l2gnt4x345swf083vvzgf-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt16ayut47gugmcgf6g0l2gnt4x345swf083vvzgf-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 502\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt16ayut47gugmcgf6g0l2gnt4x345swf083vvzgf-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt16ayut47gugmcgf6g0l2gnt4x345swf083vvzgf-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 502\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1w3v6jtyk7y92rzv0k0jvkcwwt4xc0fta4acu07: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1w3v6jtyk7y92rzv0k0jvkcwwt4xc0fta4acu07/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1w3v6jtyk7y92rzv0k0jvkcwwt4xc0fta4acu07/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1vcsl8pktx9087ejlz64ch8u9esd9p2wmkufz9u-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1vcsl8pktx9087ejlz64ch8u9esd9p2wmkufz9u-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 502\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1vcsl8pktx9087ejlz64ch8u9esd9p2wmkufz9u-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1vcsl8pktx9087ejlz64ch8u9esd9p2wmkufz9u-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 502\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper10f9wkd6vdspac05djyfwfx0uxcqxapnqhnkcg8: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper10f9wkd6vdspac05djyfwfx0uxcqxapnqhnkcg8/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper10f9wkd6vdspac05djyfwfx0uxcqxapnqhnkcg8/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1pex82qqvp3g84fu7xsmk4qxtclrgj9zv0lhuqk-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1pex82qqvp3g84fu7xsmk4qxtclrgj9zv0lhuqk-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 502\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1pex82qqvp3g84fu7xsmk4qxtclrgj9zv0lhuqk-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1pex82qqvp3g84fu7xsmk4qxtclrgj9zv0lhuqk-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 502\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1skhpmqtr8nw2takaduwh4ve5zk9pm5h5tnwlsx: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1skhpmqtr8nw2takaduwh4ve5zk9pm5h5tnwlsx/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1skhpmqtr8nw2takaduwh4ve5zk9pm5h5tnwlsx/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1pex82qqvp3g84fu7xsmk4qxtclrgj9zv0lhuqk-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1pex82qqvp3g84fu7xsmk4qxtclrgj9zv0lhuqk-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 502\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1pex82qqvp3g84fu7xsmk4qxtclrgj9zv0lhuqk-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1pex82qqvp3g84fu7xsmk4qxtclrgj9zv0lhuqk-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 502\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1ualhu3fjgg77g485gmyswkq3w0dp7gys6qzwrv: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1ualhu3fjgg77g485gmyswkq3w0dp7gys6qzwrv/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1ualhu3fjgg77g485gmyswkq3w0dp7gys6qzwrv/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1s9z02vuu5cs0hm2w5qznpr2ttcgc8gy80842w9-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1s9z02vuu5cs0hm2w5qznpr2ttcgc8gy80842w9-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1s9z02vuu5cs0hm2w5qznpr2ttcgc8gy80842w9-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1s9z02vuu5cs0hm2w5qznpr2ttcgc8gy80842w9-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper179luvthvww4t0cawrcsv3t7a8amr4n7gjxuhpx: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper179luvthvww4t0cawrcsv3t7a8amr4n7gjxuhpx/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper179luvthvww4t0cawrcsv3t7a8amr4n7gjxuhpx/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt19xjml95sw0ye5279u57xsd5dn50ghvhqrsf969-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt19xjml95sw0ye5279u57xsd5dn50ghvhqrsf969-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt19xjml95sw0ye5279u57xsd5dn50ghvhqrsf969-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt19xjml95sw0ye5279u57xsd5dn50ghvhqrsf969-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}",
-        "cosmosvaloper1lmu2hvm0prpkmacy7lw9uy3wp7fescmsuevrc9: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1lmu2hvm0prpkmacy7lw9uy3wp7fescmsuevrc9/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1lmu2hvm0prpkmacy7lw9uy3wp7fescmsuevrc9/unbonding_delegations: {\"id\":\"rest_request\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":-31001,\"message\":\"internal error: relay: error sending relay for service cosmoshub endpoint pokt1pw9gav6cr0pvdwutz3l939adhlrp7lsgxpyjet-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1pw9gav6cr0pvdwutz3l939adhlrp7lsgxpyjet-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"data\":{\"error\":\"relay: error sending relay for service cosmoshub endpoint pokt1pw9gav6cr0pvdwutz3l939adhlrp7lsgxpyjet-https://eu-s-01-cosmoshub-rest.kleomedes.network: error sending request to endpoint pokt1pw9gav6cr0pvdwutz3l939adhlrp7lsgxpyjet-https://eu-s-01-cosmoshub-rest.kleomedes.network: HTTP relay request failed: endpoint returned non 2xx HTTP status code: 503\",\"retryable\":\"true\"}}}"
+        "cosmosvaloper1qr6sk28w4r6kqsg0737wzgu05505t4glezetwn: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1qr6sk28w4r6kqsg0737wzgu05505t4glezetwn/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1qr6sk28w4r6kqsg0737wzgu05505t4glezetwn/unbonding_delegations: Internal Server Error",
+        "cosmosvaloper1q2v728c5g8ggvrr7dgc4madt9px2hlpdxpfmug: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1q2v728c5g8ggvrr7dgc4madt9px2hlpdxpfmug/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1q2v728c5g8ggvrr7dgc4madt9px2hlpdxpfmug/unbonding_delegations: Internal Server Error"
       ],
       "windowDays": 45
     }
