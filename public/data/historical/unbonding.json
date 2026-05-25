@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-05-24T08:02:13.697Z",
+  "scrapedAt": "2026-05-25T09:08:25.694Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-05-24",
-      "timestamp": 1779580800000,
-      "value": 73753,
-      "amount": 73753
-    },
-    {
       "date": "2026-05-25",
       "timestamp": 1779667200000,
-      "value": 326202,
-      "amount": 326202
+      "value": 303114,
+      "amount": 303114
     },
     {
       "date": "2026-05-26",
@@ -121,8 +115,8 @@
     {
       "date": "2026-06-12",
       "timestamp": 1781222400000,
-      "value": 236612,
-      "amount": 236612
+      "value": 235575,
+      "amount": 235575
     },
     {
       "date": "2026-06-13",
@@ -133,19 +127,22 @@
     {
       "date": "2026-06-14",
       "timestamp": 1781395200000,
-      "value": 9347,
-      "amount": 9347
+      "value": 94649,
+      "amount": 94649
+    },
+    {
+      "date": "2026-06-15",
+      "timestamp": 1781481600000,
+      "value": 129988,
+      "amount": 129988
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 614,
-      "totalUnbondingEntries": 14037,
-      "totalUnbondingAtom": 5611805.73,
-      "errors": [
-        "cosmosvaloper1qr6sk28w4r6kqsg0737wzgu05505t4glezetwn: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1qr6sk28w4r6kqsg0737wzgu05505t4glezetwn/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1qr6sk28w4r6kqsg0737wzgu05505t4glezetwn/unbonding_delegations: Internal Server Error",
-        "cosmosvaloper1q2v728c5g8ggvrr7dgc4madt9px2hlpdxpfmug: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1q2v728c5g8ggvrr7dgc4madt9px2hlpdxpfmug/unbonding_delegations: cosmos.directory: Mintscan request failed (500 Internal Server Error) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1q2v728c5g8ggvrr7dgc4madt9px2hlpdxpfmug/unbonding_delegations: Internal Server Error"
-      ],
+      "totalUnbondingEntries": 13872,
+      "totalUnbondingAtom": 5729218.11,
+      "errors": [],
       "windowDays": 45
     }
   }
