@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-05-28T08:55:18.368Z",
+  "scrapedAt": "2026-05-29T08:53:29.117Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-05-28",
-      "timestamp": 1779926400000,
-      "value": 249544,
-      "amount": 249544
-    },
-    {
       "date": "2026-05-29",
       "timestamp": 1780012800000,
-      "value": 150120,
-      "amount": 150120
+      "value": 116173,
+      "amount": 116173
     },
     {
       "date": "2026-05-30",
@@ -133,15 +127,21 @@
     {
       "date": "2026-06-18",
       "timestamp": 1781740800000,
-      "value": 164724,
-      "amount": 164724
+      "value": 4195566,
+      "amount": 4195566
+    },
+    {
+      "date": "2026-06-19",
+      "timestamp": 1781827200000,
+      "value": 1159054,
+      "amount": 1159054
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 614,
-      "totalUnbondingEntries": 13248,
-      "totalUnbondingAtom": 7641844.82,
+      "totalUnbondingEntries": 12686,
+      "totalUnbondingAtom": 12548249.39,
       "errors": [],
       "windowDays": 45
     }
