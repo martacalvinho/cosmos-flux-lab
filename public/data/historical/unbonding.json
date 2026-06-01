@@ -1,26 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-05-30T07:59:12.640Z",
+  "scrapedAt": "2026-06-01T10:32:48.678Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-05-30",
-      "timestamp": 1780099200000,
-      "value": 835864,
-      "amount": 835864
-    },
-    {
-      "date": "2026-05-31",
-      "timestamp": 1780185600000,
-      "value": 233275,
-      "amount": 233275
-    },
-    {
       "date": "2026-06-01",
       "timestamp": 1780272000000,
-      "value": 173636,
-      "amount": 173636
+      "value": 96174,
+      "amount": 96174
     },
     {
       "date": "2026-06-02",
@@ -49,8 +37,8 @@
     {
       "date": "2026-06-06",
       "timestamp": 1780704000000,
-      "value": 194651,
-      "amount": 194651
+      "value": 194583,
+      "amount": 194583
     },
     {
       "date": "2026-06-07",
@@ -91,8 +79,8 @@
     {
       "date": "2026-06-13",
       "timestamp": 1781308800000,
-      "value": 109694,
-      "amount": 109694
+      "value": 109594,
+      "amount": 109594
     },
     {
       "date": "2026-06-14",
@@ -109,14 +97,14 @@
     {
       "date": "2026-06-16",
       "timestamp": 1781568000000,
-      "value": 155180,
-      "amount": 155180
+      "value": 155079,
+      "amount": 155079
     },
     {
       "date": "2026-06-17",
       "timestamp": 1781654400000,
-      "value": 228602,
-      "amount": 228602
+      "value": 228479,
+      "amount": 228479
     },
     {
       "date": "2026-06-18",
@@ -127,21 +115,33 @@
     {
       "date": "2026-06-19",
       "timestamp": 1781827200000,
-      "value": 1515866,
-      "amount": 1515866
+      "value": 1515844,
+      "amount": 1515844
     },
     {
       "date": "2026-06-20",
       "timestamp": 1781913600000,
-      "value": 19848,
-      "amount": 19848
+      "value": 147828,
+      "amount": 147828
+    },
+    {
+      "date": "2026-06-21",
+      "timestamp": 1782000000000,
+      "value": 295266,
+      "amount": 295266
+    },
+    {
+      "date": "2026-06-22",
+      "timestamp": 1782086400000,
+      "value": 152537,
+      "amount": 152537
     }
   ],
   "rawData": {
     "summary": {
-      "validatorCount": 614,
-      "totalUnbondingEntries": 11795,
-      "totalUnbondingAtom": 12700496.71,
+      "validatorCount": 616,
+      "totalUnbondingEntries": 11245,
+      "totalUnbondingAtom": 12129264.67,
       "errors": [],
       "windowDays": 45
     }
