@@ -1,166 +1,149 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-06-10T09:03:28.848Z",
+  "scrapedAt": "2026-06-11T09:46:52.146Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-06-10",
-      "timestamp": 1781049600000,
-      "value": 52008,
-      "amount": 52008
-    },
-    {
       "date": "2026-06-11",
       "timestamp": 1781136000000,
-      "value": 310862,
-      "amount": 310862
+      "value": 265025,
+      "amount": 265025
     },
     {
       "date": "2026-06-12",
       "timestamp": 1781222400000,
-      "value": 234659,
-      "amount": 234659
+      "value": 234736,
+      "amount": 234736
     },
     {
       "date": "2026-06-13",
       "timestamp": 1781308800000,
-      "value": 107574,
-      "amount": 107574
+      "value": 109494,
+      "amount": 109494
     },
     {
       "date": "2026-06-14",
       "timestamp": 1781395200000,
-      "value": 93727,
-      "amount": 93727
+      "value": 94149,
+      "amount": 94149
     },
     {
       "date": "2026-06-15",
       "timestamp": 1781481600000,
-      "value": 2365677,
-      "amount": 2365677
+      "value": 2366554,
+      "amount": 2366554
     },
     {
       "date": "2026-06-16",
       "timestamp": 1781568000000,
-      "value": 154683,
-      "amount": 154683
+      "value": 155079,
+      "amount": 155079
     },
     {
       "date": "2026-06-17",
       "timestamp": 1781654400000,
-      "value": 222098,
-      "amount": 222098
+      "value": 227456,
+      "amount": 227456
     },
     {
       "date": "2026-06-18",
       "timestamp": 1781740800000,
-      "value": 4194054,
-      "amount": 4194054
+      "value": 4194896,
+      "amount": 4194896
     },
     {
       "date": "2026-06-19",
       "timestamp": 1781827200000,
-      "value": 1473522,
-      "amount": 1473522
+      "value": 1515703,
+      "amount": 1515703
     },
     {
       "date": "2026-06-20",
       "timestamp": 1781913600000,
-      "value": 146762,
-      "amount": 146762
+      "value": 147828,
+      "amount": 147828
     },
     {
       "date": "2026-06-21",
       "timestamp": 1782000000000,
-      "value": 292652,
-      "amount": 292652
+      "value": 294681,
+      "amount": 294681
     },
     {
       "date": "2026-06-22",
       "timestamp": 1782086400000,
-      "value": 198611,
-      "amount": 198611
+      "value": 198816,
+      "amount": 198816
     },
     {
       "date": "2026-06-23",
       "timestamp": 1782172800000,
-      "value": 383381,
-      "amount": 383381
+      "value": 384495,
+      "amount": 384495
     },
     {
       "date": "2026-06-24",
       "timestamp": 1782259200000,
-      "value": 272589,
-      "amount": 272589
+      "value": 273592,
+      "amount": 273592
     },
     {
       "date": "2026-06-25",
       "timestamp": 1782345600000,
-      "value": 246305,
-      "amount": 246305
+      "value": 253104,
+      "amount": 253104
     },
     {
       "date": "2026-06-26",
       "timestamp": 1782432000000,
-      "value": 366541,
-      "amount": 366541
+      "value": 368017,
+      "amount": 368017
     },
     {
       "date": "2026-06-27",
       "timestamp": 1782518400000,
-      "value": 349345,
-      "amount": 349345
+      "value": 351424,
+      "amount": 351424
     },
     {
       "date": "2026-06-28",
       "timestamp": 1782604800000,
-      "value": 118678,
-      "amount": 118678
+      "value": 118967,
+      "amount": 118967
     },
     {
       "date": "2026-06-29",
       "timestamp": 1782691200000,
-      "value": 148809,
-      "amount": 148809
+      "value": 148864,
+      "amount": 148864
     },
     {
       "date": "2026-06-30",
       "timestamp": 1782777600000,
-      "value": 149268,
-      "amount": 149268
+      "value": 154903,
+      "amount": 154903
     },
     {
       "date": "2026-07-01",
       "timestamp": 1782864000000,
-      "value": 33054,
-      "amount": 33054
+      "value": 191673,
+      "amount": 191673
+    },
+    {
+      "date": "2026-07-02",
+      "timestamp": 1782950400000,
+      "value": 900092,
+      "amount": 900092
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 618,
-      "totalUnbondingEntries": 6544,
-      "totalUnbondingAtom": 11914855.87,
+      "totalUnbondingEntries": 6290,
+      "totalUnbondingAtom": 12949546.43,
       "errors": [
-        "cosmosvaloper1pexrxk6s9aznl8ap2g8jr87ktc3a7dd8xf0etj: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1pexrxk6s9aznl8ap2g8jr87ktc3a7dd8xf0etj/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1pexrxk6s9aznl8ap2g8jr87ktc3a7dd8xf0etj/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper19fs9dam0cghptddw5ddc2xysqj3dp7px3hh6af: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper19fs9dam0cghptddw5ddc2xysqj3dp7px3hh6af/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper19fs9dam0cghptddw5ddc2xysqj3dp7px3hh6af/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper187kxrmex8ltkjgfapk04ctlwsywnxem4649xgv: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper187kxrmex8ltkjgfapk04ctlwsywnxem4649xgv/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper187kxrmex8ltkjgfapk04ctlwsywnxem4649xgv/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1gxgyhqagmvyg8sgwgpa79scrwqp4wn4hw4e3cl: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1gxgyhqagmvyg8sgwgpa79scrwqp4wn4hw4e3cl/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1gxgyhqagmvyg8sgwgpa79scrwqp4wn4hw4e3cl/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1gf4wlkutql95j7wwsxz490s6fahlvk2s9xpwax: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1gf4wlkutql95j7wwsxz490s6fahlvk2s9xpwax/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1gf4wlkutql95j7wwsxz490s6fahlvk2s9xpwax/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1f3p5nl5xfdrutcdp5926epe2xuj85zsastzdw9: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1f3p5nl5xfdrutcdp5926epe2xuj85zsastzdw9/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1f3p5nl5xfdrutcdp5926epe2xuj85zsastzdw9/unbonding_delegations: ",
-        "cosmosvaloper1v34d48p2z8mttnly3n9es2aqsqkem9pr6f0fdy: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1v34d48p2z8mttnly3n9es2aqsqkem9pr6f0fdy/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1v34d48p2z8mttnly3n9es2aqsqkem9pr6f0fdy/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper102ruvpv2srmunfffxavttxnhezln6fnc54at8c: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper102ruvpv2srmunfffxavttxnhezln6fnc54at8c/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper102ruvpv2srmunfffxavttxnhezln6fnc54at8c/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1sjllsnramtg3ewxqwwrwjxfgc4n4ef9u2lcnj0: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1sjllsnramtg3ewxqwwrwjxfgc4n4ef9u2lcnj0/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1sjllsnramtg3ewxqwwrwjxfgc4n4ef9u2lcnj0/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1n68tqcrf348t5qjzz5he4fw7jxvmm843l4wpkc: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1n68tqcrf348t5qjzz5he4fw7jxvmm843l4wpkc/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1n68tqcrf348t5qjzz5he4fw7jxvmm843l4wpkc/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper15urq2dtp9qce4fyc85m6upwm9xul3049e02707: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper15urq2dtp9qce4fyc85m6upwm9xul3049e02707/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper15urq2dtp9qce4fyc85m6upwm9xul3049e02707/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1c5n3z6ju8e07pqmmxcn4hkqn69d8kmvq5nxnxa: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1c5n3z6ju8e07pqmmxcn4hkqn69d8kmvq5nxnxa/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1c5n3z6ju8e07pqmmxcn4hkqn69d8kmvq5nxnxa/unbonding_delegations: ",
-        "cosmosvaloper1ec3p6a75mqwkv33zt543n6cnxqwun37rr5xlqv: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1ec3p6a75mqwkv33zt543n6cnxqwun37rr5xlqv/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1ec3p6a75mqwkv33zt543n6cnxqwun37rr5xlqv/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper160794m2vw5yu2dvmsw8lcjh33ur26myjxurm4n: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper160794m2vw5yu2dvmsw8lcjh33ur26myjxurm4n/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper160794m2vw5yu2dvmsw8lcjh33ur26myjxurm4n/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1657gj6ggfumyuq8dmfggsudxshp0kfhm7e65gy: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1657gj6ggfumyuq8dmfggsudxshp0kfhm7e65gy/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1657gj6ggfumyuq8dmfggsudxshp0kfhm7e65gy/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1mvhrxhtsjynl62p7rs8jeumtqwtvww3m0vas2y: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1mvhrxhtsjynl62p7rs8jeumtqwtvww3m0vas2y/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1mvhrxhtsjynl62p7rs8jeumtqwtvww3m0vas2y/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1armvgtd477axezdsql30s4cah03xzcrlykvc2x: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1armvgtd477axezdsql30s4cah03xzcrlykvc2x/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1armvgtd477axezdsql30s4cah03xzcrlykvc2x/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1ln37g809530r8weqgwkrrsnf3tlcsda49lw2wm: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1ln37g809530r8weqgwkrrsnf3tlcsda49lw2wm/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1ln37g809530r8weqgwkrrsnf3tlcsda49lw2wm/unbonding_delegations: <html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
+        "cosmosvaloper10jm8fvdyqlj78w0j5nawc76wsn4pqmdxl683c7: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper10jm8fvdyqlj78w0j5nawc76wsn4pqmdxl683c7/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper10jm8fvdyqlj78w0j5nawc76wsn4pqmdxl683c7/unbonding_delegations: "
       ],
       "windowDays": 45
     }
