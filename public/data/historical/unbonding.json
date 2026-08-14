@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-08-13T06:48:44.456Z",
+  "scrapedAt": "2026-08-14T06:45:20.689Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-08-13",
-      "timestamp": 1786579200000,
-      "value": 221426,
-      "amount": 221426
-    },
-    {
       "date": "2026-08-14",
       "timestamp": 1786665600000,
-      "value": 426479,
-      "amount": 426479
+      "value": 374937,
+      "amount": 374937
     },
     {
       "date": "2026-08-15",
@@ -25,14 +19,14 @@
     {
       "date": "2026-08-16",
       "timestamp": 1786838400000,
-      "value": 291517,
-      "amount": 291517
+      "value": 291470,
+      "amount": 291470
     },
     {
       "date": "2026-08-17",
       "timestamp": 1786924800000,
-      "value": 285960,
-      "amount": 285960
+      "value": 285704,
+      "amount": 285704
     },
     {
       "date": "2026-08-18",
@@ -43,8 +37,8 @@
     {
       "date": "2026-08-19",
       "timestamp": 1787097600000,
-      "value": 439313,
-      "amount": 439313
+      "value": 439036,
+      "amount": 439036
     },
     {
       "date": "2026-08-20",
@@ -67,8 +61,8 @@
     {
       "date": "2026-08-23",
       "timestamp": 1787443200000,
-      "value": 264323,
-      "amount": 264323
+      "value": 264317,
+      "amount": 264317
     },
     {
       "date": "2026-08-24",
@@ -85,14 +79,14 @@
     {
       "date": "2026-08-26",
       "timestamp": 1787702400000,
-      "value": 414129,
-      "amount": 414129
+      "value": 414101,
+      "amount": 414101
     },
     {
       "date": "2026-08-27",
       "timestamp": 1787788800000,
-      "value": 124609,
-      "amount": 124609
+      "value": 124597,
+      "amount": 124597
     },
     {
       "date": "2026-08-28",
@@ -121,8 +115,8 @@
     {
       "date": "2026-09-01",
       "timestamp": 1788220800000,
-      "value": 179564,
-      "amount": 179564
+      "value": 179459,
+      "amount": 179459
     },
     {
       "date": "2026-09-02",
@@ -133,16 +127,26 @@
     {
       "date": "2026-09-03",
       "timestamp": 1788393600000,
-      "value": 81178,
-      "amount": 81178
+      "value": 181010,
+      "amount": 181010
+    },
+    {
+      "date": "2026-09-04",
+      "timestamp": 1788480000000,
+      "value": 80551,
+      "amount": 80551
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 632,
-      "totalUnbondingEntries": 7811,
-      "totalUnbondingAtom": 6530599.32,
-      "errors": [],
+      "totalUnbondingEntries": 7978,
+      "totalUnbondingAtom": 6437282.82,
+      "errors": [
+        "cosmosvaloper10rnghuzfntag7dxhqwfeamhuzyymcd3kqpewzh: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper10rnghuzfntag7dxhqwfeamhuzyymcd3kqpewzh/unbonding_delegations: cosmos.directory: Unexpected end of JSON input",
+        "cosmosvaloper130mdu9a0etmeuw52qfxk73pn0ga6gawkxsrlwf: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper130mdu9a0etmeuw52qfxk73pn0ga6gawkxsrlwf/unbonding_delegations: cosmos.directory: Unterminated string in JSON at position 64",
+        "cosmosvaloper1nkkdef4flw8s3jxnmdyqnr7rwgfpw2kv9lx0ug: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1nkkdef4flw8s3jxnmdyqnr7rwgfpw2kv9lx0ug/unbonding_delegations: cosmos.directory: Unterminated string in JSON at position 64"
+      ],
       "windowDays": 45
     }
   }
