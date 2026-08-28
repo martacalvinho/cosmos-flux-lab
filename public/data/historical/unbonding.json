@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-08-27T16:34:21.618Z",
+  "scrapedAt": "2026-08-28T17:29:06.294Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-08-27",
-      "timestamp": 1787788800000,
-      "value": 49261,
-      "amount": 49261
-    },
-    {
       "date": "2026-08-28",
       "timestamp": 1787875200000,
-      "value": 169729,
-      "amount": 169729
+      "value": 43207,
+      "amount": 43207
     },
     {
       "date": "2026-08-29",
@@ -49,14 +43,14 @@
     {
       "date": "2026-09-03",
       "timestamp": 1788393600000,
-      "value": 180501,
-      "amount": 180501
+      "value": 180613,
+      "amount": 180613
     },
     {
       "date": "2026-09-04",
       "timestamp": 1788480000000,
-      "value": 240231,
-      "amount": 240231
+      "value": 240358,
+      "amount": 240358
     },
     {
       "date": "2026-09-05",
@@ -67,44 +61,44 @@
     {
       "date": "2026-09-06",
       "timestamp": 1788652800000,
-      "value": 145379,
-      "amount": 145379
+      "value": 146190,
+      "amount": 146190
     },
     {
       "date": "2026-09-07",
       "timestamp": 1788739200000,
-      "value": 111788,
-      "amount": 111788
+      "value": 111789,
+      "amount": 111789
     },
     {
       "date": "2026-09-08",
       "timestamp": 1788825600000,
-      "value": 187627,
-      "amount": 187627
+      "value": 187642,
+      "amount": 187642
     },
     {
       "date": "2026-09-09",
       "timestamp": 1788912000000,
-      "value": 142471,
-      "amount": 142471
+      "value": 143962,
+      "amount": 143962
     },
     {
       "date": "2026-09-10",
       "timestamp": 1788998400000,
-      "value": 321138,
-      "amount": 321138
+      "value": 320950,
+      "amount": 320950
     },
     {
       "date": "2026-09-11",
       "timestamp": 1789084800000,
-      "value": 638992,
-      "amount": 638992
+      "value": 638993,
+      "amount": 638993
     },
     {
       "date": "2026-09-12",
       "timestamp": 1789171200000,
-      "value": 349033,
-      "amount": 349033
+      "value": 349099,
+      "amount": 349099
     },
     {
       "date": "2026-09-13",
@@ -115,8 +109,8 @@
     {
       "date": "2026-09-14",
       "timestamp": 1789344000000,
-      "value": 422944,
-      "amount": 422944
+      "value": 428944,
+      "amount": 428944
     },
     {
       "date": "2026-09-15",
@@ -127,37 +121,28 @@
     {
       "date": "2026-09-16",
       "timestamp": 1789516800000,
-      "value": 176433,
-      "amount": 176433
+      "value": 179799,
+      "amount": 179799
     },
     {
       "date": "2026-09-17",
       "timestamp": 1789603200000,
-      "value": 555865,
-      "amount": 555865
+      "value": 763271,
+      "amount": 763271
+    },
+    {
+      "date": "2026-09-18",
+      "timestamp": 1789689600000,
+      "value": 211555,
+      "amount": 211555
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 633,
-      "totalUnbondingEntries": 6078,
-      "totalUnbondingAtom": 5876776.03,
-      "errors": [
-        "cosmosvaloper1s65zmn32zugl57ysj47s7vmfcek0rtd7he7wde: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1s65zmn32zugl57ysj47s7vmfcek0rtd7he7wde/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1s65zmn32zugl57ysj47s7vmfcek0rtd7he7wde/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1slk8a708q5c36e9tgnvx4qhzzg8wmch72ah6du: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1slk8a708q5c36e9tgnvx4qhzzg8wmch72ah6du/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1slk8a708q5c36e9tgnvx4qhzzg8wmch72ah6du/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper13fjm3anwze4gnkzv7r44pp0lnkr755xmdu37ct: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper13fjm3anwze4gnkzv7r44pp0lnkr755xmdu37ct/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper13fjm3anwze4gnkzv7r44pp0lnkr755xmdu37ct/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1slt7tkd7srlaxnt8vk6uff7j3mc7pk233rs0r5: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1slt7tkd7srlaxnt8vk6uff7j3mc7pk233rs0r5/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1slt7tkd7srlaxnt8vk6uff7j3mc7pk233rs0r5/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1j4j82e5fagc7n3wrv8cjj99tg69wp2jp0tqhj3: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1j4j82e5fagc7n3wrv8cjj99tg69wp2jp0tqhj3/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1j4j82e5fagc7n3wrv8cjj99tg69wp2jp0tqhj3/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1n5xufj0753hvhv6q09f5lh29s57epnrl59lpp6: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1n5xufj0753hvhv6q09f5lh29s57epnrl59lpp6/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1n5xufj0753hvhv6q09f5lh29s57epnrl59lpp6/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1nf0hr6a34wz9dpcz27qn7rm2v04azlxqu8wkmc: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1nf0hr6a34wz9dpcz27qn7rm2v04azlxqu8wkmc/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1nf0hr6a34wz9dpcz27qn7rm2v04azlxqu8wkmc/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper15w6ra6m68c63t0sv2hzmkngwr9t88e23r8vtg5: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper15w6ra6m68c63t0sv2hzmkngwr9t88e23r8vtg5/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper15w6ra6m68c63t0sv2hzmkngwr9t88e23r8vtg5/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1k9aw4y6ff0tncmmuxp86dk0fxy5s57a3f8frky: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1k9aw4y6ff0tncmmuxp86dk0fxy5s57a3f8frky/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1k9aw4y6ff0tncmmuxp86dk0fxy5s57a3f8frky/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1h87hvd873tp6ufk83hcxfyz6xndffzla5dw7sg: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1h87hvd873tp6ufk83hcxfyz6xndffzla5dw7sg/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1h87hvd873tp6ufk83hcxfyz6xndffzla5dw7sg/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1hkqejlyrj9h8knms9hwvrnp9xhqvjqlseh06vq: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1hkqejlyrj9h8knms9hwvrnp9xhqvjqlseh06vq/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1hkqejlyrj9h8knms9hwvrnp9xhqvjqlseh06vq/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper16gdxm24ht2mxtpz9cma6tr6a6d47x63h65p52c: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper16gdxm24ht2mxtpz9cma6tr6a6d47x63h65p52c/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper16gdxm24ht2mxtpz9cma6tr6a6d47x63h65p52c/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1657gj6ggfumyuq8dmfggsudxshp0kfhm7e65gy: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1657gj6ggfumyuq8dmfggsudxshp0kfhm7e65gy/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1657gj6ggfumyuq8dmfggsudxshp0kfhm7e65gy/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
-        "cosmosvaloper1uxh465053nq3at4dn0jywgwq3s9sme3la3drx6: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1uxh465053nq3at4dn0jywgwq3s9sme3la3drx6/unbonding_delegations: cosmos.directory: Mintscan request failed (503 Service Unavailable) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1uxh465053nq3at4dn0jywgwq3s9sme3la3drx6/unbonding_delegations: <html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Service Temporarily Unavailable</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n"
-      ],
+      "totalUnbondingEntries": 6172,
+      "totalUnbondingAtom": 6131755.36,
+      "errors": [],
       "windowDays": 45
     }
   }
