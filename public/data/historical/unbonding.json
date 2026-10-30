@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-10-29T11:34:16.570Z",
+  "scrapedAt": "2026-10-30T11:27:05.728Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-10-29",
-      "timestamp": 1793232000000,
-      "value": 343224,
-      "amount": 343224
-    },
-    {
       "date": "2026-10-30",
       "timestamp": 1793318400000,
-      "value": 734766,
-      "amount": 734766
+      "value": 251786,
+      "amount": 251786
     },
     {
       "date": "2026-10-31",
@@ -67,20 +61,20 @@
     {
       "date": "2026-11-08",
       "timestamp": 1794096000000,
-      "value": 186194,
-      "amount": 186194
+      "value": 179029,
+      "amount": 179029
     },
     {
       "date": "2026-11-09",
       "timestamp": 1794182400000,
-      "value": 220158,
-      "amount": 220158
+      "value": 220128,
+      "amount": 220128
     },
     {
       "date": "2026-11-10",
       "timestamp": 1794268800000,
-      "value": 144543,
-      "amount": 144543
+      "value": 144533,
+      "amount": 144533
     },
     {
       "date": "2026-11-11",
@@ -115,8 +109,8 @@
     {
       "date": "2026-11-16",
       "timestamp": 1794787200000,
-      "value": 271789,
-      "amount": 271789
+      "value": 271748,
+      "amount": 271748
     },
     {
       "date": "2026-11-17",
@@ -133,20 +127,22 @@
     {
       "date": "2026-11-19",
       "timestamp": 1795046400000,
-      "value": 50803,
-      "amount": 50803
+      "value": 198037,
+      "amount": 198037
+    },
+    {
+      "date": "2026-11-20",
+      "timestamp": 1795132800000,
+      "value": 137378,
+      "amount": 137378
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 646,
-      "totalUnbondingEntries": 5769,
-      "totalUnbondingAtom": 10400277.23,
-      "errors": [
-        "cosmosvaloper1vsc7v43kmz7m8kpcxlwwjysa72k5u5gpknu57h: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1vsc7v43kmz7m8kpcxlwwjysa72k5u5gpknu57h/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1vsc7v43kmz7m8kpcxlwwjysa72k5u5gpknu57h/unbonding_delegations: ",
-        "cosmosvaloper10qp0aaj5ugtls6qjy36820ea6yhy5wrm6p533s: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper10qp0aaj5ugtls6qjy36820ea6yhy5wrm6p533s/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper10qp0aaj5ugtls6qjy36820ea6yhy5wrm6p533s/unbonding_delegations: ",
-        "cosmosvaloper1wlagucxdxvsmvj6330864x8q3vxz4x02rmvmsu: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1wlagucxdxvsmvj6330864x8q3vxz4x02rmvmsu/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1wlagucxdxvsmvj6330864x8q3vxz4x02rmvmsu/unbonding_delegations: "
-      ],
+      "totalUnbondingEntries": 5750,
+      "totalUnbondingAtom": 9851437.84,
+      "errors": [],
       "windowDays": 45
     }
   }
