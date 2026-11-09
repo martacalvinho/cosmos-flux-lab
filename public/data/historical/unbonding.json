@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-11-08T11:58:55.823Z",
+  "scrapedAt": "2026-11-09T13:58:16.900Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-11-08",
-      "timestamp": 1794096000000,
-      "value": 47182,
-      "amount": 47182
-    },
-    {
       "date": "2026-11-09",
       "timestamp": 1794182400000,
-      "value": 220120,
-      "amount": 220120
+      "value": 35481,
+      "amount": 35481
     },
     {
       "date": "2026-11-10",
@@ -25,8 +19,8 @@
     {
       "date": "2026-11-11",
       "timestamp": 1794355200000,
-      "value": 255332,
-      "amount": 255332
+      "value": 254932,
+      "amount": 254932
     },
     {
       "date": "2026-11-12",
@@ -67,14 +61,14 @@
     {
       "date": "2026-11-18",
       "timestamp": 1794960000000,
-      "value": 177289,
-      "amount": 177289
+      "value": 177272,
+      "amount": 177272
     },
     {
       "date": "2026-11-19",
       "timestamp": 1795046400000,
-      "value": 198037,
-      "amount": 198037
+      "value": 197930,
+      "amount": 197930
     },
     {
       "date": "2026-11-20",
@@ -97,20 +91,20 @@
     {
       "date": "2026-11-23",
       "timestamp": 1795392000000,
-      "value": 1856114,
-      "amount": 1856114
+      "value": 1852373,
+      "amount": 1852373
     },
     {
       "date": "2026-11-24",
       "timestamp": 1795478400000,
-      "value": 392334,
-      "amount": 392334
+      "value": 391891,
+      "amount": 391891
     },
     {
       "date": "2026-11-25",
       "timestamp": 1795564800000,
-      "value": 638246,
-      "amount": 638246
+      "value": 638225,
+      "amount": 638225
     },
     {
       "date": "2026-11-26",
@@ -127,21 +121,27 @@
     {
       "date": "2026-11-28",
       "timestamp": 1795824000000,
-      "value": 951885,
-      "amount": 951885
+      "value": 945720,
+      "amount": 945720
     },
     {
       "date": "2026-11-29",
       "timestamp": 1795910400000,
-      "value": 121029,
-      "amount": 121029
+      "value": 320283,
+      "amount": 320283
+    },
+    {
+      "date": "2026-11-30",
+      "timestamp": 1795996800000,
+      "value": 142708,
+      "amount": 142708
     }
   ],
   "rawData": {
     "summary": {
-      "validatorCount": 648,
-      "totalUnbondingEntries": 5305,
-      "totalUnbondingAtom": 7063227.45,
+      "validatorCount": 647,
+      "totalUnbondingEntries": 6777,
+      "totalUnbondingAtom": 7162473.58,
       "errors": [],
       "windowDays": 45
     }
