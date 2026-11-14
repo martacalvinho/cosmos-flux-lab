@@ -1,148 +1,164 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-11-13T13:10:27.018Z",
+  "scrapedAt": "2026-11-14T12:14:36.405Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-11-13",
-      "timestamp": 1794528000000,
-      "value": 9673,
-      "amount": 9673
-    },
-    {
       "date": "2026-11-14",
       "timestamp": 1794614400000,
-      "value": 192659,
-      "amount": 192659
+      "value": 38069,
+      "amount": 38069
     },
     {
       "date": "2026-11-15",
       "timestamp": 1794700800000,
-      "value": 106039,
-      "amount": 106039
+      "value": 102022,
+      "amount": 102022
     },
     {
       "date": "2026-11-16",
       "timestamp": 1794787200000,
-      "value": 268547,
-      "amount": 268547
+      "value": 267057,
+      "amount": 267057
     },
     {
       "date": "2026-11-17",
       "timestamp": 1794873600000,
-      "value": 227444,
-      "amount": 227444
+      "value": 226253,
+      "amount": 226253
     },
     {
       "date": "2026-11-18",
       "timestamp": 1794960000000,
-      "value": 176844,
-      "amount": 176844
+      "value": 173996,
+      "amount": 173996
     },
     {
       "date": "2026-11-19",
       "timestamp": 1795046400000,
-      "value": 196754,
-      "amount": 196754
+      "value": 194428,
+      "amount": 194428
     },
     {
       "date": "2026-11-20",
       "timestamp": 1795132800000,
-      "value": 268890,
-      "amount": 268890
+      "value": 267849,
+      "amount": 267849
     },
     {
       "date": "2026-11-21",
       "timestamp": 1795219200000,
-      "value": 112532,
-      "amount": 112532
+      "value": 110345,
+      "amount": 110345
     },
     {
       "date": "2026-11-22",
       "timestamp": 1795305600000,
-      "value": 179260,
-      "amount": 179260
+      "value": 166786,
+      "amount": 166786
     },
     {
       "date": "2026-11-23",
       "timestamp": 1795392000000,
-      "value": 1851783,
-      "amount": 1851783
+      "value": 1845121,
+      "amount": 1845121
     },
     {
       "date": "2026-11-24",
       "timestamp": 1795478400000,
-      "value": 391482,
-      "amount": 391482
+      "value": 390457,
+      "amount": 390457
     },
     {
       "date": "2026-11-25",
       "timestamp": 1795564800000,
-      "value": 635609,
-      "amount": 635609
+      "value": 622044,
+      "amount": 622044
     },
     {
       "date": "2026-11-26",
       "timestamp": 1795651200000,
-      "value": 289358,
-      "amount": 289358
+      "value": 286804,
+      "amount": 286804
     },
     {
       "date": "2026-11-27",
       "timestamp": 1795737600000,
-      "value": 94686,
-      "amount": 94686
+      "value": 91150,
+      "amount": 91150
     },
     {
       "date": "2026-11-28",
       "timestamp": 1795824000000,
-      "value": 937972,
-      "amount": 937972
+      "value": 932788,
+      "amount": 932788
     },
     {
       "date": "2026-11-29",
       "timestamp": 1795910400000,
-      "value": 315218,
-      "amount": 315218
+      "value": 306979,
+      "amount": 306979
     },
     {
       "date": "2026-11-30",
       "timestamp": 1795996800000,
-      "value": 355373,
-      "amount": 355373
+      "value": 333318,
+      "amount": 333318
     },
     {
       "date": "2026-12-01",
       "timestamp": 1796083200000,
-      "value": 332455,
-      "amount": 332455
+      "value": 286346,
+      "amount": 286346
     },
     {
       "date": "2026-12-02",
       "timestamp": 1796169600000,
-      "value": 323071,
-      "amount": 323071
+      "value": 316375,
+      "amount": 316375
     },
     {
       "date": "2026-12-03",
       "timestamp": 1796256000000,
-      "value": 259289,
-      "amount": 259289
+      "value": 256289,
+      "amount": 256289
     },
     {
       "date": "2026-12-04",
       "timestamp": 1796342400000,
-      "value": 47498,
-      "amount": 47498
+      "value": 78304,
+      "amount": 78304
+    },
+    {
+      "date": "2026-12-05",
+      "timestamp": 1796428800000,
+      "value": 79946,
+      "amount": 79946
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 650,
-      "totalUnbondingEntries": 16346,
-      "totalUnbondingAtom": 7572435.52,
-      "errors": [],
+      "totalUnbondingEntries": 13040,
+      "totalUnbondingAtom": 7372728.52,
+      "errors": [
+        "cosmosvaloper196ax4vc0lwpxndu9dyhvca7jhxp70rmcvrj90c: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper196ax4vc0lwpxndu9dyhvca7jhxp70rmcvrj90c/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper196ax4vc0lwpxndu9dyhvca7jhxp70rmcvrj90c/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5eff5dbfd072c\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5eff5dbfd072c\",\"timestamp\":\"2026-11-14T12:14:42Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper1xsgse9yump2j35nfut2tkwh7mdtca5llcgr79d: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1xsgse9yump2j35nfut2tkwh7mdtca5llcgr79d/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1xsgse9yump2j35nfut2tkwh7mdtca5llcgr79d/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5eff7fe40ad12\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5eff7fe40ad12\",\"timestamp\":\"2026-11-14T12:14:42Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper1xjzsx9er97z2klgd9eulqj30rhwzgyk2t78pnr: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1xjzsx9er97z2klgd9eulqj30rhwzgyk2t78pnr/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1xjzsx9er97z2klgd9eulqj30rhwzgyk2t78pnr/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5eff80aea07d1\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5eff80aea07d1\",\"timestamp\":\"2026-11-14T12:14:42Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper1x3mkgqpshvpq87d33ndsleu7gd7w47dl4ve0yy: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1x3mkgqpshvpq87d33ndsleu7gd7w47dl4ve0yy/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1x3mkgqpshvpq87d33ndsleu7gd7w47dl4ve0yy/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5eff808b083b0\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5eff808b083b0\",\"timestamp\":\"2026-11-14T12:14:42Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper18g8wau89mf37h6uqj660kcvxq0jmdz6twgy7ma: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper18g8wau89mf37h6uqj660kcvxq0jmdz6twgy7ma/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper18g8wau89mf37h6uqj660kcvxq0jmdz6twgy7ma/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5eff9f9d107d1\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5eff9f9d107d1\",\"timestamp\":\"2026-11-14T12:14:42Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper1dzv2cfhynf9xqgz9xae4y94ychxy4gus6rhw8u: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1dzv2cfhynf9xqgz9xae4y94ychxy4gus6rhw8u/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1dzv2cfhynf9xqgz9xae4y94ychxy4gus6rhw8u/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5f011aab3fb43\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5f011aab3fb43\",\"timestamp\":\"2026-11-14T12:14:46Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper1vf44d85es37hwl9f4h9gv0e064m0lla60j9luj: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1vf44d85es37hwl9f4h9gv0e064m0lla60j9luj/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1vf44d85es37hwl9f4h9gv0e064m0lla60j9luj/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5f00eca3f102a\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5f00eca3f102a\",\"timestamp\":\"2026-11-14T12:14:46Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper1wauge4px27c257nfn4k3329wteddqw7gs3n66u: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1wauge4px27c257nfn4k3329wteddqw7gs3n66u/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1wauge4px27c257nfn4k3329wteddqw7gs3n66u/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5f01b18fb5120\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5f01b18fb5120\",\"timestamp\":\"2026-11-14T12:14:47Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper1sjllsnramtg3ewxqwwrwjxfgc4n4ef9u2lcnj0: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1sjllsnramtg3ewxqwwrwjxfgc4n4ef9u2lcnj0/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1sjllsnramtg3ewxqwwrwjxfgc4n4ef9u2lcnj0/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5f02af8665120\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5f02af8665120\",\"timestamp\":\"2026-11-14T12:14:51Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper1navud6jcsvyjd8ehmt5x6fx5gpqn3r7ym9cxv7: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1navud6jcsvyjd8ehmt5x6fx5gpqn3r7ym9cxv7/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1navud6jcsvyjd8ehmt5x6fx5gpqn3r7ym9cxv7/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5f038be4f5756\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5f038be4f5756\",\"timestamp\":\"2026-11-14T12:14:53Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper1asazdfn60g4nakccc9leh37du0946l5fnnluy6: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1asazdfn60g4nakccc9leh37du0946l5fnnluy6/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1asazdfn60g4nakccc9leh37du0946l5fnnluy6/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5f05d4f0883b0\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5f05d4f0883b0\",\"timestamp\":\"2026-11-14T12:14:58Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper1ljunhq7dvwctqn40wv55t52562endx3p4hm06u: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1ljunhq7dvwctqn40wv55t52562endx3p4hm06u/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1ljunhq7dvwctqn40wv55t52562endx3p4hm06u/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5f064cc30072c\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5f064cc30072c\",\"timestamp\":\"2026-11-14T12:14:59Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper1l9fwl9c77zx850htsr20pq3ltc379xt86ndelm: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1l9fwl9c77zx850htsr20pq3ltc379xt86ndelm/unbonding_delegations: cosmos.directory: Mintscan request failed (502 Bad Gateway) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1l9fwl9c77zx850htsr20pq3ltc379xt86ndelm/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5a5f0643b995756\",\"error_code\":502,\"error_name\":\"origin_bad_gateway\",\"error_category\":\"origin\",\"ray_id\":\"a5a5f0643b995756\",\"timestamp\":\"2026-11-14T12:14:59Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":60,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check their origin server health and configuration.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper1xm5er75n3ctd5kxs5lt8ac9gzlmjmenk0a3jn3: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1xm5er75n3ctd5kxs5lt8ac9gzlmjmenk0a3jn3/unbonding_delegations: cosmos.directory: Mintscan request failed (524 <none>) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1xm5er75n3ctd5kxs5lt8ac9gzlmjmenk0a3jn3/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/\",\"title\":\"Error 524: A timeout occurred\",\"status\":524,\"detail\":\"The origin web server did not return a complete response within the 120-second Proxy Read Timeout window. The connection was established, but the origin took too long to respond.\",\"instance\":\"a5a5eff88a18a200\",\"error_code\":524,\"error_name\":\"origin_response_timeout\",\"error_category\":\"origin\",\"ray_id\":\"a5a5eff88a18a200\",\"timestamp\":\"2026-11-14T12:16:47Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":120,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 120 seconds. If the error persists, the website operator should check for long-running processes or an overloaded origin.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n",
+        "cosmosvaloper143g8ag20zg42z7h2j3dszw52ac6alyv876p2q8: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper143g8ag20zg42z7h2j3dszw52ac6alyv876p2q8/unbonding_delegations: cosmos.directory: Mintscan request failed (524 <none>) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper143g8ag20zg42z7h2j3dszw52ac6alyv876p2q8/unbonding_delegations: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/\",\"title\":\"Error 524: A timeout occurred\",\"status\":524,\"detail\":\"The origin web server did not return a complete response within the 120-second Proxy Read Timeout window. The connection was established, but the origin took too long to respond.\",\"instance\":\"a5a5f03fdaaa07d1\",\"error_code\":524,\"error_name\":\"origin_response_timeout\",\"error_category\":\"origin\",\"ray_id\":\"a5a5f03fdaaa07d1\",\"timestamp\":\"2026-11-14T12:16:58Z\",\"zone\":\"rest.cosmos.directory\",\"cloudflare_error\":true,\"retryable\":true,\"retry_after\":120,\"owner_action_required\":true,\"what_you_should_do\":\"**Wait and retry.** Back off for at least 120 seconds. If the error persists, the website operator should check for long-running processes or an overloaded origin.\",\"footer\":\"This error was generated by Cloudflare on behalf of the website owner.\"}\n"
+      ],
       "windowDays": 45
     }
   }
