@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-11-20T14:04:02.567Z",
+  "scrapedAt": "2026-11-21T13:30:59.369Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-11-20",
-      "timestamp": 1795132800000,
-      "value": 43774,
-      "amount": 43774
-    },
-    {
       "date": "2026-11-21",
       "timestamp": 1795219200000,
-      "value": 112532,
-      "amount": 112532
+      "value": 46856,
+      "amount": 46856
     },
     {
       "date": "2026-11-22",
@@ -133,16 +127,29 @@
     {
       "date": "2026-12-11",
       "timestamp": 1796947200000,
-      "value": 169837,
-      "amount": 169837
+      "value": 217592,
+      "amount": 217592
+    },
+    {
+      "date": "2026-12-12",
+      "timestamp": 1797033600000,
+      "value": 148713,
+      "amount": 148713
     }
   ],
   "rawData": {
     "summary": {
-      "validatorCount": 652,
-      "totalUnbondingEntries": 16469,
-      "totalUnbondingAtom": 9435250.41,
-      "errors": [],
+      "validatorCount": 653,
+      "totalUnbondingEntries": 16779,
+      "totalUnbondingAtom": 9522267.7,
+      "errors": [
+        "cosmosvaloper1cunqeg5ydl0zvg5jm748xpc90hsz4ufuaw029z: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1cunqeg5ydl0zvg5jm748xpc90hsz4ufuaw029z/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1cunqeg5ydl0zvg5jm748xpc90hsz4ufuaw029z/unbonding_delegations: ",
+        "cosmosvaloper1eup5t8pp8jq354heck53qtama7vss9l354kh6r: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1eup5t8pp8jq354heck53qtama7vss9l354kh6r/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1eup5t8pp8jq354heck53qtama7vss9l354kh6r/unbonding_delegations: ",
+        "cosmosvaloper16mmmmaxprree97hcyy8d3pezt50xylyddfgcc7: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper16mmmmaxprree97hcyy8d3pezt50xylyddfgcc7/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper16mmmmaxprree97hcyy8d3pezt50xylyddfgcc7/unbonding_delegations: ",
+        "cosmosvaloper1mykn77lkynl8fkwvl9tqg369u0zajzzcdhkptq: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1mykn77lkynl8fkwvl9tqg369u0zajzzcdhkptq/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1mykn77lkynl8fkwvl9tqg369u0zajzzcdhkptq/unbonding_delegations: ",
+        "cosmosvaloper1m83cwjucw9nt8xm66u8xavvy6v9m7xfspcszc5: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1m83cwjucw9nt8xm66u8xavvy6v9m7xfspcszc5/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1m83cwjucw9nt8xm66u8xavvy6v9m7xfspcszc5/unbonding_delegations: ",
+        "cosmosvaloper1asazdfn60g4nakccc9leh37du0946l5fnnluy6: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1asazdfn60g4nakccc9leh37du0946l5fnnluy6/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1asazdfn60g4nakccc9leh37du0946l5fnnluy6/unbonding_delegations: "
+      ],
       "windowDays": 45
     }
   }
