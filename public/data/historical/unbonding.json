@@ -1,20 +1,14 @@
 {
   "source": "https://rest.cosmos.directory/cosmoshub",
-  "scrapedAt": "2026-11-25T15:41:18.034Z",
+  "scrapedAt": "2026-11-26T15:22:20.187Z",
   "chartId": "unbonding_chart",
   "title": "Cosmoshub unbondings map",
   "data": [
     {
-      "date": "2026-11-25",
-      "timestamp": 1795564800000,
-      "value": 59993,
-      "amount": 59993
-    },
-    {
       "date": "2026-11-26",
       "timestamp": 1795651200000,
-      "value": 289358,
-      "amount": 289358
+      "value": 39071,
+      "amount": 39071
     },
     {
       "date": "2026-11-27",
@@ -103,8 +97,8 @@
     {
       "date": "2026-12-11",
       "timestamp": 1796947200000,
-      "value": 217592,
-      "amount": 217592
+      "value": 217437,
+      "amount": 217437
     },
     {
       "date": "2026-12-12",
@@ -121,31 +115,34 @@
     {
       "date": "2026-12-14",
       "timestamp": 1797206400000,
-      "value": 649328,
-      "amount": 649328
+      "value": 648784,
+      "amount": 648784
     },
     {
       "date": "2026-12-15",
       "timestamp": 1797292800000,
-      "value": 362164,
-      "amount": 362164
+      "value": 361758,
+      "amount": 361758
     },
     {
       "date": "2026-12-16",
       "timestamp": 1797379200000,
-      "value": 104623,
-      "amount": 104623
+      "value": 140135,
+      "amount": 140135
+    },
+    {
+      "date": "2026-12-17",
+      "timestamp": 1797465600000,
+      "value": 131040,
+      "amount": 131040
     }
   ],
   "rawData": {
     "summary": {
       "validatorCount": 653,
-      "totalUnbondingEntries": 16717,
-      "totalUnbondingAtom": 7918569.42,
-      "errors": [
-        "cosmosvaloper19yn9qg7gffzdj8t2zxfhwqdcjj8fzxt2ztzgzu: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper19yn9qg7gffzdj8t2zxfhwqdcjj8fzxt2ztzgzu/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper19yn9qg7gffzdj8t2zxfhwqdcjj8fzxt2ztzgzu/unbonding_delegations: ",
-        "cosmosvaloper1l5rgg6k87m6x5hl50xg5q7t680d672z87gzd7a: All LCD providers failed for cosmos/staking/v1beta1/validators/cosmosvaloper1l5rgg6k87m6x5hl50xg5q7t680d672z87gzd7a/unbonding_delegations: cosmos.directory: Mintscan request failed (429 Too Many Requests) for /cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1l5rgg6k87m6x5hl50xg5q7t680d672z87gzd7a/unbonding_delegations: "
-      ],
+      "totalUnbondingEntries": 16666,
+      "totalUnbondingAtom": 7773736.67,
+      "errors": [],
       "windowDays": 45
     }
   }
